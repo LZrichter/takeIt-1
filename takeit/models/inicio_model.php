@@ -5,7 +5,7 @@ class Inicio_model extends CI_Model{
 	function __construct(){
 		parent::__construct();
 
-		$this->db = new Database();
+		// $this->load->database();
 	}
 
 	public function teste(){

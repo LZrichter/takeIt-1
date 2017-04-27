@@ -1,0 +1,20 @@
+body{
+	background: silver;
+	padding: 0;
+	margin: 0;
+}
+
+#header{
+	background: gold;
+	padding: 20px;
+}
+
+#content{
+	background: white;
+	padding: 20px;
+}
+
+#footer{
+	background: green;
+	padding: 20px;
+}

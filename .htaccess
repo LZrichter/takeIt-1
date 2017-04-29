@@ -8,4 +8,4 @@
 	RewriteRule ^(.*)$ index.php/$1 [QSA,NC,L]
 </IfModule>
 
-SetEnv CI_ENV production
+#SetEnv CI_ENV production

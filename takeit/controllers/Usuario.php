@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('OPSSS... Não é permitido direto acesso ao script!!');
 
-class Inicio extends CI_Controller{
+class Usuario extends CI_Controller{
 
 	function __construct(){
 		parent::__construct();
@@ -9,17 +9,17 @@ class Inicio extends CI_Controller{
 
 	public function index(){
 		
-		$dados["titulo"] = "Inicio";
-
-		$this->load->model("inicio_model","ini");
-
-		$dados["teste"] = $this->ini->teste();
+		$dados["titulo"] = "Usuário";
 
 		$this->load->model("usuario_model","user");
+		$res = $this->user->selecionaUsuario(1, true);
+
+		$dados["dado"] = $this->user->erro;
+		$dados["nome"] = $res["nome"];
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu');
-		$this->load->view('inicio', $dados);
+		$this->load->view('usuario', $dados);
 		$this->load->view('templates/footer');
 	}
 }

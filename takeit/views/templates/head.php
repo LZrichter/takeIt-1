@@ -6,6 +6,7 @@
 		<!-- CSS -->
 		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/menu.css">
 		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/footer.css">
+		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/<?= (isset($css) ? $css : "style")?>">
 		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/bootstrap.min.css">
 		<!-- JS -->

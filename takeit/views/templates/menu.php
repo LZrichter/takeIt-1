@@ -8,7 +8,7 @@
         <div class="collapse navbar-collapse navbar-menubuilder">
             <ul class="nav navbar-nav navbar-right">
                 <li id="notificacao">
-                  <button class="btn btn-default btn-lg btn-link">
+                  <button class="btn btn-lg btn-link">
                     <span class="fa fa-bell notify-bell"></span>
                     <span class="badge badge-notify">3</span>
                   </button>

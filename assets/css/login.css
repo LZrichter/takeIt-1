@@ -1,0 +1,19 @@
+
+body{
+	background-image: url("../img/login-back.jpg");
+	background-attachment:fixed;
+	background-size:cover;
+}
+
+.well{
+	margin: 50px;
+	background-color: rgba(245, 245, 245, 0.15) !important;
+	border: 0px !important;
+}
+
+.jumbotron {
+	padding-top: 50px;
+    padding-bottom: 60px;
+	color: #fff !important;
+	background-color: rgba(245, 245, 245, 0.15) !important;
+}

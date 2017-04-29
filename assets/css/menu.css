@@ -41,6 +41,16 @@
     font-size: 25px;
 }
 
+#main-menu.navbar-default .navbar-nav>li#notificacao .btn:focus, .btn:hover {
+    text-decoration: none !important; 
+}
+
+#main-menu.navbar-default .navbar-nav>li#notificacao .btn-link:focus, .btn-link:hover {
+    outline: 0px auto -webkit-focus-ring-color !important;
+}
+
+
+
 
 #main-menu.navbar-default .navbar-nav>li#sair{
     margin-top: 8px;

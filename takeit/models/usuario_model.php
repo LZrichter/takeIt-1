@@ -2,10 +2,12 @@
 
 class Usuario_model extends CI_Model{
 
+	private $obrigatorio = []
+
 	function __construct(){
 		parent::__construct();
 
-		// $this->load->database();
+		$this->load->database();
 	}
 
 	/**

@@ -72,14 +72,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $active_group = 'default';
 $query_builder = TRUE;
-$this->engine.':dbname='.$this->database.";host=".$this->host;
+
 $db['default'] = array(
 	'dsn'	   => DB_ENGINE.":dbname=".DB_DATABASE.";host=".DB_HOST,
-	'hostname' => DB_HOST,
-	'username' => DB_USER,
-	'password' => DB_PASSWORD,
-	'database' => DB_DATABASE,
-	'dbdriver' => 'mysqli',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
+	'database' => '',
+	'dbdriver' => 'pdo',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),

@@ -5,7 +5,7 @@
 
 #main-menu.navbar-default {
     font-size: 15px;
-    background-color: #2E2E2E;
+    background-color: #24292e;
     border-width: 0px;
     border-radius: 0px;
     box-shadow: 2px -9px 5px 10px #888888;  
@@ -20,7 +20,7 @@
      border-right: 1px solid #fefefe;
      font-weight: bold;
     color: rgba(254, 254, 254, 1);
-    background-color: #2E2E2E;
+    background-color: #24292e;
 }
 #main-menu.navbar-default .navbar-nav>li>a:hover,
 #main-menu.navbar-default .navbar-nav>li>a:focus {

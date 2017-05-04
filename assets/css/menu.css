@@ -1,9 +1,14 @@
+#logo {
+    /* vermelho: #cc3333 */
+    width: 100px;
+}
 
 #main-menu.navbar-default {
     font-size: 15px;
-    background-color: rgba(255, 88, 88, 1);
+    background-color: #2E2E2E;
     border-width: 0px;
-    box-shadow: 2px -7px 5px 10px #888888;  
+    border-radius: 0px;
+    box-shadow: 2px -9px 5px 10px #888888;  
 }
 
 #main-menu.navbar-default .navbar-brand {
@@ -15,7 +20,7 @@
      border-right: 1px solid #fefefe;
      font-weight: bold;
     color: rgba(254, 254, 254, 1);
-    background-color: rgba(255, 88, 88, 1);
+    background-color: #2E2E2E;
 }
 #main-menu.navbar-default .navbar-nav>li>a:hover,
 #main-menu.navbar-default .navbar-nav>li>a:focus {
@@ -48,9 +53,6 @@
 #main-menu.navbar-default .navbar-nav>li#notificacao .btn-link:focus, .btn-link:hover {
     outline: 0px auto -webkit-focus-ring-color !important;
 }
-
-
-
 
 #main-menu.navbar-default .navbar-nav>li#sair{
     margin-top: 8px;

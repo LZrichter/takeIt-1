@@ -10,7 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/bootstrap.min.css">
 		<!-- FAVICON -->
-		<link rel="shortcut icon" href="assets/img/favicon.ico">
+		<link rel="icon" type="image/png" href="assets/img/favicon.png">
 		<!-- JS -->
 		<script src="<?php echo base_url();?>assets/js/jquery.min.js"></script>
 		<script src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>

@@ -12,8 +12,9 @@
 		<!-- FAVICON -->
 		<link rel="icon" type="image/png" href="assets/img/favicon.png">
 		<!-- JS -->
-		<script src="<?php echo base_url();?>assets/js/jquery.min.js"></script>
-		<script src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>
+		<script src="<?= base_url();?>assets/js/jquery.min.js"></script>
+		<script src="<?= base_url();?>assets/js/bootstrap.min.js"></script>
+		<script src="<?= base_url();?>assets/js/<?= (isset($js) ? $js : "main")?>"></script>
 		<title>
 			<?= (isset($titulo) ? $titulo . " - takeIt" : "takeIt")?>
 		</title>

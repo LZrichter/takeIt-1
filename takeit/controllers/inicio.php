@@ -10,6 +10,7 @@ class Inicio extends CI_Controller{
 	public function index(){
 		
 		$dados["titulo"] = "Inicio";
+		$dados["logado"] = false;
 
 		$this->load->model("inicio_model","ini");
 
@@ -18,7 +19,7 @@ class Inicio extends CI_Controller{
 		$this->load->model("usuario_model","user");
 
 		$this->load->view('templates/head', $dados);
-		$this->load->view('templates/menu');
+		$this->load->view('templates/menu', $dados);
 		$this->load->view('inicio', $dados);
 		$this->load->view('templates/footer');
 	}

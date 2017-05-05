@@ -13,7 +13,7 @@
 
 #main-menu.navbar-default .navbar-brand {
     color: rgba(254, 254, 254, 1);
-    border-right: 1px solid #fefefe;
+    /*border-right: 1px solid #fefefe;*/
 }
 
 #main-menu.navbar-default .navbar-nav>li>a {
@@ -30,20 +30,31 @@
 
 #main-menu.navbar-default .navbar-nav>li#notificacao{
      border-right: 1px solid #fefefe;
-     padding-right: 0px;
+}
+
+.btn-lg{
+    padding-right: 0px !important;
 }
 
 #main-menu.navbar-default .navbar-nav>li#notificacao .badge-notify{
    background:#337ab7;
    position:relative;
    padding-right: 8px;
-    top: -12px;
-    left: -10px;
+   top: -12px;
+   left: -10px;
 }
 
 #main-menu.navbar-default .navbar-nav>li#notificacao .notify-bell{
     color: #fefefe;
     font-size: 25px;
+}
+
+#main-menu.navbar-default .navbar-header{
+    margin-left: 7%;
+}
+
+#main-menu.navbar-default .navbar-menubuilder{
+    margin-right: 7%;
 }
 
 #main-menu.navbar-default .navbar-nav>li#notificacao .btn:focus, .btn:hover {
@@ -54,14 +65,9 @@
     outline: 0px auto -webkit-focus-ring-color !important;
 }
 
-#main-menu.navbar-default .navbar-nav>li#sair{
+#main-menu.navbar-default .navbar-nav>li.btn_menu{
     margin-top: 8px;
-    padding-left: 16px;
-}
-
-#main-menu.navbar-default .navbar-nav>li#doacao{
-    margin-top: 8px;
-    padding-left: 16px;
+    padding-left: 15px;
 }
 
 #main-menu.navbar-default .navbar-nav>.active>a,
@@ -71,6 +77,7 @@
     background-color: rgba(254, 254, 254, 1);
 }
 #main-menu.navbar-default .navbar-toggle {
+    margin-right: 15%;
     border-color: #fefefe;
 }
 #main-menu.navbar-default .navbar-toggle:hover,
@@ -82,5 +89,5 @@
 }
 #main-menu.navbar-default .navbar-toggle:hover .icon-bar,
 #main-menu.navbar-default .navbar-toggle:focus .icon-bar {
-    background-color: #ff5858;
+    background-color: #cc3333;
 }

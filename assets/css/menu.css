@@ -32,7 +32,7 @@
      border-right: 1px solid #fefefe;
 }
 
-.btn-lg{
+#main-menu.navbar-default .navbar-nav>li#notificacao .btn-lg{
     padding-right: 0px !important;
 }
 

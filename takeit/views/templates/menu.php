@@ -40,7 +40,7 @@
                 <?php else: ?>
                     <li class="btn_menu" id="btn_entrar">
                         <form action="login" method="post">
-                            <button type="button" class="btn btn-primary" action="">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                                 <span class="fa fa-sign-in"></span> Entrar
                             </button>
                         </form>

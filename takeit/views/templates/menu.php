@@ -40,13 +40,13 @@
                 <?php else: ?>
                     <li class="btn_menu" id="btn_entrar">
                         <form action="login" method="post">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_login">
                                 <span class="fa fa-sign-in"></span> Entrar
                             </button>
                         </form>
                     </li>
                     <li class="btn_menu" id="btn_cadastrar">
-                        <button type="button" class="btn btn-success" action="">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_cadastro">
                             <span class="fa fa-pencil-square-o"></span> Cadastre-se
                         </button>
                     </li>

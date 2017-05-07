@@ -20,7 +20,7 @@
 					    	oninvalid="this.setCustomValidity('A senha é obrigatória!')" oninput="setCustomValidity('')">
 				  	</div>
 				  	<br>
-				  	<button class="btn btn-primary btn-lg"><span class="fa fa-sign-in"></span> Entrar</button>
+				  	<button class="btn btn-primary btn-lg">Entrar <span class="fa fa-sign-in"></span></button>
 				</form>
 			</div>
 		</div>	

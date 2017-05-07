@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">
-                <img id="logo" src="assets/img/logo.png">
+                <img id="logo" src="<?= base_url();?>assets/img/logo.png">
             </a>
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-menubuilder">
                 <span class="sr-only">Toggle navigation</span>

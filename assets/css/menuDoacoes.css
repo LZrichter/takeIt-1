@@ -26,7 +26,7 @@
 
 #sidebar-wrapper {
     z-index: 1000;
-    position: fixed;
+    position: static;
     left: 225px;
     width: 0;
     height: 100%;
@@ -57,7 +57,8 @@
 #sidebar-wrapper .sidebar-nav li a {
     display: block;
     text-decoration: none;
-    color: #428bca;
+    color: #fff;
+    background-color: #24292e;
 }
 
 /*.sidebar-nav li:first-child a {
@@ -116,8 +117,18 @@
     }
 }
 
+#location{ margin-top: 50px; }
+
 #location, #categories {
-    background: #92bce0 !important;
+    background: #454748  !important;
     color: #fff !important;
+}
+
+#sel1{ margin-left: 20px; }
+#sel2{ width: 100px; }
+
+#submenu-1 > li { 
+    color: #fff;
+    background-color: #24292e;
 }
 

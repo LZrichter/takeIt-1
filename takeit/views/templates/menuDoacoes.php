@@ -9,8 +9,24 @@
                             <b class="caret"></b>
                         </a>
                         <ul id="submenu-1" class="panel-collapse collapse in panel-switch" role="menu">
-                            <li><a href="#"><i class="fa fa-caret-right"></i>Cidade</a></li>
-                            <li><a href="#"><i class="fa fa-caret-right"></i>Estado</a></li>
+                            <li>
+                            	<label for="sel1">Estado: </label>
+ 								<select class="" id="sel1">
+    								<option>test</option>
+								    <option>test</option>
+								    <option>test</option>
+								    <option>test</option>
+								</select>
+                            </li>
+                            <li>
+                            	<label for="sel2">Município: </label>
+ 								<select class="" id="sel2">
+    								<option>test</option>
+								    <option>test</option>
+								    <option>test</option>
+								    <option>test</option>
+								</select>
+                            </li>
                         </ul>
                     </li>
                     <li>

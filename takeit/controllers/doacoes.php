@@ -12,6 +12,7 @@ class Doacoes extends CI_Controller{
 		$dados["titulo"] = "Doações";
 		$dados["logado"] = true;
 		$dados["css"]    = "menuDoacoes.css";
+		$dados["js"]     = "menuDoacoes.js";
 
 		// $this->load->model("inicio_model","ini");
 		// $dados["teste"] = $this->ini->teste();

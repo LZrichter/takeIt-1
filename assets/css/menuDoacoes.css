@@ -26,7 +26,7 @@
 
 #sidebar-wrapper {
     z-index: 1000;
-    position: static;
+    position: absolute;
     left: 225px;
     width: 0;
     height: 100%;

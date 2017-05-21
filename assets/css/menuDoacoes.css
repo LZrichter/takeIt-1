@@ -1,7 +1,7 @@
 #wrapper {
-    margin-top: -20px;
+    margin-top: 50px;
     padding-top: 0px;
-    padding-left: 0;
+    padding-left: 45px;
     -webkit-transition: all .5s ease;
     -moz-transition: all .5s ease;
     -o-transition: all .5s ease;
@@ -21,18 +21,17 @@
 }
 
 #sidebar-wrapper {
-    border-right: 1px solid #e7e7e7;
 }
 
 #sidebar-wrapper {
     z-index: 1000;
-    position: absolute;
+    position: fixed;
     left: 225px;
-    width: 0;
-    height: 100%;
+    height: 85%;
     margin-left: -225px;
-    overflow-y: auto;
-    background: #f8f8f8;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    background: #fff;
     -webkit-transition: all .5s ease;
     -moz-transition: all .5s ease;
     -o-transition: all .5s ease;
@@ -41,7 +40,7 @@
 
 #sidebar-wrapper .sidebar-nav {
     position: absolute;
-    top: 0;
+    top: -50px;
     width: 225px;
     font-size: 14px;
     margin: 0;
@@ -57,8 +56,8 @@
 #sidebar-wrapper .sidebar-nav li a {
     display: block;
     text-decoration: none;
-    color: #fff;
-    background-color: #24292e;
+    color: #000;
+    background-color: #ffffff;
 }
 
 /*.sidebar-nav li:first-child a {
@@ -74,7 +73,7 @@
     display: inline-block;
     text-indent: 7px;
     margin-right: 10px;
-    color: #fff;
+    color: #000;
     float: left;
 }
 
@@ -106,6 +105,7 @@
 @media (max-width: 992px) {
     #wrapper #sidebar-wrapper {
         width: 45px;
+        /* position: fixed; */
     }
     #wrapper #sidebar-wrapper #sidebar #sidemenu li ul {
         position: fixed;
@@ -120,15 +120,17 @@
 #location{ margin-top: 50px; }
 
 #location, #categories {
-    background: #454748  !important;
-    color: #fff !important;
+    background: #eaeaea  !important;
+    color: #000 !important;
 }
 
 #sel1{ margin-left: 20px; }
 #sel2{ width: 100px; }
 
-#submenu-1 > li { 
-    color: #fff;
-    background-color: #24292e;
+#submenu-1 > li {
+    color: #000;
+    background-color: #ffffff;
 }
+
+#page-content-wrapper{padding: 10px;border-left: 1px #e0e0e0 solid;/* height: 100%; */}
 

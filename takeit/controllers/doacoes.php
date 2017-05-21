@@ -12,6 +12,7 @@ class Doacoes extends CI_Controller{
 		$dados["titulo"] = "Doações";
 		$dados["logado"] = true;
 		$dados["css"]    = "menuDoacoes.css";
+		$dados["css2"]   = "itens.css";
 		$dados["js"]     = "menuDoacoes.js";
 
 		// $this->load->model("inicio_model","ini");
@@ -22,6 +23,20 @@ class Doacoes extends CI_Controller{
 		$this->load->view('templates/menu', $dados);
 		$this->load->view('templates/menuDoacoes', $dados);
 		$this->load->view('doacoes', $dados);
+		$this->load->view('templates/footer');
+	}
+	
+	public function item($id){
+
+		$dados["itemId"] = $id;
+		$dados["titulo"] = "Doações";
+		$dados["logado"] = true;
+		$dados["css"]    = "item.css";
+		$dados["js"]    = "imageZoom.js";
+
+		$this->load->view('templates/head', $dados);
+		$this->load->view('templates/menu', $dados);
+		$this->load->view('item', $dados);
 		$this->load->view('templates/footer');
 	}
 }

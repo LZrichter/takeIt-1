@@ -1097,7 +1097,7 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #337ab7;
+  color: #777;
   text-decoration: none;
 }
 a:hover,
@@ -1137,8 +1137,8 @@ img {
   border: 1px solid #ddd;
   border-radius: 4px;
   -webkit-transition: all .2s ease-in-out;
-       -o-transition: all .2s ease-in-out;
-          transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
 }
 .img-circle {
   border-radius: 50%;
@@ -1607,6 +1607,7 @@ pre code {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+  /* position: inherit; */
 }
 .row {
   margin-right: -15px;

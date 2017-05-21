@@ -74,6 +74,10 @@
     padding-left: 15px;
 }
 
+#main-menu.navbar-default .navbar-nav button{
+    width: 150px;
+}
+
 #main-menu.navbar-default .navbar-nav>.active>a,
 #main-menu.navbar-default .navbar-nav>.active>a:hover,
 #main-menu.navbar-default .navbar-nav>.active>a:focus {
@@ -94,4 +98,11 @@
 #main-menu.navbar-default .navbar-toggle:hover .icon-bar,
 #main-menu.navbar-default .navbar-toggle:focus .icon-bar {
     background-color: #cc3333;
+}
+
+@media (max-width: 770px){
+    #main-menu.navbar-default .navbar-menubuilder{
+        margin-right: 0px;
+        margin-left: 0px;
+    }
 }

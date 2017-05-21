@@ -1,27 +1,18 @@
-<header id="headerLogin">
-		<div class="jumbotron text-center">
-	  		<h2><i class="fa fa-dashboard"></i> <?= $titulo ?></h2>
-	  		<p> <?= $slogan ?></p>
-		</div>
-</header>
+<main id="mainLogin">
+	<div class="container">
+      	<form class="form-signin" id="loginForm" method="post" action="?page=login">
+	        <h2>Acesse sua conta</h2>
 
-	<main id="mainLogin">
-		<div class="container">
-			<div class="well col-xs-6 col-xs-offset-3">
-			 	<form class="form-group form-group-lg form-horizontal" id="loginForm" method="post" action="?page=login">
-				  	<div class="input-group " id="firstInput">
-					    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-					    <input id="usuario" type="text" class="form-control" name="usuario" placeholder="Usuário" required 
-					    	oninvalid="this.setCustomValidity('O nome do usuário é obrigatório!')" oninput="setCustomValidity('')">
-				  	</div>
-				  	<div class="input-group">
-					    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-					    <input id="password" type="password" class="form-control" name="password" placeholder="Senha" required 
-					    	oninvalid="this.setCustomValidity('A senha é obrigatória!')" oninput="setCustomValidity('')">
-				  	</div>
-				  	<br>
-				  	<button class="btn btn-primary btn-lg">Entrar <span class="fa fa-sign-in"></span></button>
-				</form>
-			</div>
-		</div>	
-	</main>
+	        <div class="form-group">
+                <label for="usuario">E-mail</label>
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus oninvalid="this.setCustomValidity('O nome do usuário é obrigatório!')" oninput="setCustomValidity('')">
+            </div>
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required oninvalid="this.setCustomValidity('A senha é obrigatória!')" oninput="setCustomValidity('')">
+            </div>
+	        <!-- <div class="checkbox"><label><input type="checkbox" value="remember-me"> Remember me</label></div> -->
+	        <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar <span class="fa fa-sign-in"></span></button>
+	    </form>
+	</div>	
+</main>

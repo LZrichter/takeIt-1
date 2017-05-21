@@ -114,7 +114,11 @@ class Usuario_model extends CI_Model{
 	 * @return boolean/array   			true se encontrado, false se não encontrado ou erro, ou array com os dados
 	 */
 	public function buscaUsuario(array $campos, bool $return_array = false){
+		if(!isset($campos) || !is_array($campos) || empty($campos)){
+			$this->erro("sys", "Array de Campos nao informado.");
 
+			return FALSE;
+		}
 	}
 
 	/**

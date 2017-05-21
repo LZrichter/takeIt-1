@@ -15,16 +15,22 @@
         <div class="collapse navbar-collapse navbar-menubuilder">
             <ul class="nav navbar-nav navbar-right">
                 <li class="btn_menu" id="btn_entrar">
-                    <form action="login" method="post">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_login">
-                            <span class="fa fa-sign-in"></span> Entrar
-                        </button>
-                    </form>
+                    <div class="button text-center">
+                        <a href="/login">
+                            <button type="button" class="btn btn-primary">
+                                <i class="fa fa-sign-in"></i> Entrar
+                            </button>
+                        </a>
+                    </div>
                 </li>
                 <li class="btn_menu" id="btn_cadastrar">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_cadastro">
-                        <span class="fa fa-pencil-square-o"></span> Cadastre-se
-                    </button>
+                    <div class="button text-center">
+                        <a href="/cadastro">
+                            <button type="button" class="btn btn-success">
+                                <i class="fa fa-pencil-square-o"></i> Cadastre-se
+                            </button>
+                        </a>
+                    </div>
                 </li>
             </ul>
         </div>

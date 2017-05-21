@@ -17,7 +17,14 @@
 		<!-- JS -->
 		<script src="<?= base_url();?>assets/js/jquery.min.js"></script>
 		<script src="<?= base_url();?>assets/js/bootstrap.js"></script>
-		<script src="<?= base_url();?>assets/js/<?= (isset($js) ? $js : "main")?>"></script>
+		<script src="<?= base_url();?>assets/js/<?= (isset($js) ? $js : "")?>"></script>
+		<script src="<?= base_url();?>assets/js/<?= (isset($js2) ? $js : "")?>"></script>
+		<!-- DataTable -->
+		<?php if(isset($dataTable)): ?>
+			<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/jquery.dataTables.min.css">
+			<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/buttons.dataTables.min.css">
+			<script src="<?= base_url();?>assets/js/jquery.dataTables.min.js"></script>
+		<?php endif;?>
 		<title>
 			<?= (isset($titulo) ? $titulo . " - takeIt" : "takeIt")?>
 		</title>

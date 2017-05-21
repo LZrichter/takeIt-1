@@ -10,7 +10,6 @@ class Doacoes extends CI_Controller{
 	public function index(){
 		
 		$dados["titulo"] = "Doações";
-		$dados["logado"] = true;
 		$dados["css"]    = "menuDoacoes.css";
 		$dados["css2"]   = "itens.css";
 		$dados["js"]     = "menuDoacoes.js";
@@ -30,7 +29,6 @@ class Doacoes extends CI_Controller{
 
 		$dados["itemId"] = $id;
 		$dados["titulo"] = "Doações";
-		$dados["logado"] = true;
 		$dados["css"]    = "item.css";
 		$dados["js"]    = "imageZoom.js";
 

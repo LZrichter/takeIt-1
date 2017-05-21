@@ -3,6 +3,10 @@
     width: 100px;
 }
 
+#main-menu {
+    z-index: 3;
+}
+
 #main-menu.navbar-default {
     font-size: 15px;
     background-color: #24292e;

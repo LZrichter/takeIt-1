@@ -1,4 +1,11 @@
 <main id="mainItem">
+
+<ul class="breadcrumb">
+  <li><a href="/inicio">Home</a></li>
+  <li><a href="/doacoes">Doações</a></li>
+  <li><a href="#">Item</a></li>
+</ul>
+
 <div class="container">
 	<div class="row">
 	  	<div class="panel panel-default">
@@ -6,7 +13,7 @@
 	  			<h3><span class="fa fa-product-hunt"></span> Violão Memphis</h3>
 	  		</div>
 	  		<div class="panel-body">
-	  			<div class="col-xs-6 text-center">
+	  			<div class="col-sm-6 col-md-6 col-lg-4 text-center">
 	  				<div id="myCarousel" class="carousel slide" data-ride="carousel">
 	  				  <!-- Indicators -->
 	  				  <ol class="carousel-indicators">
@@ -53,29 +60,23 @@
 	  				  </a>
 	  				</div>
 	  			</div>
-				<div class="col-xs-6">
+				<div class="col-sm-6 col-md-6 col-lg-8">
 					<div class="center-block text-left">
 						<p><strong>Quantidade:</strong> 1</p>
 						<p><strong>Doador:</strong> Anthony Tailer</p>
 						<p><strong>Cidade/UF:</strong> Santa Maria, RS</p>
 						<p><strong>Status:</strong> <span class="badge"> Disponível</span></p>
-						<p><strong>Descrição:</strong>
-						<div class="panel panel-default">
-							<div class="panel-body">
-								Aqui é Body Builder Ipsum PORRA! Boraaa, Hora do Show Porra. É 37 anos caralho! Sabe o que é isso daí? Trapézio descendente é o nome disso aí. Ajuda o maluco que tá doente. AHHHHHHHHHHHHHHHHHHHHHH..., porra! Sai filho da puta!
+						<p class="text-justify"><strong>Descrição:</strong> Aqui é Body Builder Ipsum PORRA! Boraaa, Hora do Show Porra. É 37 anos caralho! Sabe o que é isso daí? Trapézio descendente é o nome disso aí. Ajuda o maluco que tá doente. AHHHHHHHHHHHHHHHHHHHHHH..., porra! Sai filho da puta!
 
-								É 37 anos caralho! Aqui nóis constrói fibra, não é água com músculo. É nóis caraio é trapezera buscando caraio! Sabe o que é isso daí? Trapézio descendente é o nome disso aí. Eita porra!, tá saindo da jaula o monstro! Vamo monstro!
-							</div>
-						</div>
+						É 37 anos caralho! Aqui nóis constrói fibra, não é água com músculo. É nóis caraio é trapezera buscando caraio! Sabe o que é isso daí? Trapézio descendente é o nome disso aí. Eita porra!, tá saindo da jaula o monstro! Vamo monstro!
 						</p>
 					</div>
 				</div>
 	  		</div>
 	  		<div class="panel-footer text-center">
-	  			<div class="btn-group">
-	  				<button class="btn btn-primary btn-lg" type="button"><span class="fa fa-heart"> Manisfestar Interesse</span></button>
-	  				<button class="btn btn-danger btn-lg" type="button"><span class="fa fa-flag"> Reportar Doação</span></button>
-	  			</div>
+	  			<button class="btn btn-primary btn-lg" type="button"><span class="fa fa-heart"> Manisfestar Interesse</span></button>
+
+	  			<button class="btn btn-danger btn-lg" type="button"><span class="fa fa-flag"> Reportar Doação</span></button>
 	  		</div>
 	  	</div>
   	</div>

@@ -1,3 +1,24 @@
+ul.breadcrumb {
+    padding: 10px 16px;
+    list-style: none;
+    background-color: #eee;
+    font-size: 12px;
+}
+ul.breadcrumb li {display: inline;}
+
+ul.breadcrumb li+li:before {
+    padding: 8px;
+    color: black;
+    content: "/\00a0";
+}
+ul.breadcrumb li a {
+    color: #0275d8;
+    text-decoration: none;
+}
+ul.breadcrumb li a:hover {
+    color: #01447e;
+    text-decoration: underline;
+}
 
 #mainItem {margin-top: 60px;}
 
@@ -29,12 +50,9 @@
 	width: 300px !important;
   }
 
-#mainItem > div > div > div > div.panel-body { 
-	display: inline-flex;
-    align-items: center; 
-
+  #mainItem > div > div > div > div.panel-footer.text-center > button.btn{
+  	margin-bottom: 5px;
   }
-
 
  .mag {
     width:300px;
@@ -66,4 +84,28 @@
     -webkit-border-radius: 100%;
        -moz-border-radius: 100%;
              border-radius: 100%
+}
+
+
+@media (max-width: 360px){
+	#myCarousel {
+		height: 250px !important;
+		width: 250px !important;
+	}
+
+	.carousel-inner > .item > img,
+  	.carousel-inner > .item > a > img {  
+		margin: auto;   
+		height: 250px !important;
+		width: 250px !important;
+  	}
+
+  	.carousel-inner {
+		height: 250px !important;
+		width: 250px !important;
+  	}
+
+  	#myCarousel > a.right.carousel-control > span.fa.fa-chevron-right{
+		margin-left: 24px !important;
+	}
 }

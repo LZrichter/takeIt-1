@@ -26,7 +26,7 @@ class Doacoes extends CI_Controller{
 		$this->load->view('templates/footer');
 	}
 	
-	public function item($id){
+	public function item($id = 0){
 
 		$dados["itemId"] = $id;
 		$dados["titulo"] = "Doações";

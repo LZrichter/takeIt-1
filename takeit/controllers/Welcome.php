@@ -10,6 +10,8 @@ class Welcome extends CI_Controller{
 	public function index(){
 		
 		$dados["titulo"] = "Welcome";
+		$dados["css"]    = "welcome.css";
+		$dados["js"]	 = "welcome.js";
 
 		$this->load->model("welcome_model","ini");
 

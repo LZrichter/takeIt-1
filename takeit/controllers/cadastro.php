@@ -9,9 +9,7 @@ class Cadastro extends CI_Controller{
 	}
 
 	public function index(){
-		
-		$dados["titulo"] = "Cadastre-se";
-		$dados["slogan"] = "TakeIt - Ajude quem precisa, doando o que você não precisa.";
+
 		$dados["css"]    = "welcome.css";
 		$dados["js"]	 = "welcome.js";
 

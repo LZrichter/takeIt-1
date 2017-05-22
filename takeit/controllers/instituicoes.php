@@ -27,9 +27,9 @@ class Instituicoes extends CI_Controller{
 		if(isset($result["Error"])){
 			$dados["sqlError"] = $result["Error"];
 		}
-		echo "<br/><br/><br/><br/><br/><br/><pre>";
-		print_r($result);
-		echo "</pre>";
+		//echo "<br/><br/><br/><br/><br/><br/><pre>";
+		//print_r($result);
+		//echo "</pre>";
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);

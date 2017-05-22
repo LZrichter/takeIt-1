@@ -1,4 +1,4 @@
-<main id="mainLogin">
+<main id="mainLogin" class="footer-align">
 	<div class="container">
       	<form class="form-signin" id="loginForm" method="post" action="?page=login">
 	        <h2>Acesse sua conta</h2>

@@ -12,7 +12,6 @@ class Cadastro extends CI_Controller{
 		$dados["titulo"] = "Cadastre-se";
 		$dados["slogan"] = "TakeIt - Ajude quem precisa, doando o que você não precisa.";
 		$dados["css"]    = "welcome.css";
-		$dados["css2"]   = "cadastro.css";
 		$dados["js"]	 = "welcome.js";
 		$dados["js2"] 	 = "cadastro.js";
 

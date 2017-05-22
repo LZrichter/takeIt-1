@@ -1,4 +1,4 @@
-<div id="wrapper">
+<div id="wrapper" class="footer-align">
     <div id="sidebar-wrapper">
         <aside id="sidebar">
             <ul id="sidemenu" class="sidebar-nav">

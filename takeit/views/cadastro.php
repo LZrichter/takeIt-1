@@ -1,4 +1,4 @@
-<main id="mainCadastro">
+<main id="mainCadastro" class="footer-align">
 	<div class="container">
 		<div class="col-xs-11">
 		 	<form class="form-group form-horizontal" id="cadastroForm">

@@ -1,4 +1,4 @@
-<main id="mainItem">
+<main id="mainItem" class="footer-align">
 
 <ul class="breadcrumb">
   <li><a href="/inicio">Home</a></li>
@@ -40,7 +40,7 @@
 					  	<div class="form-group">
 					  	  	<label for="area_detalhes" class="col-sm-2 control-label">Detalhes do Item</label>
 					  	  	<div class="col-sm-10">
-					  	  	  	<textarea class="form-control" id="area_detalhes" rows="7" placeholder="Descreva aqui o máximo de detalhes do seu item"></textarea>
+					  	  	  	<textarea class="form-control" id="area_detalhes" rows="5" placeholder="Descreva aqui o máximo de detalhes do seu item"></textarea>
 					  	  	</div>
 					  	</div>
 					  	<div class="form-group">

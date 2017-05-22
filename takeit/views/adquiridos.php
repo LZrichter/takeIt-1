@@ -3,7 +3,7 @@
   <li><a href="#">Itens Adquiridos</a></li>
 </ul>
 
-<div class="container-fluid adquiridos">
+<div class="container-fluid adquiridos footer-align">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3><span class="fa fa-heart"></span> Itens Adquiridos</h3>

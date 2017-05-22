@@ -20,15 +20,16 @@ class Instituicoes extends CI_Controller{
 		$dados["filtroUF"] = "RS";
 		$dados["filtroMunicipio"] = "Alecrim";
 		$dados["filtroCategoria"] = "Chinelos";
-		$dados["filtroBusca"] = "Guillizoni";
+		$dados["filtroBusca"] = "CEO";
 
 		$this->load->model("Instituicao_model","model");
 		$result = $this->model->buscaInstituicoes($dados);
 		if(isset($result["Error"])){
 			$dados["sqlError"] = $result["Error"];
 		}
-		echo "<br/><br/><br/><br/><br/><br/>";
+		echo "<br/><br/><br/><br/><br/><br/><pre>";
 		print_r($result);
+		echo "</pre>";
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);

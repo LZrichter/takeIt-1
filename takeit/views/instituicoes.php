@@ -8,7 +8,7 @@
 	<hr>
 
 	<div class="table-responsive container" id="dic_table_div" style="width:100%">
-		<table class="table table-responsive display text-center" id="instituicoes_table" width="100%" cellspacing="0">
+		<table class="table table-responsive table-striped display text-center" id="instituicoes_table" width="100%" cellspacing="0">
 			<thead>
 				<tr>
 					<th>Nome</th>
@@ -24,47 +24,37 @@
 	                <td>RS</td>
 	                <td><button class="btn btn-success">Ver Perfil</button></td>
 	            </tr>
-	           	</tbody>
-	           	<tbody>
 	            <tr>
 	                <td>Giacomo Guillizoni Founder & CEO</td>
 	                <td>Santa Maria</td>
 	                <td>RS</td>
 	                <td><button class="btn btn-success">Ver Perfil</button></td>
 	            </tr>
-	           	</tbody>
-	           	<tbody>
 	            <tr>
 	                <td>Giacomo Guillizoni Founder & CEO</td>
 	                <td>Santa Maria</td>
 	                <td>RS</td>
 	                <td><button class="btn btn-success">Ver Perfil</button></td>
 	            </tr>
-	           	</tbody>
-	           	<tbody>
 	            <tr>
 	                <td>Giacomo Guillizoni Founder & CEO</td>
 	                <td>Santa Maria</td>
 	                <td>RS</td>
 	                <td><button class="btn btn-success">Ver Perfil</button></td>
 	            </tr>
-	           	</tbody>
-	           	<tbody>
 	            <tr>
 	                <td>Giacomo Guillizoni Founder & CEO</td>
 	                <td>Santa Maria</td>
 	                <td>RS</td>
 	                <td><button class="btn btn-success">Ver Perfil</button></td>
 	            </tr>
-	           	</tbody>
-	           	<tbody>
 	            <tr>
 	                <td>Giacomo Guillizoni Founder & CEO</td>
 	                <td>Santa Maria</td>
 	                <td>RS</td>
 	                <td><button class="btn btn-success">Ver Perfil</button></td>
 	            </tr>
-	           	</tbody>
+	        </tbody>
 		</table>
 	</div>
 </div>

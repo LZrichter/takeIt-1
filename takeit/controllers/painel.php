@@ -29,4 +29,17 @@ class Painel extends CI_Controller{
 		$this->load->view('adquiridos');
 		$this->load->view('templates/footer');
 	}
+
+	public function chat(){
+		$dados["titulo"] = "Chat";
+		$dados["css"]    = "menuChat.css";
+		$dados["css2"]   = "chat.css";
+		$dados["js"]   = "menuDoacoes.js";
+
+		$this->load->view('templates/head', $dados);
+		$this->load->view('templates/menu', $dados);
+		$this->load->view('templates/menuChat', $dados);
+		$this->load->view('chat', $dados);
+		$this->load->view('templates/footer');
+	}
 }

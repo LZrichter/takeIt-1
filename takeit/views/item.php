@@ -1,4 +1,4 @@
-<main id="mainItem">
+<main id="mainItem" class="footer-align">
 
 <ul class="breadcrumb">
   <li><a href="/inicio">Home</a></li>

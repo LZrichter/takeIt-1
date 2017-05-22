@@ -1,25 +1,29 @@
-<div class="container">
+<div class="container footer-align">
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1 text-justify">
 			<h1>Licença de uso do software takeIt</h1>
 			<hr class="featurette-divider">
-			<p>Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl. Praesent vel viverra nisi. Mauris aliquet nunc non turpis scelerisque, eget. Posuere libero varius. Nullam a nisl ut ante blandit hendrerit. Aenean sit amet nisi. Si num tem leite então bota uma pinga aí cumpadi!Leite de capivaris, leite de mula manquis sem cabeça. Delegadis gente finis, bibendum egestas augue arcu ut est. Aenean aliquam molestie leo, vitae iaculis nisl. Cevadis im ampola pa arma uma pindureta.Leite de capivaris, leite de mula manquis sem cabeça. Delegadis gente finis, bibendum egestas augue arcu ut est. Aenean aliquam molestie leo, vitae iaculis nisl. Cevadis im ampola pa arma uma pindureta.</p>
-			
-			<p>Mé faiz elementum girarzis, nisi eros vermeio. Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio. Viva Forevis aptent taciti sociosqu ad litora torquent. Mais vale um bebadis conhecidiss, que um alcoolatra anonimis.Leite de capivaris, leite de mula manquis sem cabeça. Delegadis gente finis, bibendum egestas augue arcu ut est. Aenean aliquam molestie leo, vitae iaculis nisl. Cevadis im ampola pa arma uma pindureta.Leite de capivaris, leite de mula manquis sem cabeça. Delegadis gente finis, bibendum egestas augue arcu ut est. Aenean aliquam molestie leo, vitae iaculis nisl. Cevadis im ampola pa arma uma pindureta.</p>
-			
-			<p>Interagi no mé, cursus quis, vehicula ac nisi. Quem num gosta di mé, boa gentis num é. Em pé sem cair, deitado sem dormir, sentado sem cochilar e fazendo pose. Paisis, filhis, espiritis santis.Leite de capivaris, leite de mula manquis sem cabeça. Delegadis gente finis, bibendum egestas augue arcu ut est. Aenean aliquam molestie leo, vitae iaculis nisl. Cevadis im ampola pa arma uma pindureta.Leite de capivaris, leite de mula manquis sem cabeça. Delegadis gente finis, bibendum egestas augue arcu ut est. Aenean aliquam molestie leo, vitae iaculis nisl. Cevadis im ampola pa arma uma pindureta.</p>
-			
-			<p>Per aumento de cachacis, eu reclamis. Copo furadis é disculpa de bebadis, arcu quam euismod magna. Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo! Atirei o pau no gatis, per gatis num morreus.Leite de capivaris, leite de mula manquis sem cabeça. Delegadis gente finis, bibendum egestas augue arcu ut est. Aenean aliquam molestie leo, vitae iaculis nisl. Cevadis im ampola pa arma uma pindureta.Leite de capivaris, leite de mula manquis sem cabeça. Delegadis gente finis, bibendum egestas augue arcu ut est. Aenean aliquam molestie leo, vitae iaculis nisl. Cevadis im ampola pa arma uma pindureta.</p>
-			
-			<p>Quem manda na minha terra sou euzis! Diuretics paradis num copo é motivis de denguis. Admodum accumsan disputationi eu sit. Vide electram sadipscing et per. Suco de cevadiss deixa as pessoas mais interessantis.Leite de capivaris, leite de mula manquis sem cabeça. Delegadis gente finis, bibendum egestas augue arcu ut est. Aenean aliquam molestie leo, vitae iaculis nisl. Cevadis im ampola pa arma uma pindureta.Leite de capivaris, leite de mula manquis sem cabeça. Delegadis gente finis, bibendum egestas augue arcu ut est. Aenean aliquam molestie leo, vitae iaculis nisl. Cevadis im ampola pa arma uma pindureta.</p>
-			
-			<p>A ordem dos tratores não altera o pão duris. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Quem num gosta di mim que vai caçá sua turmis! Tá deprimidis, eu conheço uma cachacis que pode alegrar sua vidis.Leite de capivaris, leite de mula manquis sem cabeça. Delegadis gente finis, bibendum egestas augue arcu ut est. Aenean aliquam molestie leo, vitae iaculis nisl. Cevadis im ampola pa arma uma pindureta.Leite de capivaris, leite de mula manquis sem cabeça. Delegadis gente finis, bibendum egestas augue arcu ut est. Aenean aliquam molestie leo, vitae iaculis nisl. Cevadis im ampola pa arma uma pindureta.</p>
+			<p>The MIT License (MIT)
 
-			<hr class="featurette-divider">
-			
-			<p>Casamentiss faiz malandris se pirulitá. Vehicula non. Ut sed ex eros. Vivamus sit amet nibh non tellus tristique interdum. In elementis mé pra quem é amistosis quis leo. Detraxit consequat et quo num tendi nada.Leite de capivaris, leite de mula manquis sem cabeça. Delegadis gente finis, bibendum egestas augue arcu ut est. Aenean aliquam molestie leo, vitae iaculis nisl. Cevadis im ampola pa arma uma pindureta.Leite de capivaris, leite de mula manquis sem cabeça. Delegadis gente finis, bibendum egestas augue arcu ut est. Aenean aliquam molestie leo, vitae iaculis nisl. Cevadis im ampola pa arma uma pindureta.</p>
-			
-			<p>Leite de capivaris, leite de mula manquis sem cabeça. Delegadis gente finis, bibendum egestas augue arcu ut est. Aenean aliquam molestie leo, vitae iaculis nisl. Cevadis im ampola pa arma uma pindureta.Leite de capivaris, leite de mula manquis sem cabeça. Delegadis gente finis, bibendum egestas augue arcu ut est. Aenean aliquam molestie leo, vitae iaculis nisl. Cevadis im ampola pa arma uma pindureta.Leite de capivaris, leite de mula manquis sem cabeça. Delegadis gente finis, bibendum egestas augue arcu ut est. Aenean aliquam molestie leo, vitae iaculis nisl. Cevadis im ampola pa arma uma pindureta.</p>
+<p>Copyright (c) 2014 - 2017, British Columbia Institute of Technology</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
 
 			<hr class="featurette-divider">
 		</div>

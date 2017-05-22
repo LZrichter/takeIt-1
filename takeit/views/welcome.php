@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('OPSSS... Não é permitido direto acesso ao script!!'); ?>
 
-<main id="mainWelcome">
+<main id="mainWelcome" class="footer-align">
 	<div id="container">
 		<div class="banner">
 			<img src="<?= base_url();?>assets/img/banner.png">

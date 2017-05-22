@@ -10,7 +10,7 @@
 	<div class="row">
 	  	<div class="panel panel-default">
 	  		<div class="panel-heading">
-	  			<h3><span class="fa fa-product-hunt"></span> Violão Memphis</h3>
+	  			<h2><span class="fa fa-product-hunt"></span> Violão Memphis</h2>
 	  		</div>
 	  		<div class="panel-body">
 	  			<div class="col-sm-6 col-md-6 col-lg-4 text-center">
@@ -74,9 +74,9 @@
 				</div>
 	  		</div>
 	  		<div class="panel-footer text-center">
-	  			<button class="btn btn-primary btn-lg" type="button"><span class="fa fa-heart"> Manisfestar Interesse</span></button>
+	  			<button class="btn btn-primary btn-lg" type="button"><span class="fa fa-heart"></span> Manisfestar Interesse</button>
 
-	  			<button class="btn btn-danger btn-lg" type="button"><span class="fa fa-flag"> Reportar Doação</span></button>
+	  			<button class="btn btn-danger btn-lg" type="button"><span class="fa fa-flag"></span> Reportar Doação</button>
 	  		</div>
 	  	</div>
   	</div>

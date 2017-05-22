@@ -7,12 +7,16 @@
     z-index: 3;
 }
 
+#main-menu .navbar-collapse {
+    z-index: 4;
+}
+
 #main-menu.navbar-default {
     font-size: 15px;
     background-color: #24292e;
     border-width: 0px;
     border-radius: 0px;
-    box-shadow: 2px -9px 5px 10px #888888;
+    box-shadow: 2px -9px 5px 10px #2d2d2d;
 }
 
 #main-menu.navbar-default .navbar-brand {
@@ -74,7 +78,7 @@
     padding-left: 15px;
 }
 
-#main-menu.navbar-default .navbar-nav button{
+#main-menu.navbar-default .welcome button {
     width: 150px;
 }
 

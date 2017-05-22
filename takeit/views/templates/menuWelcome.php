@@ -12,7 +12,7 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <div class="collapse navbar-collapse navbar-menubuilder">
+        <div class="collapse navbar-collapse navbar-menubuilder welcome">
             <ul class="nav navbar-nav navbar-right">
                 <li class="btn_menu" id="btn_entrar">
                     <div class="button text-center">

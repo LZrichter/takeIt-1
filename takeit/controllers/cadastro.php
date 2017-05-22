@@ -51,8 +51,7 @@ class Cadastro extends CI_Controller{
 		$dados["titulo"] = "Licença de Uso do sistema takeIt";
 		$dados["slogan"] = "TakeIt - Ajude quem precisa, doando o que você não precisa.";
 		$dados["css"]    = "welcome.css";
-
-		//$this->load->model("usuario_model","user");
+		
 		$this->load->view('templates/head', $dados);
 		$this->load->view('licenca_uso', $dados);
 		$this->load->view('templates/footer');

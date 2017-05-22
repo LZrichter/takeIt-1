@@ -37,4 +37,16 @@ class Doacoes extends CI_Controller{
 		$this->load->view('item', $dados);
 		$this->load->view('templates/footer');
 	}
+
+	public function cadastrarItem(){
+
+		$dados["titulo"] = "Cadastrar Item";
+		$dados["css"]    = "item.css";
+		$dados["js"]     = "doacao.js";
+
+		$this->load->view('templates/head', $dados);
+		$this->load->view('templates/menu', $dados);
+		$this->load->view('doacao', $dados);
+		$this->load->view('templates/footer');
+	}
 }

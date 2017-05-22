@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('OPSSS... Não é permitido direto acesso ao script!!'); ?>
 
 
-<div id="container">
+<div id="container" class="footer-align">
 	<center>
 		<h1>Testes com o model de usuario!</h1>
 	</center>

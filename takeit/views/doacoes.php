@@ -16,7 +16,7 @@
         </div>
 	</div>
 </div>
-<div class="container-fluid">
+<div class="container-fluid footer-align">
 	<div class="text-center center-block">
 	 	<div class="col-item"><!-- Cada Doação -->
 	   	    <div class="photo"> 

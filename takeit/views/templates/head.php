@@ -12,6 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/bootstrap.css.map">
+		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/head.css">
 		<!-- FAVICON -->
 		<link rel="icon" type="image/png" href="<?= base_url();?>assets/img/favicon.png">
 		

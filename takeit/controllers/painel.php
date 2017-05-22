@@ -12,7 +12,8 @@ class Painel extends CI_Controller{
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
-		// view resumo
+		// Quando adicionar a view com o conteúdo da página tem que adicionar "class = footer-align" no container principal
+		// Isso é para alinhar o footer na parte inferior da página
 		$this->load->view('templates/footer');
 	}
 

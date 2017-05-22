@@ -3,7 +3,7 @@
   <li><a href="#">Instituições Beneficientes</a></li>
 </ul>
 
-<div class="container-fluid" id="container-instituicoes">
+<div class="container-fluid footer-align" id="container-instituicoes">
 	<h3><span class="fa fa-building"></span> Instituiçoes Beneficientes</h3>
 	<hr>
 

@@ -15,6 +15,22 @@ class Instituicoes extends CI_Controller{
 		$dados["js"]   = "menuDoacoes.js";
 		$dados["js2"]   = "instituicoes.js";
 
+		$dados["quantidadePorPagina"] = 20;
+		$dados["paginaAtual"] = 1;
+		$dados["filtroUF"] = "RS";
+		$dados["filtroMunicipio"] = "Alecrim";
+		$dados["filtroCategoria"] = "Chinelos";
+		$dados["filtroBusca"] = "CEO";
+
+		$this->load->model("Instituicao_model","model");
+		$result = $this->model->buscaInstituicoes($dados);
+		if(isset($result["Error"])){
+			$dados["sqlError"] = $result["Error"];
+		}
+		echo "<br/><br/><br/><br/><br/><br/><pre>";
+		print_r($result);
+		echo "</pre>";
+
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
 		$this->load->view('templates/menuDoacoes', $dados);

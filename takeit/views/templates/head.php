@@ -14,16 +14,12 @@
 		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/bootstrap.css.map">
 		<!-- FAVICON -->
 		<link rel="icon" type="image/png" href="<?= base_url();?>assets/img/favicon.png">
-		<!-- JS -->
-		<script src="<?= base_url();?>assets/js/jquery.min.js"></script>
-		<script src="<?= base_url();?>assets/js/bootstrap.js"></script>
-		<script src="<?= base_url();?>assets/js/<?= (isset($js) ? $js : "")?>"></script>
-		<script src="<?= base_url();?>assets/js/<?= (isset($js2) ? $js : "")?>"></script>
-		<!-- DataTable -->
 		<?php if(isset($dataTable)): ?>
-			<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/jquery.dataTables.min.css">
-			<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/buttons.dataTables.min.css">
-			<script src="<?= base_url();?>assets/js/jquery.dataTables.min.js"></script>
+			<link rel="stylesheet" href="<?= base_url();?>assets/css/jquery.dataTables.min.css">
+			<link rel="stylesheet" href="<?= base_url();?>assets/css/buttons.dataTables.min.css">
+			<link rel="stylesheet" href="<?= base_url();?>assets/css/dataTables.bootstrap.css">
+			<link rel="stylesheet" href="<?= base_url();?>assets/css/dataTables.fontAwesome.css">
+
 		<?php endif;?>
 		<title>
 			<?= (isset($titulo) ? $titulo . " - takeIt" : "takeIt")?>

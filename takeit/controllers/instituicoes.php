@@ -19,6 +19,6 @@ class Instituicoes extends CI_Controller{
 		$this->load->view('templates/menu', $dados);
 		$this->load->view('templates/menuDoacoes', $dados);
 		$this->load->view('instituicoes');
-		$this->load->view('templates/footer');
+		$this->load->view('templates/footer', $dados);
 	}
 }

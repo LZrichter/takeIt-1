@@ -4,71 +4,69 @@
 </ul>
 
 <div class="container-fluid" id="container-instituicoes">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3><span class="fa fa-building"></span> Instituições Beneficientes</h3>
-			</div>
-			<div class="panel-body">
-				<table class="table table-striped table-bordered table-hover table-condensed text-center" id="instituicoes_table" width="100%" cellspacing="0">
-					<thead>
-						<tr>
-							<th>Nome</th>
-							<th>Cidade</th>
-							<th>UF</th>
-							<th>Perfil</th>
-						</tr>
-					</thead>
-					<tbody>
-					            <tr>
-					                <td>Giacomo Guillizoni Founder & CEO</td>
-					                <td>Santa Maria</td>
-					                <td>RS</td>
-					                <td><button class="btn btn-success">Ver Perfil</button></td>
-					            </tr>
-				           	</tbody>
-				           	<tbody>
-					            <tr>
-					                <td>Giacomo Guillizoni Founder & CEO</td>
-					                <td>Santa Maria</td>
-					                <td>RS</td>
-					                <td><button class="btn btn-success">Ver Perfil</button></td>
-					            </tr>
-				           	</tbody>
-				           	<tbody>
-					            <tr>
-					                <td>Giacomo Guillizoni Founder & CEO</td>
-					                <td>Santa Maria</td>
-					                <td>RS</td>
-					                <td><button class="btn btn-success">Ver Perfil</button></td>
-					            </tr>
-				           	</tbody>
-				           	<tbody>
-					            <tr>
-					                <td>Giacomo Guillizoni Founder & CEO</td>
-					                <td>Santa Maria</td>
-					                <td>RS</td>
-					                <td><button class="btn btn-success">Ver Perfil</button></td>
-					            </tr>
-				           	</tbody>
-				           	<tbody>
-					            <tr>
-					                <td>Giacomo Guillizoni Founder & CEO</td>
-					                <td>Santa Maria</td>
-					                <td>RS</td>
-					                <td><button class="btn btn-success">Ver Perfil</button></td>
-					            </tr>
-				           	</tbody>
-				           	<tbody>
-					            <tr>
-					                <td>Giacomo Guillizoni Founder & CEO</td>
-					                <td>Santa Maria</td>
-					                <td>RS</td>
-					                <td><button class="btn btn-success">Ver Perfil</button></td>
-					            </tr>
-				           	</tbody>
-				</table>
-			</div>
-		</div>
+	<h3><span class="fa fa-building"></span> Instituiçoes Beneficientes</h3>
+	<hr>
+
+	<div class="table-responsive container" id="dic_table_div" style="width:100%">
+		<table class="table table-responsive display text-center" id="instituicoes_table" width="100%" cellspacing="0">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>Cidade</th>
+					<th>UF</th>
+					<th>Perfil</th>
+				</tr>
+			</thead>
+			<tbody>
+	            <tr>
+	                <td>Giacomo Guillizoni Founder & CEO</td>
+	                <td>Santa Maria</td>
+	                <td>RS</td>
+	                <td><button class="btn btn-success">Ver Perfil</button></td>
+	            </tr>
+	           	</tbody>
+	           	<tbody>
+	            <tr>
+	                <td>Giacomo Guillizoni Founder & CEO</td>
+	                <td>Santa Maria</td>
+	                <td>RS</td>
+	                <td><button class="btn btn-success">Ver Perfil</button></td>
+	            </tr>
+	           	</tbody>
+	           	<tbody>
+	            <tr>
+	                <td>Giacomo Guillizoni Founder & CEO</td>
+	                <td>Santa Maria</td>
+	                <td>RS</td>
+	                <td><button class="btn btn-success">Ver Perfil</button></td>
+	            </tr>
+	           	</tbody>
+	           	<tbody>
+	            <tr>
+	                <td>Giacomo Guillizoni Founder & CEO</td>
+	                <td>Santa Maria</td>
+	                <td>RS</td>
+	                <td><button class="btn btn-success">Ver Perfil</button></td>
+	            </tr>
+	           	</tbody>
+	           	<tbody>
+	            <tr>
+	                <td>Giacomo Guillizoni Founder & CEO</td>
+	                <td>Santa Maria</td>
+	                <td>RS</td>
+	                <td><button class="btn btn-success">Ver Perfil</button></td>
+	            </tr>
+	           	</tbody>
+	           	<tbody>
+	            <tr>
+	                <td>Giacomo Guillizoni Founder & CEO</td>
+	                <td>Santa Maria</td>
+	                <td>RS</td>
+	                <td><button class="btn btn-success">Ver Perfil</button></td>
+	            </tr>
+	           	</tbody>
+		</table>
+	</div>
 </div>
 
 </main><!-- #page-content-wrapper  -->

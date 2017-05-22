@@ -9,18 +9,47 @@ class Cadastro extends CI_Controller{
 	}
 
 	public function index(){
-
+		$dados["titulo"] = "Cadastre-se";
+		$dados["slogan"] = "TakeIt - Ajude quem precisa, doando o que você não precisa.";
 		$dados["css"]    = "welcome.css";
+		$dados["css2"]   = "cadastro.css";
 		$dados["js"]	 = "welcome.js";
+		$dados["js2"] 	 = "cadastro.js";
 
-		//$this->load->model("usuario_model","user");
+		$this->load->model("CidadeEstado_model", "CEM");
+		$dados["estados"] = $this->CEM->todosEstados();
+
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menuWelcome');
 		$this->load->view('cadastro', $dados);
 		$this->load->view('templates/footer');
 	}
 
-	public function licenca_uso(){
+	/**
+	 * Será chamada por ajax para buscar as cidades
+	 * @return json Da um echo em um JSON
+	 */
+	public function selecionaCidades(){
+		$this->load->model("CidadeEstado_model", "CEM");
+
+		$id_estado = $this->uri->segment(3, null);
+
+		if(isset($id_estado) && !is_null($id_estado) && !empty($id_estado)){
+			$cidades = $this->CEM->selecionaCidades((int) $id_estado);	
+
+			if($cidades !== FALSE){
+				echo json_encode(["cidades" => $cidades]);
+
+				return;
+			}
+		}
+
+		echo json_encode(["erro" => "Ocorreu um erro ao sistema, tente novamente mais tarde."]);
+	}
+
+	public function licencaUso(){
+		$dados["titulo"] = "Licença de Uso do sistema takeIt";
+		$dados["slogan"] = "TakeIt - Ajude quem precisa, doando o que você não precisa.";
 		$dados["css"]    = "welcome.css";
 		
 		$this->load->view('templates/head', $dados);

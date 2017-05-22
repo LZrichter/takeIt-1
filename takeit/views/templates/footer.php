@@ -4,6 +4,7 @@
 <!-- JS -->
 	<script src="<?= base_url();?>assets/js/jquery.min.js"></script>
 	<script src="<?= base_url();?>assets/js/bootstrap.js"></script>
+	<script src="<?= base_url();?>assets/js/main.js"></script>
 	<script src="<?= base_url();?>assets/js/<?= (isset($js) ? $js : "")?>"></script>
 	<script src="<?= base_url();?>assets/js/<?= (isset($js2) ? $js2 : "")?>"></script>
 <!-- DataTable -->

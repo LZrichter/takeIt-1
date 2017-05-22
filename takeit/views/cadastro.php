@@ -1,10 +1,21 @@
 <main id="mainCadastro">
 	<div class="container">
-		<div class="col-xs-6 col-xs-offset-3">
-		 	<form class="form-group form-horizontal" id="cadastroForm" method="post" action="?page=cadastro">
-		 		<h2>Cadastre-se</h2>
+		<div class="col-xs-11">
+		 	<form class="form-group form-horizontal" id="cadastroForm">
 	      		<div class="form-group">
-			  	  	<label class="col-sm-2 control-label">Tipo</label>
+			  	  	<div class="col-sm-11 col-sm-offset-1 text-center">
+			  	  		<h2>Cadastre-se</h2> <hr>	
+			  	  	</div>
+	      		</div>
+	      		<div class="form-group">
+	      			<div class="col-sm-6 col-sm-offset-1 text-center">
+	      				<button class="btn btn-primary botao" type="button">Pessoa</button>
+	      				
+	      			</div>
+	      			<div class="col-sm-5 text-center">
+	      				<button class="btn btn-info botao" type="button">Instituição</button>
+	      			</div>
+			  	  	<!-- <label class="col-sm-2 control-label">Tipo</label>
 			  	  	<div class="col-sm-10">
 			  	  	  	<label class="radio-inline">
 						  	<input type="radio" name="radio_tipo" id="radio_pessoa" value="option1"> Pessoa
@@ -12,7 +23,7 @@
 						<label class="radio-inline">
 						  	<input type="radio" name="radio_tipo" id="radio_instituicao" value="option2"> Instituição
 						</label>
-			  	  	</div>
+			  	  	</div> -->
 			  	</div>
 			  	<div class="form-group">
 			  	  	<label for="input_nome" class="col-sm-2 control-label">Nome</label>
@@ -68,19 +79,21 @@
 			  	  	<label for="select_estado" class="col-sm-2 control-label">Estado</label>
 			  	  	<div class="col-sm-4">
 			  	  	  	<select class="form-control" id="select_estado">
-						  <option>RJ</option>
-						  <option>RS</option>
-						  <option>RN</option>
-						  <option>SP</option>
+						  	<? if(isset($estados)){ ?>
+								<option selected="true" disabled="true" style="display: none;">Selecione seu estado</option>
+
+								<? foreach ($estados as $n => $val){ ?>
+									<option value="<?= $val["id"]; ?>"><?= $val["uf"]; ?></option>
+								<? }
+							}else{ ?>
+								<option selected="true" disabled="true">Ocorreu um erro, tente recarregar a página!</option>
+							<? } ?>
 						</select>
 			  	  	</div>
 		  	  	  	<label for="select_cidade" class="col-sm-2 control-label">Cidade</label>
 		  	  	  	<div class="col-sm-4">
-			  	  	  	<select class="form-control" id="select_cidade">
-						  <option>Mata</option>
-						  <option>Santa Maria</option>
-						  <option>Santo Cristo</option>
-						  <option>São Valério</option>
+			  	  	  	<select class="form-control" id="select_cidade" disabled="true">
+			  	  	  		<option selected="true" disabled="true" title="Selecione seu estado">Selecione o estado.</option>
 						</select>
 			  	  	</div>
 			  	</div>
@@ -93,8 +106,13 @@
 			  	<div class="form-group">
 			  	  	<div class="col-sm-offset-2 col-sm-10">
 			  	  	  	<div class="checkbox">
-			  	  	  	  	<label> <input type="checkbox" id="input_licenca"> Concordo com os termos da <a target="_blank" href="cadastro/licenca_uso">Licença de Uso.</a></label>
+			  	  	  	  	<label> <input type="checkbox" id="input_licenca"> Concordo com os termos da <a target="_blank" href="licenca-de-uso">Licença de Uso.</a></label>
 			  	  	  	</div>
+			  	  	</div>
+			  	</div>
+			  	<div class="form-group" id="group_mensagem" style="display: none;">
+			  	  	<div class="col-sm-12">
+			  	  	  	<div id="mensagem"></div>
 			  	  	</div>
 			  	</div>
 			  	<div class="form-group text-right">
@@ -103,6 +121,7 @@
 	        		</div>
         		</div>
 			</form>
+			<input type="hidden" id="basePath" value="<?= base_url(); ?>">
 		</div>
 	</div>	
 </main>

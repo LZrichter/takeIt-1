@@ -20,7 +20,14 @@ ul.breadcrumb li a:hover {
     text-decoration: underline;
 }
 
-#mainItem {margin-top: 60px;}
+.add-img {
+    width: 100px;
+    cursor: pointer;
+}
+
+#mainItem {
+    margin-top: 60px;
+}
 
 #myCarousel {
 	height: 300px !important;
@@ -43,28 +50,26 @@ ul.breadcrumb li a:hover {
 	margin: auto;   
 	height: 300px !important;
 	width: 300px !important;
-  }
+}
 
-  .carousel-inner {
-	height: 300px !important;
-	width: 300px !important;
-  }
+.carousel-inner {
+    height: 300px !important;
+    width: 300px !important;
+}
 
-  #mainItem > div > div > div > div.panel-footer.text-center > button.btn{
+#mainItem > div > div > div > div.panel-footer.text-center > button.btn{
   	margin-bottom: 5px;
   }
 
- .mag {
+.mag {
     width:300px;
     margin: 0 auto;
     float: none;
-}
-    
+}   
+
 .mag img {
     max-width: 100%;
 }
-        
-  
 
 .magnify {
     position: relative;
@@ -85,7 +90,6 @@ ul.breadcrumb li a:hover {
        -moz-border-radius: 100%;
              border-radius: 100%
 }
-
 
 @media (max-width: 360px){
 	#myCarousel {

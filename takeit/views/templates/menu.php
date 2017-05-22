@@ -27,14 +27,22 @@
                     <a href="/instituicoes">Instituições</a>
                 </li>
                 <li class="btn_menu" id="btn_doacao">
-                    <button type="button" class="btn btn-primary" action="">
-                        <span class="fa fa-heart"></span> Fazer Doação
-                    </button>
+                    <div class="button text-center">
+                        <a href="/doacoes/cadastrarItem">
+                            <button type="button" class="btn btn-primary" action="">
+                                <span class="fa fa-heart"></span> Fazer Doação
+                            </button>
+                        </a>
+                    </div>
                 </li>
                 <li class="btn_menu" id="btn_sair">
-                    <button type="button" class="btn btn-danger" action="">
-                        <span class="fa fa-sign-out"></span>Sair
-                    </button>
+                    <div class="button text-center">
+                        <a href="/welcome">
+                            <button type="button" class="btn btn-danger" action="">
+                                <span class="fa fa-sign-out"></span>Sair
+                            </button>
+                        </a>
+                    </div>
                 </li>
             </ul>
         </div>

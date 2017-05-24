@@ -1,0 +1,20 @@
+
+#left-head-chat > span {
+	font-size: 20px;
+}
+
+#left-head-chat{
+	display: inline-flex;
+	align-items: center;
+}
+
+
+#right-head-chat > div {
+	display: inline-flex;
+	align-items: center;
+	float: right;
+}
+
+#right-head-chat #qtd-intens-input{
+	width: 55px;
+}

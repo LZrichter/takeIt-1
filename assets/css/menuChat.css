@@ -22,15 +22,12 @@
 }
 
 #sidebar-wrapper {
-}
-
-#sidebar-wrapper {
     z-index: 0;
     position: fixed;
     left: 225px;
     height: 60%;
     margin-left: -225px;
-    overflow-y: auto;
+    overflow-y: hidden;
     overflow-x: hidden;
     background: #fff;
     -webkit-transition: all .5s ease;
@@ -41,7 +38,7 @@
 
 #sidebar-wrapper .sidebar-nav {
     position: absolute;
-    top: -50px;
+    top: 0px;
     width: 225px;
     font-size: 14px;
     margin: 0;
@@ -51,7 +48,8 @@
 
 #sidebar-wrapper .sidebar-nav li {
     text-indent: 0;
-    line-height: 45px;
+    line-height: 48px;
+    margin-top: 10px;
 }
 
 #sidebar-wrapper .sidebar-nav li a {
@@ -69,13 +67,16 @@
 #sidebar-wrapper .sidebar-nav li a .sidebar-icon {
     width: 45px;
     height: 45px;
-    font-size: 14px;
+    font-size: 20px;
     padding: 0 2px;
     display: inline-block;
-    text-indent: 7px;
+    text-indent: 6px;
     margin-right: 10px;
     color: #000;
     float: left;
+    border: 1px solid #000;
+    border-radius: 25px;
+    margin-left: 4px;
 }
 
 #sidebar-wrapper .sidebar-nav li a .caret {
@@ -105,7 +106,7 @@
 
 @media (max-width: 992px) {
     #wrapper #sidebar-wrapper {
-        width: 45px;
+        width: 55px;
         /* position: fixed; */
     }
     #wrapper #sidebar-wrapper #sidebar #sidemenu li ul {

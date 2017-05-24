@@ -11,8 +11,10 @@
 				<div id="right-head-chat" class="col-md-8">
 					<div class="align-item-right">
 						<input class="btn btn-success" type="button" name="chat-doar" value="Doar Item">
+						<input id="qtd-intens-input" class="form-control input-sm" type="number" name="qtd-itens" value="1">
+						<span class="qtd-itens-totais"> de 9</span>
 						<div class="dropdown">
-							<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+							<button class="btn btn-link btn-lg dropdown-toggle" data-toggle="dropdown">
 								<span class="fa fa-cog"><span class="caret"></span></span>
 							</button>
 						  <ul class="dropdown-menu">
@@ -21,7 +23,7 @@
 						    <li><a href="#">Reportar bate papo</a></li>
 						  </ul>
 						</div>
-						<input id="qtd-intens-input" class="form-control input-sm" type="number" name="qtd-itens" value="1">
+						
 					</div>
 				</div>
 			</div>

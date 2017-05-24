@@ -1,19 +1,25 @@
+var obrigatorio = ["nome", "email", "senha", "confirmacao", "estado", "cidade", "termos", "cpf", "cnpj"];
+
 $(function(){
+	// Mascara dos campos
 	$('#input_cpf').mask('000.000.000-00', {reverse: true});
 	$('#input_cnpj').mask('00.000.000/0000-00', {reverse: true});
 
-	$("#button_pessoa").on("click", function(){ 
-		btnChange(["pessoa", "cpf"], ["instituicao", "cnpj"]);
-	});
+	// Mudança na tela quando clica nos botões
+	$("#button_pessoa").on("click", function(){ btnChange(["pessoa", "cpf"], ["instituicao", "cnpj"]); });
+	$("#button_instituicao").on("click", function(){ btnChange(["instituicao", "cnpj"], ["pessoa", "cpf"]); });
 
-	$("#button_instituicao").on("click", function(){ 
-		btnChange(["instituicao", "cnpj"], ["pessoa", "cpf"]);
+	// Remove a classe de erro	
+	obrigatorio.forEach(function(item, index){
+		$("[name='" + item + "']").on("change", function(){ changeClass($(this), "remove"); });
 	});
 });
 
 /* Ajax responsável por buscar as cidades correspondentes com o estado selecionado */
 $("#select_estado").on("change", function(a){
 	var estado 	= $(this).val();
+
+	changeClass($(this), "remove");
 
 	$("#select_estado").prop('disabled', true);
 	$.ajax({
@@ -51,37 +57,49 @@ $("#select_estado").on("change", function(a){
 	});
 });
 
+
+/* Quando é dado submit no formulário, aqui ele é tratado e mandado por ajax */
 $("#cadastroForm").on("submit", function(e){
     e.preventDefault();
 
-    var obrigatorio = ["nome", "email", "senha", "confirmacao", "estado", "cidade", "termos"], flag = false;
+    var flag = false;
 
     obrigatorio.forEach(function(item, index){
-    	if($.trim($('[name="' + item + '"]').val()).length === 0){
-    		var mainDiv = function(ini){
-    			while(true){
-    				ini = ini.parent();
-    				if(ini.hasClass("form-group")) return ini;
-    			}
-    		}
+    	var obj = $('[name="' + item + '"]');
 
-    		mainDiv($('[name="' + item + '"]')).addClass("has-error");
-    		flag = true;
+    	if(($.trim(obj.val()).length === 0)){
+    		var sair = false;
+
+    		if(item == "cpf" && !$("#radio_pessoa").prop("checked")) sair = true;
+    		if(item == "cnpj" && !$("#radio_instituicao").prop("checked")) sair = true;
+
+    		if(!sair){
+    			changeClass(obj, "add");
+	    		flag = true;
+    		}
+    	}else if(item == "termos" && !obj.prop("checked")){
+			changeClass(obj, "add");
+			flag = true;
     	}
     });
 
-	$.ajax({
-		url: 'cadastro/salvarUsuario',
-		type: 'POST',
-		data: $("#cadastroForm").serialize(),
-		dataType: "json",
-		success: function(data){
-			console.log(data);
+    if(!flag){
+    	$.ajax({
+			url: 'cadastro/salvarUsuario',
+			type: 'POST',
+			data: $("#cadastroForm").serialize(),
+			dataType: "json",
+			success: function(data){
+				console.log(data);
 
-			mensagem("sucesso", "Oi, ainda não terminei isso... Não ta inserindo no banco, mas algumas coisas estão funcionando já!", "mensagem");
-			$("#div_mensagem").show();
-		}
-	});
+				mensagem("sucesso", "Oi, ainda não terminei isso... Não ta inserindo no banco, mas algumas coisas estão funcionando já!", "mensagem");
+				$("#div_mensagem").show();
+			}
+		});
+    }else{
+    	mensagem("erro", "Campos obrigatórios ainda não foram preenchidos.", "mensagem");
+		$("#div_mensagem").show();
+	}
 
 	e.preventDefault();
 });
@@ -93,10 +111,6 @@ $("#cadastroForm").on("submit", function(e){
  * @return {void}
  */
 function btnChange(to, from){
-	console.info("To: ");
-	console.log(to);
-	console.info("From: ");
-	console.log(from);
 	if($("#radio_" + to[0]).prop("checked")) return;	
 	else{
 		$("#button_" + from[0]).removeClass("btn-primary").addClass("btn-info");
@@ -110,13 +124,25 @@ function btnChange(to, from){
 	}
 }
 
-// $.ajax({
-//    url: url,
-//    type: "POST",
-//    data: $("#cadastroForm").serialize(), // serializes the form's elements.
-//    success: function(data){
-//        alert(data); // show response from the php script.
-//    }
-//  });
+/**
+ * Modifica as classes dos objetos que são colocados como erros e para remover esses erros
+ * @param  {html-object} obj Objeto a ser modificado
+ * @param  {string} way Tipo de modificação, podendo ser remove ou add
+ * @return {void}
+ */
+function changeClass(obj, way){
+	var mainDiv = function(ini){
+		var safetyCount = 0;
+		while(true){
+			if(safetyCount == 20) break;
 
-// e.preventDefault(); // avoid to execute the actual submit of the form.
+			ini = ini.parent();
+			if(ini.hasClass("form-group")) return ini;
+
+			safetyCount += 1;
+		}
+	}
+
+	if(way == "add") mainDiv(obj).addClass("has-error");
+	else mainDiv(obj).removeClass("has-error");
+}

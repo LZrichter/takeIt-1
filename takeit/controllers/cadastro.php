@@ -12,7 +12,8 @@ class Cadastro extends CI_Controller{
 		$dados["titulo"] = "Cadastre-se";
 		$dados["slogan"] = "TakeIt - Ajude quem precisa, doando o que você não precisa.";
 		$dados["css"]    = "welcome.css";
-		$dados["js"]	 = "welcome.js";
+		$dados["css2"]   = "cadastro.css";	
+		$dados["js"]	 = "jquery.mask.js";
 		$dados["js2"] 	 = "cadastro.js";
 
 		$this->load->model("CidadeEstado_model", "CEM");
@@ -22,6 +23,10 @@ class Cadastro extends CI_Controller{
 		$this->load->view('templates/menuWelcome');
 		$this->load->view('cadastro', $dados);
 		$this->load->view('templates/footer');
+	}
+
+	public function salvarUsuario(){
+		echo json_encode($_REQUEST);
 	}
 
 	/**

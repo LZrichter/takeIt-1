@@ -4,15 +4,18 @@
 </ul>
 
 <div class="container-fluid procurando-algo">
+
     <div class="row">    
-        <div class="col-xs-10 col-xs-offset-1">
-		    <div class="input-group">
-                <input type="hidden" name="search_param" value="all" id="search_param">         
-                <input type="text" class="form-control" name="x" placeholder="Procurando por algo?">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><span class="fa fa-search"></span></button>
-                </span>
-            </div>
+        <div class="col-xs-10 col-xs-offset-1 text-center">
+        <div class="btn btn-info btn-lg " onclick="openNav()"><span id="filtro-pesquisa" class="fa fa-filter"> Quer filtrar sua pesquisa?</span></div>
+        <hr>
+	    <div class="input-group">
+            <input type="hidden" name="search_param" value="all" id="search_param">         
+            <input type="text" class="form-control" name="x" placeholder="Procurando por algo?">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><span class="fa fa-search"></span></button>
+            </span>
+        </div>
         </div>
 	</div>
 </div>
@@ -308,4 +311,3 @@
 		</div>
 </div>
 </div><!-- bloco das doações -->
-</div><!-- .main -->

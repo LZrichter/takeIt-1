@@ -15,6 +15,21 @@
 	float: right;
 }
 
+#right-head-chat > div > input {
+	margin-left: 3px;
+	margin-right: 3px;
+}
+
+#right-head-chat > div > div > button{
+	text-decoration: none;
+	color: #000;
+	padding-right: 0px !important;
+}
+
+#right-head-chat > div > div > button > span{
+	font-size: 25px;
+}
+
 #right-head-chat #qtd-intens-input{
 	width: 55px;
 }

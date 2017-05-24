@@ -308,5 +308,4 @@
 		</div>
 </div>
 </div><!-- bloco das doações -->
-</main><!-- #page-content-wrapper  -->
-</div> <!-- #wrapper -->
+</div><!-- .main -->

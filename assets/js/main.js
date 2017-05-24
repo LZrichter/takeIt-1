@@ -1,7 +1,4 @@
 /**
- * AINDA NÃO FINALIZADA
- * AINDA NÃO FINALIZADA
- * AINDA NÃO FINALIZADA
  * Função de mensagens padrão para o sistema, criando uma div com a mensagem passada
  * @param  {string} tipo        Tipo da mensagem, podendo ser:
  *     'normal' 	como branco 		(default)
@@ -15,5 +12,10 @@
  * @return {void}
  */	
 function mensagem(tipo, msg, nome_objeto){
-	$("#" + nome_objeto).html(msg);
+	$("#" + nome_objeto).html("");
+	if(tipo == "erro"){
+		$("#" + nome_objeto).append('<div class="alert alert-danger alert-dismissable fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Erro!</strong> ' + msg + '</div>');
+	}else if(tipo == "sucesso"){
+		$("#" + nome_objeto).append('<div class="alert alert-success alert-dismissable fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + msg + '</div>');
+	}else $("#" + nome_objeto).html(msg);
 }

@@ -20,7 +20,7 @@ class Instituicoes extends CI_Controller{
 		$dados["filtroUF"] = "RS";
 		$dados["filtroMunicipio"] = "Alecrim";
 		$dados["filtroCategoria"] = "Chinelos";
-		$dados["filtroBusca"] = "CEO";
+		//$dados["filtroBusca"] = "CEO";
 
 		$this->load->model("Instituicao_model","model");
 		$result = $this->model->buscaInstituicoes($dados);

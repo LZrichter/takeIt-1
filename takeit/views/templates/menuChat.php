@@ -1,5 +1,5 @@
 <div id="wrapper" class="footer-align">
-    <div id="sidebar-wrapper">
+    <div id="sidebar-wrapper" style="display: flex; flex-direction: row;">
         <aside id="sidebar">
             <ul id="sidemenu" class="sidebar-nav">
                 <li>

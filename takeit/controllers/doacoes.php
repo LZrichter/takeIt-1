@@ -49,4 +49,10 @@ class Doacoes extends CI_Controller{
 		$this->load->view('doacao', $dados);
 		$this->load->view('templates/footer');
 	}
+
+	public function carregaEstadosMenu(){
+		$this->load->model("CidadeEstado_model", "CEM");
+		$dados = $this->CEM->todosEstados();
+		echo( json_encode($dados) );
+	}
 }

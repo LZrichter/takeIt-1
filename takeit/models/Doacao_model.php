@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('OPSSS... Não é permitido direto acesso ao script!!');
 
-class Instituicao_model extends CI_Model {
+class Doacao_model extends CI_Model {
 
         public function __construct() {
                 parent::__construct();
@@ -9,13 +9,13 @@ class Instituicao_model extends CI_Model {
         }
 
 		/**
-		* Insere no Banco de Dados uma instituição
+		* Insere no Banco de Dados uma doacao
 		* @param  $dados 	Array com os dados necessários para a realização da inserção
 		*	Array format:
 		*		array(
-		*			"idUsuario" => "",
-		*			"cnpj" => "",
-		*			"site" => ""
+		*			"quantidade" => "",
+		*			"interesse_id" => "",
+		*			"agradecimento" => ""
 		*		)
 		* @return 			Boolean indicando o sucesso da inserção ou array com mensagem de erro
 		*	Array format:
@@ -23,15 +23,15 @@ class Instituicao_model extends CI_Model {
 		*			"Error" => ""
 		*		)
 		*/
-		public function insereInstituicao($dados){
-			if(!isset($dados['idUsuario']) || !isset($dados['cnpj']) || !isset($dados['site'])){
+		public function registraDoacao($dados){
+			if(!isset($dados['quantidade']) || !isset($dados['interesse_id']) || !isset($dados['agradecimento'])){
 				return array("Error" => "Insuficient information to execute the query");
 			}
 
 			try{
 
-				$sql = "INSERT INTO instituicao (instituicao_id, instituicao_cnpj, instituicao_site) 
-				values (".$dados['idUsuario'].", ".$dados['cnpj'].", ".$dados['site'].")";
+				$sql = "INSERT INTO doacao (doacao_qtde, doacao_data, interesse_id, doacao_agradecimento) 
+				values (".$dados['quantidade'].", ".date('Y/m/d').", ".$dados['interesse_id'].", ".$dados['agradecimento'].")";
 
 				if(!$query = $this->db->query($sql)){
 					if($this->db->error()){
@@ -47,25 +47,24 @@ class Instituicao_model extends CI_Model {
 		}
 
 		/**
-		* Altera o cnpj e o site de uma instituição no Banco de Dados
-		* @param 	$idInst		ID da instituição a ser alterada
-		* @param  	$novoCnpj 	Novo CNPJ (duh)
-		* @param  	$novoSite 	Novo Site (duh)
+		* Altera o agradecimento de uma doacao no Banco de Dados
+		* @param 	$idDoacao	ID da doacao a ser alterada
+		* @param  	$novoAgra 	Novo agradecimento
 		* @return 				Boolean indicando o sucesso da alteração ou array com mensagem de erro
 		*	Array format:
 		*		array(
 		*			"Error" => ""
 		*		)
 		*/
-		public function alteraInstituicao($idInst, $novoCnpj, $novoSite){
-			if(!isset($idInst) || !isset($novoCnpj) || !isset($novoSite)){
+		public function alteraAgradecimento($idDoacao, $novoAgra){
+			if(!isset($idDoacao) || !isset($novoAgra)){
 				return array("Error" => "Insuficient information to execute the query");
 			}
 
 			try{
 
-				$sql = "UPDATE instituicao SET instituicao_cnpj = ".$novoCnpj.", instituicao_site = ".$novoSite." 
-				WHERE instituicao_id = ".$idInst;
+				$sql = "UPDATE doacao SET doacao_agradecimento = ".$novoAgra." 
+				WHERE doacao_id = ".$idDoacao;
 
 				if(!$query = $this->db->query($sql)){
 					if($this->db->error()){
@@ -81,28 +80,30 @@ class Instituicao_model extends CI_Model {
 		}
 
 		/**
-		* Busca no Banco de Dados o CNPJ e site de uma instituição e os retorna
-		* @param 	$idInst		ID da instituição a ser buscada
-		* @return 				Array com os dados buscados da instituição ou mensagem de erro
+		* Busca no Banco de Dados os dados de uma doação realizada e os retorna
+		* @param 	$idDoacao	ID da doação a ser buscada
+		* @return 				Array com os dados buscados da doação ou mensagem de erro
 		*	Array format:
 		*		array(
-		*			"cnpjInst" => "",
-		*			"siteInst" => ""
+		*			"doacao_qtde" => "",
+		*			"doacao_data" => "",
+		*			"interesse_id" => "",
+		*			"doacao_agradecimento" => ""
 		*		)
 		*	Ou:
 		*		array(
 		*			"Error" => ""
 		*		)
 		*/
-		public function buscaInstituicao($idInst){
-			if(!isset($idInst)){
+		public function buscaDoacao($idDoacao){
+			if(!isset($idDoacao)){
 				return array("Error" => "Insuficient information to execute the query");
 			}
 
 			try{
 
-				$sql = "SELECT instituicao_cnpj, instituicao_site FROM instituicao
-				WHERE instituicao_id = ".$idInst;
+				$sql = "SELECT doacao_qtde, doacao_data, interesse_id, doacao_agradecimento FROM doacao
+				WHERE doacao_id = ".$idDoacao;
 
 				if(!$query = $this->db->query($sql)){
 					if($this->db->error()){
@@ -118,15 +119,15 @@ class Instituicao_model extends CI_Model {
 		}
 
 		/**
-		* Busca no Banco de Dados as instituições e as retorna
-		* @return 				Array com os dados buscados das instituições ou mensagem de erro
+		* Busca no Banco de Dados as doações e as retorna
+		* @return 				Array com os dados buscados das doações ou mensagem de erro
 		*	Array format:
 		*		array(
 		*			array(
-		*				"usuario_id" => "",
-		*				"usuario_nome" => "",
-		*				"cidade_nome" => "",
-		*				"estado_uf" => ""
+		*				"doacao_id" => "",
+		*				"doacao_qtde" => "",
+		*				"doacao_data" => "",
+		*				"interesse_id" => ""
 		*			),
 		*			...
 		*		)
@@ -135,12 +136,11 @@ class Instituicao_model extends CI_Model {
 		*			"Error" => ""
 		*		)
 		*/
-        public function buscaInstituicoes(){ // Adicionar filtro por tipo_usuario quando ele for adicionado
+        public function buscaDoacoes(){
         	
 			try{
 
-				$sql = "SELECT DISTINCT usuario_id, usuario_nome, cidade_nome, estado_uf
-				FROM estado NATURAL JOIN cidade NATURAL JOIN usuario";
+				$sql = "SELECT DISTINCT doacao_id, doacao_qtde, doacao_data, interesse_id FROM doacao";
 
 				if(!$query = $this->db->query($sql)){
 					if($this->db->error()){

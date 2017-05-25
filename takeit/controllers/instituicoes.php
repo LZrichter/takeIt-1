@@ -8,25 +8,23 @@ class Instituicoes extends CI_Controller{
 	}
 
 	public function index(){
+
+		$this->load->model("Instituicao_model","model");
+		$result = $this->model->buscaInstituicoes();
+
+		if(isset($result["Error"])){
+			$dados["sqlError"] = $result["Error"];
+		} else {
+			$dados["instituicoes"] = $result;
+		}
+
 		$dados["titulo"] = "Instituições";
 		$dados["dataTable"] = true;
 		$dados["css"]    = "menuDoacoes.css";
 		$dados["css2"]   = "instituicoes.css";
 		$dados["js"]   = "menuDoacoes.js";
 		$dados["js2"]   = "instituicoes.js";
-
-		$dados["quantidadePorPagina"] = 20;
-		$dados["paginaAtual"] = 1;
-		$dados["filtroUF"] = "RS";
-		$dados["filtroMunicipio"] = "Alecrim";
-		$dados["filtroCategoria"] = "Chinelos";
-		//$dados["filtroBusca"] = "CEO";
-
-		$this->load->model("Instituicao_model","model");
-		$result = $this->model->buscaInstituicoes($dados);
-		if(isset($result["Error"])){
-			$dados["sqlError"] = $result["Error"];
-		}
+		
 		//echo "<br/><br/><br/><br/><br/><br/><pre>";
 		//print_r($result);
 		//echo "</pre>";

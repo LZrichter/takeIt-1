@@ -78,4 +78,40 @@ class Pessoa_model extends CI_Model {
 			}
 		}
 
+		/**
+		* Busca no Banco de Dados o cpf de uma pessoa e o retorna
+		* @param 	$idPessoa	ID da pessoa a ser buscada
+		* @return 				Array com o dado buscado da pessoa ou mensagem de erro
+		*	Array format:
+		*		array(
+		*			"cpf" => ""
+		*		)
+		*	Ou:
+		*		array(
+		*			"Error" => ""
+		*		)
+		*/
+		public function buscaPessoa($idPessoa){
+			if(!isset($idPessoa)){
+				return array("Error" => "Insuficient information to execute the query");
+			}
+
+			try{
+
+				$sql = "SELECT pessoa_cpf FROM pessoa
+				WHERE pessoa_id = ".$idPessoa;
+
+				if(!$query = $this->db->query($sql)){
+					if($this->db->error()){
+						return array("Error" => "$error[message]");
+					}
+				} else {
+					return true;
+				}
+				
+			} catch(Exception $E) {
+				return array("Error" => "Server was unable to execute query");
+			}
+		}
+
 }

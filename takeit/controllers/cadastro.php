@@ -26,7 +26,9 @@ class Cadastro extends CI_Controller{
 	}
 
 	public function salvarUsuario(){
-		echo json_encode($_REQUEST);
+		$this->load->model("Usuario_model", "user");
+
+		echo json_encode($this->user->insereUsuario($_REQUEST));
 	}
 
 	/**

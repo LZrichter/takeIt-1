@@ -9,19 +9,19 @@ class Pessoa_model extends CI_Model {
         }
 
 		/**
-		* Insere no Banco de Dados uma pessoa
-		* @param  $dados 	Array com os dados necessários para a realização da inserção
-		*	Array format:
-		*		array(
-		*			"idUsuario" => "",
-		*			"cpf" => ""
-		*		)
-		* @return 			Boolean indicando o sucesso da inserção ou array com mensagem de erro
-		*	Array format:
-		*		array(
-		*			"Error" => ""
-		*		)
-		*/
+		 * Insere no Banco de Dados uma pessoa
+		 * @param  $dados 	Array com os dados necessários para a realização da inserção
+		 *	Array format:
+		 *		array(
+		 *			"idUsuario" => "",
+		 *			"cpf" => ""
+		 *		)
+		 * @return 			Boolean indicando o sucesso da inserção ou array com mensagem de erro
+		 *	Array format:
+		 *		array(
+		 *			"Error" => ""
+		 *		)
+		 */
 		public function inserePessoa($dados){
 			if(!isset($dados['idUsuario']) || !isset($dados['cpf'])){
 				return array("Error" => "Insuficient information to execute the query");
@@ -79,18 +79,18 @@ class Pessoa_model extends CI_Model {
 		}
 
 		/**
-		* Busca no Banco de Dados o cpf de uma pessoa e o retorna
-		* @param 	$idPessoa	ID da pessoa a ser buscada
-		* @return 				Array com o dado buscado da pessoa ou mensagem de erro
-		*	Array format:
-		*		array(
-		*			"cpf" => ""
-		*		)
-		*	Ou:
-		*		array(
-		*			"Error" => ""
-		*		)
-		*/
+		 * Busca no Banco de Dados o cpf de uma pessoa e o retorna
+		 * @param 	$idPessoa	ID da pessoa a ser buscada
+		 * @return 				Array com o dado buscado da pessoa ou mensagem de erro
+		 *	Array format:
+		 *		array(
+		 *			"cpf" => ""
+		 *		)
+		 *	Ou:
+		 *		array(
+		 *			"Error" => ""
+		 *		)
+		 */
 		public function buscaPessoa($idPessoa){
 			if(!isset($idPessoa)){
 				return array("Error" => "Insuficient information to execute the query");

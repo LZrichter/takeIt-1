@@ -22,7 +22,7 @@
 	      			</div>
 			  	</div>
 			  	<div class="form-group" id="div_mensagem" style="display: none;">
-			  	  	<div class="col-sm-12 text-center">
+			  	  	<div class="col-sm-10 col-sm-offset-2 text-center">
 			  	  	  	<div id="mensagem"></div>
 			  	  	</div>
 			  	</div>
@@ -116,7 +116,7 @@
 			  	  	  	<input type="text" class="form-control" name="website" id="input_website" placeholder="website.com.br">
 			  	  	</div>
 			  	</div>
-			  	<div class="form-groupr">
+			  	<div class="form-group">
 			  	  	<div class="col-sm-offset-2 col-sm-10">
 			  	  	  	<div class="checkbox">
 			  	  	  	  	<label> <input type="checkbox" name="termos" id="input_licenca" value="Sim"> Concordo com os termos da <a target="_blank" href="licenca-de-uso">Licença de Uso.</a></label>

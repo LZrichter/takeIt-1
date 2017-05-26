@@ -92,6 +92,15 @@ $("#cadastroForm").on("submit", function(e){
 			success: function(data){
 				console.log(data);
 
+				if(typeof data["erro"] != "undefined" && data["erro"].length > 0){
+					mensagem("erro", data["erro"], data["campo"]);
+
+					return;
+				}
+
+				
+				$("#cadastroForm")[0].reset();
+
 				mensagem("sucesso", "Oi, ainda não terminei isso... Não ta inserindo no banco, mas algumas coisas estão funcionando já!", "mensagem");
 				$("#div_mensagem").show();
 			}

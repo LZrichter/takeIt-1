@@ -3,11 +3,6 @@
     cursor: pointer;
 }
 
-#filtro-pesquisa:hover{
-    text-shadow: .6px .6px #000;
-    font-size: 21px;
-}
-
 .sidenav {
     height: 100%;
     width: 0;
@@ -21,38 +16,27 @@
     padding-top: 60px;
 }
 .sidenav-itens p {
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-
-#mySidenav > ul > li {
-    font-size: 22px;
-}
-
-#mySidenav > ul > li.list-group-item.active > span {
-    margin-top: 5px;
-}
-
-.list-group-item:first-child {
-    border-top-left-radius: 0px !important;
-    border-top-right-radius: 0px !important;
-}
-
-.sidenav a {
-    /*padding: 8px 8px 8px 32px;*/
-    text-decoration: none;
     font-size: 20px;
     color: #818181;
     display: block;
     transition: 0.3s;
 }
 
-.sidenav a:hover, .offcanvas a:focus{
-    color: #4C4C4C;
-    text-decoration: none;
-    text-shadow: 1px;
+#mySidenav > ul > li {
+    font-size: 18px;
+}
+
+#mySidenav > ul > li.list-group-item.active > span {
+    margin-top: 5px;
+}
+
+.categ {
+    cursor: pointer;
+}
+
+.list-group-item:first-child {
+    border-top-right-radius: 0px !important;
+    border-top-left-radius: 0px !important;
 }
 
 .sidenav .closebtn {
@@ -64,20 +48,20 @@
 }
 
 .sidenav::-webkit-scrollbar {
-    width: 0.4em;
-}
- 
-.sidenav::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-}
- 
-.sidenav::-webkit-scrollbar-thumb {
-    outline: 1px solid slategrey;
-    border-radius: 25px;
-    background-color: #848484;
-    background: #848484;
-    color: #848484;
-}
+     width: 0.3em;
+ }
+  
+ .sidenav::-webkit-scrollbar-track {
+     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.7);
+ }
+  
+ .sidenav::-webkit-scrollbar-thumb {
+     outline: 1px solid slategrey;
+     border-radius: 25px;
+     background-color: #848484;
+     background: #848484;
+     color: #848484;
+ }
 
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}

@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('OPSSS... Não é permitido direto acesso ao script!!');
 
-class Pessoa_model extends CI_Model {
+class Categoria_model extends CI_Model {
 
         public function __construct() {
                 parent::__construct();

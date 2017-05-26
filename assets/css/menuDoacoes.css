@@ -16,33 +16,22 @@
     padding-top: 60px;
 }
 .sidenav-itens p {
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-
-#mySidenav > ul > li {
-    font-size: 22px;
-}
-
-#mySidenav > ul > li.list-group-item.active > span {
-    margin-top: 5px;
-}
-
-.sidenav a {
-    /*padding: 8px 8px 8px 32px;*/
-    text-decoration: none;
     font-size: 20px;
     color: #818181;
     display: block;
     transition: 0.3s;
 }
 
-.sidenav a:hover, .offcanvas a:focus{
-    color: #4C4C4C;
-    text-decoration: none;
-    text-shadow: 1px;
+#mySidenav > ul > li {
+    font-size: 18px;
+}
+
+#mySidenav > ul > li.list-group-item.active > span {
+    margin-top: 5px;
+}
+
+.categ {
+    cursor: pointer;
 }
 
 .sidenav .closebtn {
@@ -52,6 +41,22 @@
     font-size: 40px;
     margin-left: 50px;
 }
+
+.sidenav::-webkit-scrollbar {
+     width: 0.3em;
+ }
+  
+ .sidenav::-webkit-scrollbar-track {
+     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.7);
+ }
+  
+ .sidenav::-webkit-scrollbar-thumb {
+     outline: 1px solid slategrey;
+     border-radius: 25px;
+     background-color: rgba(208, 219, 214, 0.6);
+     background: rgba(208, 219, 214, 0.6);
+     color: rgba(208, 219, 214, 0.6);
+ }
 
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}

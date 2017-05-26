@@ -18,6 +18,8 @@ function todosEstados(){
 		for (var i = 0; i <= msg.length-1; i++) {
 			sel_estado.append("<option id='"+msg[i]['id']+"' >"+msg[i]['uf']+"</option>");
 		}
+		var idEstado = $(".estados option:selected").attr("id");
+        municipiosPorEstado(idEstado);
 	})
 	.fail(function() {
 		console.log("error ao preencher o menu de estados");
@@ -39,6 +41,7 @@ function municipiosPorEstado(estado){
 		dataType: 'json'
 	})
 	.done(function(data) {
+		sel_municipios.empty();
 		for (var i = 0; i <= data.length-1; i++) {
 			sel_municipios.append("<option id='"+data[i]['id']+"' >"+data[i]['nome']+"</option>");
 		}
@@ -61,7 +64,7 @@ function todasCategorias(){
 	})
 	.done(function(data){
 		for (var i = 0; i <= data.length-1; i++) {
-			sel_categorias.append("<li id='"+data[i]['categoria_id']+"' class='list-group-item' >"+data[i]['categoria_nome']+"</li>");
+			sel_categorias.append("<li id='"+data[i]['categoria_id']+"' class='list-group-item categ' >"+data[i]['categoria_nome']+"</li>");
 		}
 	})
 	.fail(function(){
@@ -107,10 +110,23 @@ $(document).ready(function(){
 	);
 
 	/**
+	 * Função para ao selecionar uma categoria retornar os itens 
+	 * da categoria com base no id da cidade.
+	 * 
+	 */
+	$(".categorias").on("click", ".categ", 
+		function(event) {
+			/* chamar controle que carrega as doacoes filtradas */
+			alert("Franciel faz a função de filtrar.. ta loco");
+			console.log($( this ).text());
+		}
+	);
+
+	/**
 	 * Abre o menu lateral com os filtros ao clicar no botão ou no hover
 	 * 
 	 */
-	btn_menu.on('click mouseenter',
+	btn_menu.on('click',
 	 	function(event) {
 			event.preventDefault();
 			openMenuFilter();
@@ -121,7 +137,7 @@ $(document).ready(function(){
 	 * Fecha o menu lateral com os filtros ao clicar no botão X
 	 * 
 	 */
-	close_btn.on('click',
+	btn_close.on('click',
 	 	function(event) {
 			event.preventDefault();
 			closeMenuFilter();

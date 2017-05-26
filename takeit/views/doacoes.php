@@ -11,12 +11,12 @@
 		        <input type="hidden" name="search_param" value="all" id="search_param">         
 		        <input type="text" class="form-control input-lg" name="x" placeholder="Procurando por algo?">
 		        <span class="input-group-btn">
-		            <button class="btn btn-success btn-lg" type="button"><span class="fa fa-search"></span> Pesquisar</button>
+		            <button class="btn btn-primary btn-lg" type="button"><span class="fa fa-search"></span> Pesquisar</button>
 		        </span>
 		    </div>
 		</div>
 		<div class="col-xs-8 col-md-4">
-		   	<div class="btn btn-info btn-lg " ><span id="filtro-pesquisa" class="fa fa-filter"> Quer filtrar sua pesquisa?</span></div>
+		   	<div  id="filtro-pesquisa" class="btn btn-info btn-lg" ><span class="fa fa-filter"> Quer filtrar sua pesquisa?</span></div>
 		</div>
 	</div>
 </div>

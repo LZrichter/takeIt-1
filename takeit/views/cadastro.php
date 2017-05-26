@@ -1,6 +1,6 @@
 <main id="mainCadastro" class="footer-align">
 	<div class="container">
-		<div class="col-xs-11">
+		<div class="col-xs-8 col-xs-offset-2">
 		 	<form class="form-group form-horizontal" id="cadastroForm">
 	      		<div class="form-group">
 			  	  	<div class="col-sm-11 col-sm-offset-1 text-center">
@@ -8,18 +8,16 @@
 			  	  	</div>
 	      		</div>
 	      		<div class="form-group">
-	      			<div class="col-sm-6 col-sm-offset-1 text-center">
-	      				<button class="btn btn-primary botao" id="button_pessoa" type="button">
-	      					<i class="fa fa-user" aria-hidden="true"></i> Pessoa
-      					</button>
-	      				<input type="radio" id="radio_pessoa" name="tipo_usuario" value="Pessoa" checked="TRUE">
-	      			</div>
-	      			<div class="col-sm-5 text-center">
-	      				<button class="btn btn-info botao" id="button_instituicao" type="button">
-	      					<i class="fa fa-building" aria-hidden="true"></i> Instituição
-      					</button>
-	      				<input type="radio" id="radio_instituicao" name="tipo_usuario" value="Instituição">
-	      			</div>
+	      			<ul class="nav nav-tabs nav-justified">
+					    <li id="li_pessoa" class="active">
+					    	<a id="tab_pessoa" data-toggle="tab" href="#"><i class="fa fa-user" aria-hidden="true"></i> Pessoa</a>
+					    	<input type="radio" id="radio_pessoa" name="tipo_usuario" value="Pessoa" checked="TRUE">
+					    </li>
+					    <li id="li_instituicao">
+					    	<a id="tab_instituicao" data-toggle="tab" href="#"><i class="fa fa-building" aria-hidden="true"></i> Instituição</a>
+					    	<input type="radio" id="radio_instituicao" name="tipo_usuario" value="Instituição">
+					    </li>
+				  	</ul>
 			  	</div>
 			  	<div class="form-group" id="div_mensagem" style="display: none;">
 			  	  	<div class="col-sm-12 text-center">
@@ -77,7 +75,7 @@
 			  	  	<div class="col-sm-4">
 			  	  	  	<input type="text" class="form-control" name="numero" id="input_numero" placeholder="1482">
 			  	  	</div>
-		  	  	  	<label for="input_complemento" class="col-sm-2 control-label">Complement.</label>
+		  	  	  	<label for="input_complemento" class="col-sm-2 control-label">Complemento</label>
 		  	  	  	<div class="col-sm-4">
 			  	  	  	<input type="text" class="form-control" name="complemento" id="input_complemento" placeholder="Apt 101">
 			  	  	</div>

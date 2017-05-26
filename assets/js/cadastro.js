@@ -6,8 +6,8 @@ $(function(){
 	$('#input_cnpj').mask('00.000.000/0000-00', {reverse: true});
 
 	// Mudança na tela quando clica nos botões
-	$("#button_pessoa").on("click", function(){ btnChange(["pessoa", "cpf"], ["instituicao", "cnpj"]); });
-	$("#button_instituicao").on("click", function(){ btnChange(["instituicao", "cnpj"], ["pessoa", "cpf"]); });
+	$("#tab_pessoa").on("click", function(){ btnChange(["pessoa", "cpf"], ["instituicao", "cnpj"]); });
+	$("#tab_instituicao").on("click", function(){ btnChange(["instituicao", "cnpj"], ["pessoa", "cpf"]); });
 
 	// Remove a classe de erro	
 	obrigatorio.forEach(function(item, index){
@@ -111,10 +111,12 @@ $("#cadastroForm").on("submit", function(e){
  * @return {void}
  */
 function btnChange(to, from){
-	if($("#radio_" + to[0]).prop("checked")) return;	
+	if($("#radio_" + to[0]).prop("checked")) return;
 	else{
-		$("#button_" + from[0]).removeClass("btn-primary").addClass("btn-info");
-		$("#button_" + to[0]).removeClass("btn-info").addClass("btn-primary");
+		// $("#button_" + from[0]).removeClass("btn-primary").addClass("btn-info");
+		// $("#button_" + to[0]).removeClass("btn-info").addClass("btn-primary");
+		$("#li_" + to[0]).addClass("active");
+		$("#li_" + from[0]).removeClass("active");
 		$("#radio_" + to[0]).prop("checked", true);
 		$("#div_" + to[1]).show();
 		$("#div_" + from[1]).val("").hide();

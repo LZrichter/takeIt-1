@@ -2,116 +2,116 @@
 
 class Pessoa_model extends CI_Model {
 
-        public function __construct() {
-                parent::__construct();
+    public function __construct() {
+        parent::__construct();
 
-                $this->load->database();
-        }
+        $this->load->database();
+    }
 
-		/**
-		 * Insere no Banco de Dados uma pessoa
-		 * @param  $dados 	Array com os dados necessários para a realização da inserção
-		 *	Array format:
-		 *		array(
-		 *			"idUsuario" => "",
-		 *			"cpf" => ""
-		 *		)
-		 * @return 			Boolean indicando o sucesso da inserção ou array com mensagem de erro
-		 *	Array format:
-		 *		array(
-		 *			"Error" => ""
-		 *		)
-		 */
-		public function inserePessoa($dados){
-			if(!isset($dados['idUsuario']) || !isset($dados['cpf'])){
-				return array("Error" => "Insuficient information to execute the query");
-			}
-
-			try{
-
-				$sql = "INSERT INTO pessoa (pessoa_id, pessoa_cpf) 
-				values (".$dados['idUsuario'].", ".$dados['cpf'].")";
-
-				if(!$query = $this->db->query($sql)){
-					if($this->db->error()){
-						return array("Error" => "$error[message]");
-					}
-				} else {
-					return true;
-				}
-				
-			} catch(Exception $E) {
-				return array("Error" => "Server was unable to execute query");
-			}
+	/**
+	 * Insere no Banco de Dados uma pessoa
+	 * @param  $dados 	Array com os dados necessários para a realização da inserção
+	 *	Array format:
+	 *		array(
+	 *			"idUsuario" => "",
+	 *			"cpf" => ""
+	 *		)
+	 * @return 			Boolean indicando o sucesso da inserção ou array com mensagem de erro
+	 *	Array format:
+	 *		array(
+	 *			"Error" => ""
+	 *		)
+	 */
+	public function inserePessoa($dados){
+		if(!isset($dados['idUsuario']) || !isset($dados['cpf'])){
+			return array("Error" => "Insuficient information to execute the query");
 		}
 
-		/**
-		* Altera o cpf de uma pessoa no Banco de Dados
-		* @param 	$idPessoa	ID da pessoa a ser alterada
-		* @param  	$novoCpf 	Novo CPF (duh)
-		* @return 				Boolean indicando o sucesso da alteração ou array com mensagem de erro
-		*	Array format:
-		*		array(
-		*			"Error" => ""
-		*		)
-		*/
-		public function alteraPessoa($idPessoa, $novoCpf){
-			if(!isset($idInst) || !isset($novoCpf)){
-				return array("Error" => "Insuficient information to execute the query");
-			}
+		try{
 
-			try{
+			$sql = "INSERT INTO pessoa (pessoa_id, pessoa_cpf) 
+			values (".$dados['idUsuario'].", ".$dados['cpf'].")";
 
-				$sql = "UPDATE pessoa SET pessoa_cpf = ".$novoCpf." 
-				WHERE pessoa_id = ".$idPessoa;
-
-				if(!$query = $this->db->query($sql)){
-					if($this->db->error()){
-						return array("Error" => "$error[message]");
-					}
-				} else {
-					return true;
+			if(!$query = $this->db->query($sql)){
+				if($this->db->error()){
+					return array("Error" => "$error[message]");
 				}
-				
-			} catch(Exception $E) {
-				return array("Error" => "Server was unable to execute query");
+			} else {
+				return true;
 			}
+			
+		} catch(Exception $E) {
+			return array("Error" => "Server was unable to execute query");
+		}
+	}
+
+	/**
+	* Altera o cpf de uma pessoa no Banco de Dados
+	* @param 	$idPessoa	ID da pessoa a ser alterada
+	* @param  	$novoCpf 	Novo CPF (duh)
+	* @return 				Boolean indicando o sucesso da alteração ou array com mensagem de erro
+	*	Array format:
+	*		array(
+	*			"Error" => ""
+	*		)
+	*/
+	public function alteraPessoa($idPessoa, $novoCpf){
+		if(!isset($idInst) || !isset($novoCpf)){
+			return array("Error" => "Insuficient information to execute the query");
 		}
 
-		/**
-		 * Busca no Banco de Dados o cpf de uma pessoa e o retorna
-		 * @param 	$idPessoa	ID da pessoa a ser buscada
-		 * @return 				Array com o dado buscado da pessoa ou mensagem de erro
-		 *	Array format:
-		 *		array(
-		 *			"cpf" => ""
-		 *		)
-		 *	Ou:
-		 *		array(
-		 *			"Error" => ""
-		 *		)
-		 */
-		public function buscaPessoa($idPessoa){
-			if(!isset($idPessoa)){
-				return array("Error" => "Insuficient information to execute the query");
-			}
+		try{
 
-			try{
+			$sql = "UPDATE pessoa SET pessoa_cpf = ".$novoCpf." 
+			WHERE pessoa_id = ".$idPessoa;
 
-				$sql = "SELECT pessoa_cpf FROM pessoa
-				WHERE pessoa_id = ".$idPessoa;
-
-				if(!$query = $this->db->query($sql)){
-					if($this->db->error()){
-						return array("Error" => "$error[message]");
-					}
-				} else {
-					return true;
+			if(!$query = $this->db->query($sql)){
+				if($this->db->error()){
+					return array("Error" => "$error[message]");
 				}
-				
-			} catch(Exception $E) {
-				return array("Error" => "Server was unable to execute query");
+			} else {
+				return true;
 			}
+			
+		} catch(Exception $E) {
+			return array("Error" => "Server was unable to execute query");
 		}
+	}
+
+	/**
+	 * Busca no Banco de Dados o cpf de uma pessoa e o retorna
+	 * @param 	$idPessoa	ID da pessoa a ser buscada
+	 * @return 				Array com o dado buscado da pessoa ou mensagem de erro
+	 *	Array format:
+	 *		array(
+	 *			"cpf" => ""
+	 *		)
+	 *	Ou:
+	 *		array(
+	 *			"Error" => ""
+	 *		)
+	 */
+	public function buscaPessoa($idPessoa){
+		if(!isset($idPessoa)){
+			return array("Error" => "Insuficient information to execute the query");
+		}
+
+		try{
+
+			$sql = "SELECT pessoa_cpf FROM pessoa
+			WHERE pessoa_id = ".$idPessoa;
+
+			if(!$query = $this->db->query($sql)){
+				if($this->db->error()){
+					return array("Error" => "$error[message]");
+				}
+			} else {
+				return true;
+			}
+			
+		} catch(Exception $E) {
+			return array("Error" => "Server was unable to execute query");
+		}
+	}
 
 }

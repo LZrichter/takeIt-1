@@ -5,7 +5,6 @@ class Cadastro extends CI_Controller{
 	function __construct(){
 		parent::__construct();
 		$this->load->helper('url');
-		$this->load->helper('form');
 	}
 
 	public function index(){
@@ -26,9 +25,35 @@ class Cadastro extends CI_Controller{
 	}
 
 	public function salvarUsuario(){
+		foreach($_REQUEST as $k => $v)
+			$$k = $v;
+
 		$this->load->model("Usuario_model", "user");
 
-		echo json_encode($this->user->insereUsuario($_REQUEST));
+		$resposta = $this->user->insereUsuario($_REQUEST);
+
+		echo json_encode($resposta); return;
+		if(isset($resposta["sucesso"])){
+			if($tipo_usuario == "Pessoa"){
+				$this->load->model("Pessoa_model", "pessoa");
+
+				// if($res = $this->pessoa->inserePessoa(["idUsuario" => $this->user->id, "cpf" => $cpf])){
+
+				// }else{
+				// 	echo json_encode();
+				// }
+
+				echo "Pessoa";
+			}else{
+				echo "Instituição";
+			}
+
+			$nome = $this->user->nome;
+			$teste_senha = $this->user->testaSenha("12345");
+		}else{
+			
+			echo json_encode($resposta);	
+		} 
 	}
 
 	/**

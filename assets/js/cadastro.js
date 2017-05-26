@@ -99,7 +99,7 @@ $("#cadastroForm").on("submit", function(e){
 				}
 
 				
-				$("#cadastroForm")[0].reset();
+				// $("#cadastroForm")[0].reset();
 
 				mensagem("sucesso", "Oi, ainda não terminei isso... Ta inserindo no banco, mas alguns testes ainda não estão finalizados! =D", "mensagem");
 				$("#div_mensagem").show();

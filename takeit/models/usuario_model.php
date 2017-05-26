@@ -12,10 +12,30 @@ class Usuario_model extends CI_Model{
 		"termos"
 	];
 
+	public $nome = "";
+	public $email = "";
+	public $endereco = "";
+	public $bairro = "";
+	public $numero = "";
+	public $complemento = "";
+	public $telefone = "";
+	public $ativo = "";
+	public $cidade_id = "";
+	public $cidade_nome = "";
+	public $estado_id = "";
+	public $estado_uf = "";
+
 	function __construct(){
 		parent::__construct();
 
 		$this->load->database();
+	}
+
+	function __get($var){
+		if(isset($this->$var) && $var != "senha")
+			return $this->$var;
+		else 
+			return false;
 	}
 
 	/**
@@ -33,29 +53,36 @@ class Usuario_model extends CI_Model{
 
 		if($dados["senha"] != $dados["confirmacao"]) 
 			return ["erro" => "Confirmação da senha esta incorreta!", "campo" => "confirmacao"];
+		else if(self::buscaUsuario(["email" => $dados["email"]]))
+			return ["erro" => "Email já cadastrado.", "campo" => "email"];
 
 		try{
 			$this->load->helper("passBCrypt");
 			$this->pass = new Bcrypt;
 
-			if(!$query = $this->db->query("
+			$sql = "
 				INSERT INTO usuario (
 					usuario_nome, usuario_email, usuario_senha, 
 					usuario_endereco, usuario_bairro, usuario_numero, 
 					usuario_complemento, usuario_telefone, usuario_ativo, 
 					usuario_nivel, cidade_id
 				) VALUES (
-				".$this->db->escape($dados["nome"]).", ".$this->db->escape($dados["email"]).", 
-				".$this->db->escape($this->pass->hash($dados["senha"])).", ".$this->db->escape($dados["endereco"]).", 
-				".$this->db->escape($dados["bairro"]).", ".$this->db->escape($dados["numero"]).", 
-				".$this->db->escape($dados["complemento"]).", ".$this->db->escape($dados["telefone"]).", 1, 'Comum', ".$this->db->escape($dados["cidade"]).")
-			")){
-				if($error = $this->db->error()) return ["erro" => "Não foi possivel inserir o usuário"];
+					".$this->db->escape($dados["nome"]).", ".$this->db->escape($dados["email"]).", 
+					".$this->db->escape($this->pass->hash($dados["senha"])).", ".$this->db->escape($dados["endereco"]).", 
+					".$this->db->escape($dados["bairro"]).", ".$this->db->escape($dados["numero"]).", 
+					".$this->db->escape($dados["complemento"]).", ".$this->db->escape($dados["telefone"]).", 
+					1, 'Comum', ".$this->db->escape($dados["cidade"])."
+				)";
+
+			// return [$sql];
+			if(!$query = $this->db->query($sql)){
+				if($error = $this->db->error()) 
+					return ["erro" => "Não foi possivel inserir o usuário"];
 			}else{
 				$query = $this->db->query("select last_insert_id() as id");
-				self::selecionaUsuario($query->result()[0]["id"]);
+				self::selecionaUsuario($query->result()[0]->id);
 
-				return true;
+				return ["sucesso" => "Cadastro efetuado com sucesso."];
 			}
 		}catch(PDOException $PDOE){
 			return ["erro" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
@@ -92,13 +119,12 @@ class Usuario_model extends CI_Model{
 				WHERE usuario_id = $id
 			";
 
-			if(!$query = $this->db->query($sql)){
-				if($error = $this->db->error()){
-					$this->erro("sql", "Ocorreu um erro na tentativa de selecionar um usuário: $error[code] - $error[message]");
+			if(!$query = $this->db->query($sql))
+				return ["erro" => "Não foi possivel inserir o usuário"];
+			else{
+				if(!count($query->result())) 
+					return false;
 
-					return FALSE;
-				}
-			}else{
 				if(isset($return_array) and $return_array == TRUE){
 					foreach($query->result()[0] as $campo => $valor){
 						$campo = str_replace("usuario_", "", $campo);
@@ -107,12 +133,12 @@ class Usuario_model extends CI_Model{
 
 					return $dados;
 				}else{
-					foreach($query->result() as $campo => $valor){
+					foreach($query->result()[0] as $campo => $valor){
 						$campo = str_replace("usuario_", "", $campo);
 						$this->$campo = $valor;
-
-						return TRUE;
 					}
+
+					return TRUE;
 				}
 			}
 		}catch(PDOException $PDOE){
@@ -155,18 +181,20 @@ class Usuario_model extends CI_Model{
 				}
 			}
 
-			if(!$query = $this->db->query("
+			$sql = "
 				SELECT * 
 				FROM usuario u NATURAL LEFT JOIN cidade c NATURAL LEFT JOIN estado e
 				WHERE $pesquisa
-			")){
-				if($error = $this->db->error()){
-					$this->erro("sql", "Ocorreu um erro na tentativa de selecionar um usuário: $error[code] - $error[message]");
+			";
 
-					return FALSE;
-				}
+			if(!$query = $this->db->query($sql)){
+				if($error = $this->db->error()) 
+					return ["erro" => "Não foi possivel inserir o usuário"];
 			}else{
-				if(isset($return_array) and $return_array == TRUE){
+				if(!count($query->result())) 
+					return false;
+
+				if(isset($return_array) and $return_array == true){
 					foreach($query->result()[0] as $campo => $valor){
 						$campo = str_replace("usuario_", "", $campo);
 						$dados[$campo] = $this->$campo = $valor;
@@ -178,7 +206,7 @@ class Usuario_model extends CI_Model{
 						$campo = str_replace("usuario_", "", $campo);
 						$this->$campo = $valor;
 
-						return TRUE;
+						return true;
 					}
 				}
 			}

@@ -200,7 +200,8 @@ class Usuario_model extends CI_Model{
 	}
 
 	public function testaSenha($senha){
-		$this->load->helper("passBCrypt", "pass");
+		$this->load->helper("passBCrypt");
+		$this->pass = new Bcrypt;
 
 		return $this->pass->check($senha, $this->senha);
 	}

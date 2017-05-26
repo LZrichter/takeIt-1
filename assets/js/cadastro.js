@@ -101,7 +101,7 @@ $("#cadastroForm").on("submit", function(e){
 				
 				$("#cadastroForm")[0].reset();
 
-				mensagem("sucesso", "Oi, ainda não terminei isso... Não ta inserindo no banco, mas algumas coisas estão funcionando já!", "mensagem");
+				mensagem("sucesso", "Oi, ainda não terminei isso... Ta inserindo no banco, mas alguns testes ainda não estão finalizados! =D", "mensagem");
 				$("#div_mensagem").show();
 			}
 		});

@@ -1,5 +1,5 @@
 <div id="mySidenav" class="sidenav"> 
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>   
+    <a href="javascript:void(0)" class="closebtn"><span class="fa fa-times-circle-o 2x"></span></a>   
     <p class="sidenav-itens">
         <ul class="list-group">
         <li class="list-group-item active">
@@ -23,27 +23,11 @@
         </ul>
     </p>
     <p class="sidenav-itens">
-        <ul class="list-group">
+        <ul class="list-group categorias">
             <li class="list-group-item active">
                 Categorias <span class="fa fa-list pull-right"></span>
             </li>
-            <li class="list-group-item"><a href="#"> Roupas</a></li>
-            <li class="list-group-item"><a href="#"> Roupas</a></li>
-            <li class="list-group-item"><a href="#"> Roupas</a></li>
-            <li class="list-group-item"><a href="#"> Roupas</a></li>
-            <li class="list-group-item"><a href="#"> Roupas</a></li>
-            <li class="list-group-item"><a href="#"> Roupas</a></li>
-            <li class="list-group-item"><a href="#"> Roupas</a></li>
         </ul>         
     </p>
 </div>
-<script>
-function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
-}
-
-function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-}
-</script>
         

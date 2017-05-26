@@ -5,6 +5,8 @@ class Doacoes extends CI_Controller{
 	function __construct(){
 		parent::__construct();
 		$this->load->helper('url');
+		$this->load->model("CidadeEstado_model", "CEM");
+		$this->load->model("Categoria_model", "CM");
 	}
 
 	public function index(){
@@ -51,8 +53,27 @@ class Doacoes extends CI_Controller{
 	}
 
 	public function carregaEstadosMenu(){
-		$this->load->model("CidadeEstado_model", "CEM");
 		$dados = $this->CEM->todosEstados();
 		echo( json_encode($dados) );
+	}
+
+	public function carregaMunicipiosMenu($idEstado){
+		$dados = $this->CEM->selecionaCidades($idEstado);
+		echo( json_encode($dados) );
+	}
+
+	public function carregaCategoriasMenu(){
+		$dados = $this->CM->buscaCategorias();
+		echo( json_encode($dados) );
+	}
+
+	public function filtraDoacoes($idCategoria, $idCidade){
+		/*
+		* TODO
+		* filtra doaçoes pela categoria e cidade pelo menu lateral 
+		*/
+	
+		
+
 	}
 }

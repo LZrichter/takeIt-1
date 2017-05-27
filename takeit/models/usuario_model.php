@@ -31,12 +31,11 @@ class Usuario_model extends CI_Model{
 		$this->load->database();
 	}
 
-	function __get($var){
-		if(isset($this->$var) && $var != "senha")
-			return $this->$var;
-		else 
-			return false;
-	}
+	// function __get($var){
+	// 	if(isset($this->$var) && $var != "senha")
+	// 		return $this->$var;
+	// 	else return false;
+	// }
 
 	/**
 	 * Insere um novo usuário no banco
@@ -44,17 +43,18 @@ class Usuario_model extends CI_Model{
 	 * @return int        	ID do usuário inserido ou false caso ocorra um erro
 	 */
 	public function insereUsuario(array $dados){
-		if(!isset($dados)) return ["erro" => "Dados não informado"];
+		if(!isset($dados)) 
+			return ["tipo" => "erro", "msg" => "Dados não informado"];
 
 		foreach($this->obrigatorio as $campo){
 			if(!in_array($campo, array_keys($dados)) || (isset($dados[$campo]) && empty(trim($dados[$campo]))))
-				return ["erro" => "Campos obrigatórios ainda não foram preenchidos.", "campo" => $campo];
+				return ["tipo" => "erro", "msg" => "Campos obrigatórios ainda não foram preenchidos.", "campo" => $campo];
 		}
 
 		if($dados["senha"] != $dados["confirmacao"]) 
-			return ["erro" => "Confirmação da senha esta incorreta!", "campo" => "confirmacao"];
+			return ["tipo" => "erro", "msg" => "Confirmação da senha esta incorreta!", "campo" => "confirmacao"];
 		else if(self::buscaUsuario(["email" => $dados["email"]]))
-			return ["erro" => "Email já cadastrado.", "campo" => "email"];
+			return ["tipo" => "erro", "msg" => "Email já cadastrado.", "campo" => "email"];
 
 		try{
 			$this->load->helper("passBCrypt");
@@ -77,20 +77,20 @@ class Usuario_model extends CI_Model{
 			// return [$sql];
 			if(!$query = $this->db->query($sql)){
 				if($error = $this->db->error()) 
-					return ["erro" => "Não foi possivel inserir o usuário"];
+					return ["tipo" => "erro", "msg" => "Não foi possivel inserir o usuário"];
 			}else{
 				$query = $this->db->query("select last_insert_id() as id");
 				self::selecionaUsuario($query->result()[0]->id);
 
-				return ["sucesso" => "Cadastro efetuado com sucesso."];
+				return ["tipo" => "sucesso", "msg" => "Cadastro efetuado com sucesso."];
 			}
 		}catch(PDOException $PDOE){
-			return ["erro" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
 		}catch(Exception $NE){
-			return ["erro" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
 		}
 
-		return ["erro" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
+		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
 	}
 
 	/**
@@ -110,7 +110,7 @@ class Usuario_model extends CI_Model{
 	 */
 	public function selecionaUsuario(int $id, bool $return_array = FALSE){
 		if(!isset($id) or empty($id))
-			return ["erro" => "ID não informado para a busca."];
+			return ["tipo" => "erro", "msg" => "ID não informado para a busca."];
 
 		try{
 			$sql = "
@@ -120,7 +120,7 @@ class Usuario_model extends CI_Model{
 			";
 
 			if(!$query = $this->db->query($sql))
-				return ["erro" => "Não foi possivel inserir o usuário"];
+				return ["tipo" => "erro", "msg" => "Não foi possivel inserir o usuário"];
 			else{
 				if(!count($query->result())) 
 					return false;
@@ -142,12 +142,12 @@ class Usuario_model extends CI_Model{
 				}
 			}
 		}catch(PDOException $PDOE){
-			return ["erro" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
 		}catch(Exception $NE){
-			return ["erro" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
 		}
 
-		return ["erro" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
+		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
 	}
 
 
@@ -160,7 +160,7 @@ class Usuario_model extends CI_Model{
 	 */
 	public function buscaUsuario(array $campos, bool $return_array = false){
 		if(!isset($campos) || !is_array($campos) || empty($campos))
-			return ["erro" => "Campos não informados."];
+			return ["tipo" => "erro", "msg" => "Campos não informados."];
 
 		try{
 			$pesquisa = "";
@@ -189,7 +189,7 @@ class Usuario_model extends CI_Model{
 
 			if(!$query = $this->db->query($sql)){
 				if($error = $this->db->error()) 
-					return ["erro" => "Não foi possivel inserir o usuário"];
+					return ["tipo" => "erro", "msg" => "Não foi possivel inserir o usuário"];
 			}else{
 				if(!count($query->result())) 
 					return false;
@@ -211,12 +211,12 @@ class Usuario_model extends CI_Model{
 				}
 			}
 		}catch(PDOException $PDOE){
-			return ["erro" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
 		}catch(Exception $NE){
-			return ["erro" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
 		}
 
-		return ["erro" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
+		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
 	}
 
 	/**

@@ -92,17 +92,13 @@ $("#cadastroForm").on("submit", function(e){
 			success: function(data){
 				console.log(data);
 
-				if(typeof data["erro"] != "undefined" && data["erro"].length > 0){
-					mensagem("erro", data["erro"], data["campo"]);
-
-					return;
-				}
-
-				
-				// $("#cadastroForm")[0].reset();
-
-				mensagem("sucesso", "Oi, ainda não terminei isso... Ta inserindo no banco, mas alguns testes ainda não estão finalizados! =D", "mensagem");
+				mensagem(data["tipo"], data["msg"], "mensagem");
 				$("#div_mensagem").show();
+
+				if(data["tipo"] == "erro")
+					changeClass($("[name='" + data["campo"] + "']"), "add");
+				else
+					$("#cadastroForm")[0].reset();
 			}
 		});
     }else{

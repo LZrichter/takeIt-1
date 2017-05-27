@@ -17,8 +17,6 @@ class Welcome extends CI_Controller{
 
 		$dados["teste"] = $this->ini->teste();
 
-		$this->load->model("usuario_model","user");
-
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menuWelcome');
 		$this->load->view('welcome', $dados);

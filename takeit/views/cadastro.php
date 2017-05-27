@@ -19,11 +19,6 @@
 					    </li>
 				  	</ul>
 			  	</div>
-			  	<div class="form-group" id="div_mensagem" style="display: none;">
-			  	  	<div class="col-sm-10 col-sm-offset-2 text-center">
-			  	  	  	<div id="mensagem"></div>
-			  	  	</div>
-			  	</div>
 			  	<div class="form-group">
 			  	  	<label for="input_nome" class="col-sm-2 control-label">* Nome</label>
 			  	  	<div class="col-sm-10">
@@ -122,6 +117,11 @@
 			  	  	</div>
 			  	  	<div class="col-sm-4 text-right">
 			  	  	  	<small><strong>* Campos obrigatórios.</strong></small>
+			  	  	</div>
+			  	</div>
+			  	<div class="form-group" id="div_mensagem" style="display: none;">
+			  	  	<div class="col-sm-10 col-sm-offset-2 text-center">
+			  	  	  	<div id="mensagem"></div>
 			  	  	</div>
 			  	</div>
 			  	<div class="form-group text-right">

@@ -98,6 +98,8 @@ $("#cadastroForm").on("submit", function(e){
 				else{
 					$("#cadastroForm")[0].reset();
 					$("#select_cidade option").remove();
+					$('#select_cidade').prop('disabled', true);
+					$("#select_cidade").append('<option>Selecione o estado.</option>');
 				}
 			}
 		});

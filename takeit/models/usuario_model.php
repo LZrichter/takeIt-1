@@ -30,6 +30,14 @@ class Usuario_model extends CI_Model{
 		parent::__construct();
 
 		$this->load->database();
+		$this->db->trans_start(TRUE);
+	}
+
+	function __destruct(){
+		if($this->db->trans_status() === FALSE)
+        	$this->db->trans_rollback();
+		else
+        	$this->db->trans_commit();
 	}
 
 	// function __get($var){
@@ -226,6 +234,10 @@ class Usuario_model extends CI_Model{
 	 */
 	public function tipoUsuario(){
 
+	}
+
+	public function getId(){
+		return $this->id;
 	}
 
 	public function testaSenha($senha){

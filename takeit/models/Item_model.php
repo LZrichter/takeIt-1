@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('OPSSS... Não é permitido direto acesso ao script!!');
 
-class Doacao_model extends CI_Model {
+class Item_model extends CI_Model {
 
         public function __construct() {
                 parent::__construct();
@@ -9,13 +9,14 @@ class Doacao_model extends CI_Model {
         }
 
 		/**
-		* Insere no Banco de Dados uma doacao
+		* Insere no Banco de Dados um item
 		* @param  $dados 	Array com os dados necessários para a realização da inserção
 		*	Array format:
 		*		array(
+		*			"descricao" => "",
 		*			"quantidade" => "",
-		*			"interesse_id" => "",
-		*			"agradecimento" => ""
+		*			"idUsuario" => "",
+		*			"idCategoria" => ""
 		*		)
 		* @return 			Boolean indicando o sucesso da inserção ou array com mensagem de erro
 		*	Array format:
@@ -23,15 +24,16 @@ class Doacao_model extends CI_Model {
 		*			"Error" => ""
 		*		)
 		*/
-		public function registraDoacao($dados){
-			if(!isset($dados['quantidade']) || !isset($dados['interesse_id']) || !isset($dados['agradecimento'])){
+		public function insereItem($dados){
+			if(!isset($dados['descricao']) || !isset($dados['quantidade']) || 
+				!isset($dados['status']) || !isset($dados['idUsuario']) || !isset($dados['idCategoria'])){
 				return array("Error" => "Insuficient information to execute the query");
 			}
 
 			try{
 
-				$sql = "INSERT INTO doacao (doacao_qtde, doacao_data, interesse_id, doacao_agradecimento) 
-				values (".$dados['quantidade'].", ".date('Y/m/d').", ".$dados['interesse_id'].", ".$dados['agradecimento'].")";
+				$sql = "INSERT INTO item (item_descricao, item_qtde, item_data, item_status, usuario_id, categoria_id) 
+				values (".$dados['descricao'].", ".$dados['quantidade'].", ".date('Y/m/d').", ".$dados['status'].", ".$dados['idUsuario'].", ".$dados['idCategoria'].")";
 
 				if(!$query = $this->db->query($sql)){
 					if($this->db->error()){
@@ -47,24 +49,26 @@ class Doacao_model extends CI_Model {
 		}
 
 		/**
-		* Altera o agradecimento de uma doacao no Banco de Dados
-		* @param 	$idDoacao	ID da doacao a ser alterada
-		* @param  	$novoAgra 	Novo agradecimento
-		* @return 				Boolean indicando o sucesso da alteração ou array com mensagem de erro
+		* Altera a descrição, quantidade e id da Categoria de um item no Banco de Dados
+		* @param 	$idItem			ID do item a ser alterado
+		* @param 	$descricao		Descrição do item
+		* @param  	$quantidade 	Nova quantidade de itens
+		* @param  	$idCategoria 	Nova categoria
+		* @return 					Boolean indicando o sucesso da alteração ou array com mensagem de erro
 		*	Array format:
 		*		array(
 		*			"Error" => ""
 		*		)
 		*/
-		public function alteraAgradecimento($idDoacao, $novoAgra){
-			if(!isset($idDoacao) || !isset($novoAgra)){
+		public function alteraItem($idItem, $descricao, $quantidade, $idCategoria){
+			if(!isset($idItem) || !isset($descricao) || !isset($quantidade) || !isset($idCategoria)){
 				return array("Error" => "Insuficient information to execute the query");
 			}
 
 			try{
 
-				$sql = "UPDATE doacao SET doacao_agradecimento = ".$novoAgra." 
-				WHERE doacao_id = ".$idDoacao;
+				$sql = "UPDATE item SET item_descricao = ".$descricao.", item_qtde = ".$quantidade."
+				, categoria_id = ".$idCategoria." WHERE item_id = ".$idItem;
 
 				if(!$query = $this->db->query($sql)){
 					if($this->db->error()){
@@ -80,30 +84,29 @@ class Doacao_model extends CI_Model {
 		}
 
 		/**
-		* Busca no Banco de Dados os dados de uma doação realizada e os retorna
-		* @param 	$idDoacao	ID da doação a ser buscada
-		* @return 				Array com os dados buscados da doação ou mensagem de erro
+		* Busca no Banco de Dados a descrição, quantidade e id da Categoria de um item e os retorna
+		* @param 	$idItem		ID do item a ser buscada
+		* @return 				Array com os dados buscados do item ou mensagem de erro
 		*	Array format:
 		*		array(
-		*			"doacao_qtde" => "",
-		*			"doacao_data" => "",
-		*			"interesse_id" => "",
-		*			"doacao_agradecimento" => ""
+		*			"descricao" => "",
+		*			"quantidade" => "",
+		*			"idCategoria" => "",
 		*		)
 		*	Ou:
 		*		array(
 		*			"Error" => ""
 		*		)
 		*/
-		public function buscaDoacao($idDoacao){
-			if(!isset($idDoacao)){
+		public function buscaItem($idItem){
+			if(!isset($idItem)){
 				return array("Error" => "Insuficient information to execute the query");
 			}
 
 			try{
 
-				$sql = "SELECT doacao_qtde, doacao_data, interesse_id, doacao_agradecimento FROM doacao
-				WHERE doacao_id = ".$idDoacao;
+				$sql = "SELECT item_descricao, item_qtde, item_data, item_status, usuario_id, categoria_id FROM item
+				WHERE item_id = ".$idItem;
 
 				if(!$query = $this->db->query($sql)){
 					if($this->db->error()){
@@ -112,22 +115,19 @@ class Doacao_model extends CI_Model {
 				} else {
 					return true;
 				}
-				
+
 			} catch(Exception $E) {
 				return array("Error" => "Server was unable to execute query");
 			}
 		}
 
 		/**
-		* Busca no Banco de Dados as doações e as retorna
-		* @return 				Array com os dados buscados das doações ou mensagem de erro
+		* Busca no Banco de Dados os itens e os retorna
+		* @return 				Array com os dados buscados dos itens ou mensagem de erro
 		*	Array format:
 		*		array(
 		*			array(
-		*				"doacao_id" => "",
-		*				"doacao_qtde" => "",
-		*				"doacao_data" => "",
-		*				"interesse_id" => ""
+		*				"NOME DO ITEM (MUDAR DEPOIS)" => ""
 		*			),
 		*			...
 		*		)
@@ -136,11 +136,12 @@ class Doacao_model extends CI_Model {
 		*			"Error" => ""
 		*		)
 		*/
-		public function buscaDoacoes(){
-
+        public function buscaItens($idCidade){
+        	
 			try{
 
-				$sql = "SELECT DISTINCT doacao_id, doacao_qtde, doacao_data, interesse_id FROM doacao";
+				$sql = "SELECT DISTINCT item_id, item_descricao, item_qtde, item_data, item_status, usuario_id, categoria_id
+				FROM cidade NATURAL JOIN usuario NATURAL JOIN item WHERE cidade_id = ".$idCidade;
 
 				if(!$query = $this->db->query($sql)){
 					if($this->db->error()){

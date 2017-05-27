@@ -25,35 +25,35 @@
 			  	  	</div>
 			  	</div>
 			  	<div class="form-group">
-			  	  	<label for="input_nome" class="col-sm-2 control-label">Nome</label>
+			  	  	<label for="input_nome" class="col-sm-2 control-label">* Nome</label>
 			  	  	<div class="col-sm-10">
 			  	  	  	<input type="text" class="form-control" name="nome" id="input_nome" placeholder="Nome">
 			  	  	</div>
 			  	</div>
 				<div class="form-group" id="div_cpf">
-			  	  	<label for="input_cpf" class="col-sm-2 control-label">CPF</label>
+			  	  	<label for="input_cpf" class="col-sm-2 control-label">* CPF</label>
 			  	  	<div class="col-sm-10">
 			  	  	  	<input type="text" class="form-control input-d" name="cpf" id="input_cpf" placeholder="000.000.000-00">
 			  	  	</div>
 			  	</div>
 			  	<div class="form-group" id="div_cnpj">
-			  	  	<label for="input_cnpj" class="col-sm-2 control-label">CNPJ</label>
+			  	  	<label for="input_cnpj" class="col-sm-2 control-label">* CNPJ</label>
 			  	  	<div class="col-sm-10">
 			  	  	  	<input type="text" class="form-control" name="cnpj" id="input_cnpj" placeholder="00.000.000/0000-00">
 			  	  	</div>
 			  	</div>
 			  	<div class="form-group">
-			  	  	<label for="input_email" class="col-sm-2 control-label">Email</label>
+			  	  	<label for="input_email" class="col-sm-2 control-label">* Email</label>
 			  	  	<div class="col-sm-10">
 			  	  	  	<input type="email" class="form-control" name="email" id="input_email" placeholder="email@email.com">
 			  	  	</div>
 			  	</div>
 			  	<div class="form-group">
-			  	  	<label for="input_senha" class="col-sm-2 control-label">Senha</label>
+			  	  	<label for="input_senha" class="col-sm-2 control-label">* Senha</label>
 			  	  	<div class="col-sm-4">
 			  	  	  	<input type="password" class="form-control" name="senha" id="input_senha" placeholder="**********">
 			  	  	</div>
-		  	  	  	<label for="input_confirma" class="col-sm-2 control-label">Confirmação</label>
+		  	  	  	<label for="input_confirma" class="col-sm-2 control-label">* Confirmação</label>
 		  	  	  	<div class="col-sm-4">
 			  	  	  	<input type="password" class="form-control" name="confirmacao" id="input_confirma" placeholder="Confirme sua Senha">
 			  	  	</div>
@@ -81,7 +81,7 @@
 			  	  	</div>
 			  	</div>
 			  	<div class="form-group">
-			  	  	<label for="select_estado" class="col-sm-2 control-label">Estado</label>
+			  	  	<label for="select_estado" class="col-sm-2 control-label">* Estado</label>
 			  	  	<div class="col-sm-4">
 			  	  	  	<select class="form-control" name="estado" id="select_estado">
 						  	<? if(isset($estados)){ ?>
@@ -95,7 +95,7 @@
 							<? } ?>
 						</select>
 			  	  	</div>
-		  	  	  	<label for="select_cidade" class="col-sm-2 control-label">Cidade</label>
+		  	  	  	<label for="select_cidade" class="col-sm-2 control-label">* Cidade</label>
 		  	  	  	<div class="col-sm-4">
 			  	  	  	<select class="form-control" name="cidade" id="select_cidade" disabled="true">
 			  	  	  		<option selected="true" disabled="true" title="Selecione seu estado">Selecione o estado.</option>
@@ -115,10 +115,13 @@
 			  	  	</div>
 			  	</div>
 			  	<div class="form-group">
-			  	  	<div class="col-sm-offset-2 col-sm-10">
+			  	  	<div class="col-sm-offset-2 col-sm-6">
 			  	  	  	<div class="checkbox">
-			  	  	  	  	<label> <input type="checkbox" name="termos" id="input_licenca" value="Sim"> Concordo com os termos da <a target="_blank" href="licenca-de-uso">Licença de Uso.</a></label>
+			  	  	  	  	<label> <input type="checkbox" name="termos" id="input_licenca" value="Sim">* Concordo com os termos da <a target="_blank" href="licenca-de-uso">Licença de Uso.</a></label>
 			  	  	  	</div>
+			  	  	</div>
+			  	  	<div class="col-sm-4 text-right">
+			  	  	  	<small><strong>* Campos obrigatórios.</strong></small>
 			  	  	</div>
 			  	</div>
 			  	<div class="form-group text-right">

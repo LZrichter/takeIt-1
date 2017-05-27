@@ -3,6 +3,7 @@
 class Usuario_model extends CI_Model{
 
 	protected $senha = "";
+	protected $senhaAddOn = "$2a$08$";
 	
 	private $id = "";
 	private $nivel = "";
@@ -68,7 +69,7 @@ class Usuario_model extends CI_Model{
 					usuario_nivel, cidade_id
 				) VALUES (
 					".$this->db->escape($dados["nome"]).", ".$this->db->escape($dados["email"]).", 
-					".$this->db->escape($this->pass->hash($dados["senha"])).", ".$this->db->escape($dados["endereco"]).", 
+					".str_replace($this->senhaAddOn, "", $this->db->escape($this->pass->hash($dados["senha"]))).", ".$this->db->escape($dados["endereco"]).", 
 					".$this->db->escape($dados["bairro"]).", ".$this->db->escape($dados["numero"]).", 
 					".$this->db->escape($dados["complemento"]).", ".$this->db->escape($dados["telefone"]).", 
 					1, 'Comum', ".$this->db->escape($dados["cidade"])."
@@ -231,7 +232,7 @@ class Usuario_model extends CI_Model{
 		$this->load->helper("passBCrypt");
 		$this->pass = new Bcrypt;
 
-		return $this->pass->check($senha, $this->senha);
+		return $this->pass->check($senha, $this->senhaAddOn.$this->senha);
 	}
 
 } ?>

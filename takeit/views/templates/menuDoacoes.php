@@ -9,7 +9,7 @@
                 <div class="form-group">
                     <label for="sel-estado">Estado: </label>
                     <select class="estados form-control" id="sel-estado">
-                            <!-- Ajax carrega os Estados -->
+                        <!-- Ajax carrega os Estados -->
                     </select>    
                 </div>
                 

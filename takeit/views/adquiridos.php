@@ -1,6 +1,6 @@
 <ul class="breadcrumb">
-  <li><a href="/painel">Painel</a></li>
-  <li><a href="#">Itens Adquiridos</a></li>
+  	<li><a href="/painel">Painel</a></li>
+  	<li><a href="#">Itens Adquiridos</a></li>
 </ul>
 
 <div class="container-fluid adquiridos footer-align">

@@ -56,13 +56,13 @@
 			  	<div class="form-group">
 			  	  	<label for="input_endereco" class="col-sm-2 control-label">Endereço</label>
 			  	  	<div class="col-sm-10">
-			  	  	  	<input type="text" class="form-control" name="endereco" id="input_endereco" placeholder="Rua Comissario Justo">
+			  	  	  	<input type="text" class="form-control" name="endereco" id="input_endereco" placeholder="Rua Nome de Exemplo">
 			  	  	</div>
 			  	</div>
 			  	<div class="form-group">
 			  	  	<label for="input_bairro" class="col-sm-2 control-label">Bairro</label>
 			  	  	<div class="col-sm-10">
-			  	  	  	<input type="text" class="form-control" name="bairro" id="input_bairro" placeholder="Centro">
+			  	  	  	<input type="text" class="form-control" name="bairro" id="input_bairro" placeholder="Bairro de Exemplo">
 			  	  	</div>
 			  	</div>
 			  	<div class="form-group">

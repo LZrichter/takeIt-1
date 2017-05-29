@@ -58,6 +58,6 @@
 		</table>
 	</div>
 </div>
-
+</div> <!-- main-body -->
 </main><!-- #page-content-wrapper  -->
 </div> <!-- #wrapper -->

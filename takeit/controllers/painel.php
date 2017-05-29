@@ -9,24 +9,31 @@ class Painel extends CI_Controller{
 
 	public function index(){
 		$dados["titulo"] = "Meu Painel";
+		$dados["css"]    = "painel.css";
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
-		// Quando adicionar a view com o conteúdo da página tem que adicionar "class = footer-align" no container principal
-		// Isso é para alinhar o footer na parte inferior da página
+		$this->load->view('painel', $dados);
+		$this->load->view('templates/footer');
+	}
+
+	public function perfil(){
+		$dados["titulo"] = "Perfil do Usuário.php";
+		$dados["css"]    = "painel.css";
+
+		$this->load->view('templates/head', $dados);
+		$this->load->view('templates/menu', $dados);
+		$this->load->view('perfil');
 		$this->load->view('templates/footer');
 	}
 
 
 	public function adquiridos(){
 		$dados["titulo"] = "Itens Adquiridos";
-		$dados["css"]    = "menuDoacoes.css";
-		$dados["css2"]   = "adquiridos.css";
-		$dados["js"]   = "menuDoacoes.js";
+		$dados["css"]   = "painel.css";
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
-		$this->load->view('templates/menuDoacoes', $dados);
 		$this->load->view('adquiridos');
 		$this->load->view('templates/footer');
 	}
@@ -35,7 +42,6 @@ class Painel extends CI_Controller{
 		$dados["titulo"] = "Chat";
 		$dados["css"]    = "menuChat.css";
 		$dados["css2"]   = "chat.css";
-		$dados["js"]   = "menuDoacoes.js";
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);

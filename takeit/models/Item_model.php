@@ -18,7 +18,7 @@ class Item_model extends CI_Model {
 		*			"idUsuario" => "",
 		*			"idCategoria" => ""
 		*		)
-		* @return 			Boolean indicando o sucesso da inserção ou array com mensagem de erro
+		* @return 			Id do produto inserido ou array com mensagem de erro
 		*	Array format:
 		*		array(
 		*			"Error" => ""
@@ -40,7 +40,7 @@ class Item_model extends CI_Model {
 						return array("Error" => "$error[message]");
 					}
 				} else {
-					return true;
+					return LAST_INSERT_ID();
 				}
 				
 			} catch(Exception $E) {
@@ -89,9 +89,12 @@ class Item_model extends CI_Model {
 		* @return 				Array com os dados buscados do item ou mensagem de erro
 		*	Array format:
 		*		array(
-		*			"descricao" => "",
-		*			"quantidade" => "",
-		*			"idCategoria" => "",
+		*			"item_descricao" => "",
+		*			"item_qtde" => "",
+		*			"item_data" => "",
+		*			"item_status" => "",
+		*			"usuario_id" => "",
+		*			"categoria_id" => ""
 		*		)
 		*	Ou:
 		*		array(
@@ -113,7 +116,12 @@ class Item_model extends CI_Model {
 						return array("Error" => "$error[message]");
 					}
 				} else {
-					return true;
+					foreach($query->result() as $row){
+						foreach ($row as $campo => $valor) {
+							$result[$campo] = $valor;
+						}
+					}
+					return $result;
 				}
 
 			} catch(Exception $E) {

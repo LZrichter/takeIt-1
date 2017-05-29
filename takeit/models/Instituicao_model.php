@@ -164,4 +164,43 @@ class Instituicao_model extends CI_Model {
 		}
     }
 
+    /**
+	 * Insere no Banco de Dados as categorias das quais uma instituição tem interesse
+	 * @param 	$idInst		ID da instituição a ser buscada
+	 * @param 	$categs 	Array com os ids das categorias a serem associadas
+	 *	Array format:
+	 *		array($idCat1, $idCat2,...)
+	 * @return 			Boolean indicando o sucesso da inserção ou array com mensagem de erro
+	 *	Array format:
+	 *		array(
+	 *			"Error" => ""
+	 *		)
+	 */
+    public function associarInstituicaoCategorias(){
+    	if(!isset($idInst) || !isset($categs)){
+			return array("Error" => "Insuficient information to execute the query");
+		}
+
+		try{
+
+			for($i = 0; $i < sizeof($categs); $i++){
+				$sql = "INSERT INTO instituicao_categoria (instituicao_id, categoria_id) 
+				values (".$idInst.", ".$categs[$i].")";
+			}
+
+			
+
+			if(!$query = $this->db->query($sql)){
+				if($this->db->error()){
+					return array("Error" => "$error[message]");
+				}
+			} else {
+				return true;
+			}
+			
+		} catch(Exception $E) {
+			return array("Error" => "Server was unable to execute query");
+		}
+    }
+
 }

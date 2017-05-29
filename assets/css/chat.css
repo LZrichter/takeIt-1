@@ -33,3 +33,9 @@
 #right-head-chat #qtd-intens-input{
 	width: 55px;
 }
+
+.dropdown-menu {
+	position: absolute !important;
+   	left: auto !important;
+   	right: 0 !important;
+}

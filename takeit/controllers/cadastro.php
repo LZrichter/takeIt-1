@@ -32,28 +32,23 @@ class Cadastro extends CI_Controller{
 
 		$resposta = $this->user->insereUsuario($_REQUEST);
 
-		echo json_encode($resposta);
-		return;
-		
-		if(isset($resposta["sucesso"])){
+		if($resposta["tipo"] == "sucesso"){
 			if($tipo_usuario == "Pessoa"){
 				$this->load->model("Pessoa_model", "pessoa");
 
-				// if($res = $this->pessoa->inserePessoa(["idUsuario" => $this->user->id, "cpf" => $cpf])){
+				if($res = $this->pessoa->inserePessoa(["idUsuario" => $this->user->getId(), "cpf" => $cpf])){
+					echo json_encode(["tipo" => "sucesso", "msg" => "Cadastro efetuado com sucesso."]);
+				}else{
+					$this->user->db->query("rollback");
+					echo json_encode($res);
 
-				// }else{
-				// 	echo json_encode();
-				// }
-
-				echo "Pessoa";
+					return;
+				}
 			}else{
 				echo "Instituição";
 			}
-
-			$nome = $this->user->nome;
-			$teste_senha = $this->user->testaSenha("12345");
 		}else{
-			
+			$this->user->db->query("rollback");
 			echo json_encode($resposta);	
 		} 
 	}

@@ -90,15 +90,17 @@ $("#cadastroForm").on("submit", function(e){
 			data: $("#cadastroForm").serialize(),
 			dataType: "json",
 			success: function(data){
-				console.log(data);
-
 				mensagem(data["tipo"], data["msg"], "mensagem");
 				$("#div_mensagem").show();
 
 				if(data["tipo"] == "erro")
 					changeClass($("[name='" + data["campo"] + "']"), "add");
-				else
+				else{
 					$("#cadastroForm")[0].reset();
+					$("#select_cidade option").remove();
+					$('#select_cidade').prop('disabled', true);
+					$("#select_cidade").append('<option>Selecione o estado.</option>');
+				}
 			}
 		});
     }else{

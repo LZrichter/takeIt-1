@@ -8,15 +8,15 @@ class Instituicoes extends CI_Controller{
 	}
 
 	public function index(){
-
 		$this->load->model("Instituicao_model","model");
-		// $result = $this->model->buscaInstituicao($cnpj);
+		$result = $this->model->todasInstituicoes();
 
-		// if(isset($result["Error"])){
-		// 	$dados["sqlError"] = $result["Error"];
-		// } else {
-		// 	$dados["instituicoes"] = $result;
-		// }
+		// var_dump($result); return;
+
+		if(isset($result["tipo"]) && $result["tipo"] == "erro")
+			$dados["mensagem"] = $result["msg"];
+		else
+			$dados["instituicoes"] = $result;
 
 		$dados["titulo"] = "Instituições";
 		$dados["dataTable"] = true;
@@ -30,7 +30,7 @@ class Instituicoes extends CI_Controller{
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
-		$this->load->view('instituicoes');
+		$this->load->view('instituicoes', $dados);
 		$this->load->view('templates/footer', $dados);
 	}
 }

@@ -1,74 +1,133 @@
+@import "compass/css3";
+
 #main {
     display: block;
 }
 
-#page-content-wrapper > div > div > div.panel-body > div > div > div > div.left-adquiridos {
+h1 {
+    margin-top: 5px !important;
+}
+
+.flex-container {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.flex-item {
+  background: #E6E6E6;
+  padding-bottom: 5px;
+  width: 300px;
+  min-height: 150px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  
+  line-height: 150px;
+  color: white;
+  font-weight: bold;
+  font-size: 3em;
+  text-align: center;
+
+  border-radius: 15px;
+  border: 4px dashed #B1B1B1;
+}
+
+.flex-item img {
+    width: 100px;
+}
+
+.flex-item h2 {
+    color: #2D2D2D;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    margin-top: 0px;
+}
+
+.flex-item:hover{
+    background: #C9C9C9;
+    border: 4px dashed #939393;
+}
+
+.flex-item a:hover {
+    text-decoration: none;
+}
+
+#page-content-wrapper > div > div > div.panel-body > div > div > div > div.left-recebidos {
     display: inline-flex;
     /* margin-left: 90px; */
     align-items: center;
 }
 
-#page-content-wrapper > div > div > div.panel-body > div > div > div > div.left-adquiridos > div{
+#page-content-wrapper > div > div > div.panel-body > div > div > div > div.left-recebidos > div{
     padding: 15px;
 }
 
-#page-content-wrapper > div > div > div.panel-body > div > div > div > div.right-adquiridos {
+#page-content-wrapper > div > div > div.panel-body > div > div > div > div.right-recebidos {
     margin-top: 4%;
     float: right;
 }
 
-.right-adquiridos {
+.right-recebidos {
     margin-top: 40px;
 }
 
-.right-adquiridos button {
+.right-recebidos button {
     width: 75px;
     margin: 1px;
 }
 
-#page-content-wrapper > div > div > div.panel-body > div > div > div > div.right-adquiridos > button.btn {
+#page-content-wrapper > div > div > div.panel-body > div > div > div > div.right-recebidos > button.btn {
     margin-bottom: 2px;
 }
 
-#body-adquiridos {
+#body-recebidos {
     padding: 5px !important;
 }
 
 @media (max-width: 1024px) {
 
-    .right-adquiridos{
+    .right-recebidos{
         margin-top: 25px;
     }
 }
 
 @media (max-width: 768px) {
 
-    .right-adquiridos{
+    .right-recebidos{
         margin-top: 15px;
     }
 
-    #page-content-wrapper > div > div > div.panel-body > div > div > div > div.left-adquiridos {
+    #page-content-wrapper > div > div > div.panel-body > div > div > div > div.left-recebidos {
         display: inline-block;
     }
 
-    #body-adquiridos > div > div.left-adquiridos > div {
+    #body-recebidos > div > div.left-recebidos > div {
         display: inline-block;
     }
 
     /*.photo { display: none !important; }*/
 
-    #page-content-wrapper > div > div > div.panel-body > div > div > div > div.right-adquiridos {
+    #page-content-wrapper > div > div > div.panel-body > div > div > div > div.right-recebidos {
         margin-top: 0%;
     }
 }
 
 @media (max-width: 454px) {
 
-    #page-content-wrapper > div > div > div.panel-body > div > div > div > div.left-adquiridos {
+    #page-content-wrapper > div > div > div.panel-body > div > div > div > div.left-recebidos {
         display: inline-flex;
     }
 
-    #body-adquiridos > div > div.left-adquiridos > div {
+    #body-recebidos > div > div.left-recebidos > div {
         display: inline-grid;
         align-items: top;
     }
@@ -78,7 +137,7 @@
 
 @media (max-width: 454px) {
 
-   #body-adquiridos > div > div.left-adquiridos > div{
+   #body-recebidos > div > div.left-recebidos > div{
         font-size: 12px;
    }
 }

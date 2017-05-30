@@ -28,13 +28,13 @@ class Painel extends CI_Controller{
 	}
 
 
-	public function adquiridos(){
-		$dados["titulo"] = "Itens Adquiridos";
+	public function itens_recebidos(){
+		$dados["titulo"] = "Itens Recebidos";
 		$dados["css"]   = "painel.css";
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
-		$this->load->view('adquiridos');
+		$this->load->view('itens_recebidos');
 		$this->load->view('templates/footer');
 	}
 

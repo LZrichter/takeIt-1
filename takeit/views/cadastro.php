@@ -68,7 +68,7 @@
 			  	<div class="form-group">
 			  	  	<label for="input_numero" class="col-sm-2 control-label">Número</label>
 			  	  	<div class="col-sm-4">
-			  	  	  	<input type="text" class="form-control" name="numero" id="input_numero" placeholder="1482">
+			  	  	  	<input type="text" class="form-control" name="numero" id="input_numero" placeholder="1001">
 			  	  	</div>
 		  	  	  	<label for="input_complemento" class="col-sm-2 control-label">Complemento</label>
 		  	  	  	<div class="col-sm-4">
@@ -127,7 +127,7 @@
 			  	<div class="form-group text-right">
 			  		<div class="col-sm-offset-6 col-sm-6">
 	        			<button type="submit" class="btn btn-success" id="btnSend">
-	        				<span class="fa fa-pencil-square-o" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Cadastrando"></span> Cadastrar
+	        				<span class="fa fa-pencil-square-o" data-loading-text="<i class='fa fa-cog fa-spin fa-2x fa-fw'></i> Cadastrando"></span> Cadastrar
         				</button>
 	        		</div>
         		</div>

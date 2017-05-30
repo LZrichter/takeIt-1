@@ -9,19 +9,9 @@ class Instituicao_model extends CI_Model {
     }
 
 	/**
-	 * Insere no Banco de Dados uma instituição
-	 * @param  $dados 	Array com os dados necessários para a realização da inserção
-	 *	Array format:
-	 *		array(
-	 *			"idUsuario" => "",
-	 *			"cnpj" => "",
-	 *			"site" => ""
-	 *		)
-	 * @return 			Boolean indicando o sucesso da inserção ou array com mensagem de erro
-	 *	Array format:
-	 *		array(
-	 *			"Error" => ""
-	 *		)
+	 * Insere uma instituição no banco de dados
+	 * @param  array $dados  Array com todos os dados da instituição vindo do formulário de cadastro
+	 * @return array         Array com a resposta caso tenha dado erro ou não
 	 */
 	public function insereInstituicao($dados){
 		$this->db->trans_begin();
@@ -140,6 +130,35 @@ class Instituicao_model extends CI_Model {
 		} catch(Exception $E) {
 			return array("Error" => "Server was unable to execute query");
 		}
+	}
+
+	public function todasInstituicoes(){
+		try{
+			$sql = "SELECT DISTINCT usuario_id, usuario_nome, cidade_nome, estado_uf
+ 				FROM estado NATURAL JOIN cidade NATURAL JOIN usuario";
+
+ 			if(!$query = $this->db->query($sql)){
+				if($this->db->error()){
+					return array("Error" => "$error[message]");
+				}
+			}else if(!count($query->result()))
+				return array("tipo" => "erro", "msg" => "Nenhuma instituição cadastrada no momento.");
+			else{
+				$count = 0;
+				foreach($query->result() as $row){
+					foreach ($row as $campo => $valor) {
+						$result[$count][$campo] = $valor;
+					}
+					$count++;
+				}
+
+ 				return $result;
+ 			}
+		}catch(PDOException $PDOE){
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. Por favor, tente mais tarde! - Código: " . $PDOE->getCode()];
+		}catch(Exception $E){
+			return ["tipo" => "erro", "msg" => "Problema interno do sistema. Por favor, tente mais tarde! - Código: " . $E->getCode()];
+  		}
 	}
 
 	

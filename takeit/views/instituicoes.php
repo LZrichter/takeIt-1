@@ -7,56 +7,40 @@
 	<div class="container-fluid footer-align" id="container-instituicoes">
 		<h3><span class="fa fa-building"></span> Instituiçoes Beneficientes</h3>
 		<hr>
-
-		<div class="table-responsive container" id="dic_table_div" style="width:100%">
-			<table class="table table-responsive table-striped display text-center" id="instituicoes_table" width="100%" cellspacing="0">
-				<thead>
-					<tr>
-						<th>Nome</th>
-						<th>Cidade</th>
-						<th>UF</th>
-						<th>Perfil</th>
-					</tr>
-				</thead>
-				<tbody>
-		            <tr>
-		                <td>Giacomo Guillizoni Founder & CEO</td>
-		                <td>Santa Maria</td>
-		                <td>RS</td>
-		                <td><button class="btn btn-success">Ver Perfil</button></td>
-		            </tr>
-		            <tr>
-		                <td>Giacomo Guillizoni Founder & CEO</td>
-		                <td>Santa Maria</td>
-		                <td>RS</td>
-		                <td><button class="btn btn-success">Ver Perfil</button></td>
-		            </tr>
-		            <tr>
-		                <td>Giacomo Guillizoni Founder & CEO</td>
-		                <td>Santa Maria</td>
-		                <td>RS</td>
-		                <td><button class="btn btn-success">Ver Perfil</button></td>
-		            </tr>
-		            <tr>
-		                <td>Giacomo Guillizoni Founder & CEO</td>
-		                <td>Santa Maria</td>
-		                <td>RS</td>
-		                <td><button class="btn btn-success">Ver Perfil</button></td>
-		            </tr>
-		            <tr>
-		                <td>Giacomo Guillizoni Founder & CEO</td>
-		                <td>Santa Maria</td>
-		                <td>RS</td>
-		                <td><button class="btn btn-success">Ver Perfil</button></td>
-		            </tr>
-		            <tr>
-		                <td>Giacomo Guillizoni Founder & CEO</td>
-		                <td>Santa Maria</td>
-		                <td>RS</td>
-		                <td><button class="btn btn-success">Ver Perfil</button></td>
-		            </tr>
-		        </tbody>
-			</table>
+		
+		<? if(isset($mensagem)){ ?>
+			<div class="row">
+				<div class="col-sm-12 text-center">
+					<p class="bg-info">
+						<h3><?= $mensagem; ?></h3>
+					</p>
+				</div>
+			</div>
+		<? } ?>
+		
+		<? if(isset($instituicoes) && count($instituicoes) > 0){ ?>
+			<div class="table-responsive container" id="dic_table_div" style="width:100%">
+				<table class="table table-responsive table-striped display text-center" id="instituicoes_table" width="100%" cellspacing="0">
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Cidade</th>
+							<th>UF</th>
+							<th>Perfil</th>
+						</tr>
+					</thead>
+					<tbody>
+						<? foreach ($instituicoes as $num => $campos){ ?>
+				            <tr>
+				                <td><?= $campos["usuario_nome"]; ?></td>
+				                <td><?= $campos["cidade_nome"]; ?></td>
+				                <td><?= $campos["estado_uf"]; ?></td>
+				                <td><button class="btn btn-success">Ver Perfil</button></td>
+				            </tr>							
+						<? } ?>
+			        </tbody>
+				</table>
+			</div>
 		</div>
-	</div>
+		<? } ?>
 </div>

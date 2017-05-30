@@ -1,13 +1,13 @@
 <ul class="breadcrumb">
   	<li><a href="/painel">Painel</a></li>
-  	<li><a href="#">Perfil do Usuário</a></li>
+  	<li><a href="#">Dados da Conta</a></li>
 </ul>
 
 <div class="container footer-align" id="main">
 	<div class="row">
 	  	<div class="panel panel-default">
 	  		<div class="panel-heading text-center">
-	  			<h2><span class="fa fa-user"></span> Perfil do Usuário</h2>
+	  			<h2><span class="fa fa-user"></span> Dados da Conta do Usuário</h2>
 	  		</div>
 	  		<div class="panel-body">
 	  			<div class="col-md-8 col-md-offset-2">

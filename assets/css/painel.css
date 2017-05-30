@@ -55,6 +55,7 @@ h1 {
 .flex-item:hover{
     background: #C9C9C9;
     border: 4px dashed #939393;
+    cursor: pointer;
 }
 
 .flex-item a:hover {

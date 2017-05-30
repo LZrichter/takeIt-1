@@ -10,18 +10,18 @@ class Instituicoes extends CI_Controller{
 	public function index(){
 
 		$this->load->model("Instituicao_model","model");
-		$result = $this->model->buscaInstituicoes();
+		//$result = $this->model->buscaInstituicoes();
 
-		if(isset($result["Error"])){
-			$dados["sqlError"] = $result["Error"];
-		} else {
-			$dados["instituicoes"] = $result;
-		}
+		// if(isset($result["Error"])){
+		// 	$dados["sqlError"] = $result["Error"];
+		// } else {
+		// 	$dados["instituicoes"] = $result;
+		// }
 
 		$dados["titulo"] = "Instituições";
 		$dados["dataTable"] = true;
 		$dados["css"]   = "instituicoes.css";
-		$dados["css2"]   = "jquery.dataTables.min.css";
+		$dados["css2"]   = "dataTables.bootstrap.min.css";
 		$dados["js"]   = "instituicoes.js";
 		
 		//echo "<br/><br/><br/><br/><br/><br/><pre>";

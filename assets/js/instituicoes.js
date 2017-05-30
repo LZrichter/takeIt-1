@@ -29,8 +29,6 @@ $(document).ready(function() {
 		}
     });
 
-    $('#instituicoes_table')
-		.removeClass( 'display' )
-		.addClass('table table-striped table-bordered');
+    $('#instituicoes_table').removeClass( 'display' ).addClass('table table-striped table-bordered');
 
 } );

@@ -60,7 +60,7 @@
 					  	  	  		<img class="img-rounded add-img" id="img-1" src="<?= base_url()?>/assets/img/add-img.png" alt="Imagem do item">
 					  	  	  	</label>
 					  	  	  	<div class="input">
-					  	  	  		<input name="imagem1" id="imagem1"  type="file" accept="image/*"  style="visibility: hidden">
+					  	  	  		<input name="imagem1" id="imagem1"  type="file" accept=".gif,.jpg,.png,.jpeg"  style="visibility: hidden">
 
 					  	  	  	</div>
 					  	  	</div>
@@ -68,25 +68,25 @@
 					  	  	  	<label for="imagem2">
 					  	  	  		<img class="img-rounded add-img" id="img-2" src="<?= base_url()?>/assets/img/add-img.png" alt="Imagem do item">
 					  	  	  	</label>
-					  	  	  	<input name="imagem2" id="imagem2"  type="file" accept="image/*" style="visibility: hidden">
+					  	  	  	<input name="imagem2" id="imagem2"  type="file" accept=".gif,.jpg,.png,.jpeg" style="visibility: hidden">
 					  	  	</div>
 					  	  	<div class="col-sm-2">
 					  	  	  	<label for="imagem3">
 					  	  	  		<img class="img-rounded add-img" id="img-3" src="<?= base_url()?>/assets/img/add-img.png" alt="Imagem do item">
 					  	  	  	</label>
-					  	  	  	<input name="imagem3" id="imagem3"  type="file" accept="image/*" style="visibility: hidden">
+					  	  	  	<input name="imagem3" id="imagem3"  type="file" accept=".gif,.jpg,.png,.jpeg" style="visibility: hidden">
 					  	  	</div>
 					  	  	<div class="col-sm-2">
 					  	  	  	<label for="imagem4">
 					  	  	  		<img class="img-rounded add-img" id="img-4" src="<?= base_url()?>/assets/img/add-img.png" alt="Imagem do item">
 					  	  	  	</label>
-					  	  	  	<input name="imagem4" id="imagem4"  type="file" accept="image/*" style="visibility: hidden">
+					  	  	  	<input name="imagem4" id="imagem4"  type="file" accept=".gif,.jpg,.png,.jpeg" style="visibility: hidden">
 					  	  	</div>
 					  	  	<div class="col-sm-2">
 					  	  	  	<label for="imagem5">
 					  	  	  		<img class="img-rounded add-img" id="img-5" src="<?= base_url()?>/assets/img/add-img.png" alt="Imagem do item">
 					  	  	  	</label>
-					  	  	  	<input name="imagem5" id="imagem5"  type="file" accept="image/*" style="visibility: hidden">
+					  	  	  	<input name="imagem5" id="imagem5"  type="file" accept=".gif,.jpg,.png,.jpeg" style="visibility: hidden">
 					  	  	</div>
 					  	</div>
 					  	<div class="panel-footer text-center">

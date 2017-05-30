@@ -10,6 +10,7 @@
 <!-- DataTable -->
 	<?php if(isset($dataTable)): ?>
 		<script src="<?= base_url();?>assets/js/jquery.dataTables.min.js"></script>
+		<script src="<?= base_url();?>assets/js/dataTables.bootstrap.min.js"></script>
 	<?php endif;?>
 </body>
 </html>

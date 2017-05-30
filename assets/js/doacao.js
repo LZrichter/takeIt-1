@@ -1,3 +1,5 @@
+var obrigatorio = 0;
+
 /**
  * Função que carrega uma preview das imagens selecionadsa para o cadastro.
  * @param  {[input type="file"]} input que seleciona a imagem. 
@@ -14,27 +16,68 @@ function readURL(input, imgTag){
     }
 }
 
+function inputIsEmpty(valor, form_group){
+	if (!valor.trim() || valor == 'Selecione...'){
+		mensagem("erro", "Por favor, preencha os campos obrigatórios.", "mensagem");
+        $("#div_mensagem").show();
+        form_group.addClass('has-error');
+		obrigatorio += 1;
+	}
+}
+
 $(document).ready(function(){
 	
+	var fileExtension = ['jpeg', 'jpg', 'png', 'gif'];
+
 	/*Alteração da preview da imagem escolhida*/
 	$('#imagem1').on('change', function(event) {
-		readURL(this, "#img-1");
+        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            mensagem("erro", "Apenas arquivos com extensões <b>.jpg .jpeg .png .gif</b> serão aceitos.   ", "mensagem");
+            $("#div_mensagem").show();
+            $(this).val("");
+        }else{
+        	readURL(this, "#img-1");	
+        }
 	});
 
 	$('#imagem2').on('change', function(event) {
-		readURL(this, "#img-2");
+        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            mensagem("erro", "Apenas arquivos com extensões <b>.jpg .jpeg .png .gif</b> serão aceitos.   ", "mensagem");
+            $("#div_mensagem").show();
+            $(this).val("");
+        }else{
+        	readURL(this, "#img-2");	
+        }
 	});
 
 	$('#imagem3').on('change', function(event) {
-		readURL(this, "#img-3");
+        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            mensagem("erro", "Apenas arquivos com extensões <b>.jpg .jpeg .png .gif</b> serão aceitos.   ", "mensagem");
+            $("#div_mensagem").show();
+            $(this).val("");
+        }else{
+        	readURL(this, "#img-3");	
+        }
 	});
 
 	$('#imagem4').on('change', function(event) {
-		readURL(this, "#img-4");
+        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            mensagem("erro", "Apenas arquivos com extensões <b>.jpg .jpeg .png .gif</b> serão aceitos.   ", "mensagem");
+            $("#div_mensagem").show();
+            $(this).val("");
+        }else{
+        	readURL(this, "#img-4");	
+        }
 	});
 
 	$('#imagem5').on('change', function(event) {
-		readURL(this, "#img-5");
+        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            mensagem("erro", "Apenas arquivos com extensões <b>.jpg .jpeg .png .gif</b> serão aceitos.   ", "mensagem");
+            $("#div_mensagem").show();
+            $(this).val();
+        }else{
+        	readURL(this, "#img-5");	
+        }
 	});
 	
 	/**
@@ -46,7 +89,7 @@ $(document).ready(function(){
 	 */
 	$('#doacaoForm').on('submit', function(event) {
 		event.preventDefault();
-
+		$("#div_mensagem").hide();
 		$(".fotos-group").removeClass('has-error');
 
 		var filename = $('input[type=file]').val().split('\\').pop();
@@ -54,34 +97,47 @@ $(document).ready(function(){
 			mensagem("erro", "Você precisa selecionar ao menos <b>uma imagem</b> para a doação!", "mensagem");
 			$("#div_mensagem").show();
 			$(".fotos-group").addClass('has-error');
-			return 0;
+			obrigatorio += 1;
 		}
+
+		inputIsEmpty($('#input_descricao').val(), $('.descricao-group'));
+
+		inputIsEmpty($('#select_categoria option:selected').text(), $('.categoria-group'));
 		
-		$('input[type=file]').upload("teste",{
+		inputIsEmpty($('#input_qtde').val(), $('.quantidade-group'));
+
+		inputIsEmpty($('#area_detalhes').val(), $('.detalhes-group'));
+
+		if (obrigatorio == 5 ) {
+			$('input[type=file]').upload("teste",{
 			descricao: $("#input_descricao").val(),
 			categoria: $("#select_categoria option:selected").text(),
+			idCategoria: $("#select_categoria option:selected").attr("id"),
 			quantidade: $("#input_qtde").val(),
-			detalhes: $("#area_detalhes").val()
-		},function(success){	
-			console.log("Retorno com sucesso do ajaxUploadFile: ", success);
-			var msg = " ";
-			var tipo;
-			$.each(success, function(index, campo) {
-				msg += campo["msg"]+"<br>";
-				tipo = campo["tipo"];
+			detalhes: $("#area_detalhes").val(),
+			idUsuario: 1 //DEVE SER ALTERADO PARA VALOR DA SESSÃO DO USUARIO
+			},function(success){	
+				console.log("Retorno com sucesso do ajaxUploadFile: ", success);
+				var msg = " ";
+				var tipo;
+				$.each(success, function(index, campo) {
+					//if (!jQuery.isEmptyObject(campo["msg"])) //teste se string está vazia
+					tipo = campo["tipo"];
 
-				if (tipo === 'erro') {
-					$('.'+campo["campo"]+'-group').addClass('has-error');
-					mensagem(tipo, msg, "mensagem");
-					$("#div_mensagem").show();
-				}
+					if (tipo === 'erro') {
+						msg += "<br>"+campo["msg"];
+						$('.'+campo["campo"]+'-group').addClass('has-error');
+						mensagem(tipo, msg, "mensagem");
+						$("#div_mensagem").show();
+					}
 
-				if(tipo === 'sucesso'){
-					$('.'+campo["campo"]+'-group').removeClass('has-error');
-					$('.'+campo["campo"]+'-group').addClass('has-success');
-					$("#div_mensagem").hide();
-				}
+					if(tipo === 'sucesso'){
+						$('.'+campo["campo"]+'-group').removeClass('has-error');
+						$('.'+campo["campo"]+'-group').addClass('has-success');
+						$("#div_mensagem").hide();
+					}
+				});
 			});
-		});
+		}	
 	});
 });

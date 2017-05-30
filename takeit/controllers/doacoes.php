@@ -71,81 +71,75 @@ class Doacoes extends CI_Controller{
 		];
 
 		$return = array();
-		$erro = 1;
 		/* Validação dos Campos */
 		foreach($obrigatorio as $campo){
 			if(!in_array($campo, array_keys($dados)) || (isset($dados[$campo]) && empty(trim($dados[$campo])))){
-				if ($campo == 'quantidade' && $dados['quantidade'] <= 0) {
-					array_push($return, ["tipo" => "erro", "msg" => "O campo<b> $campo.</b> deve ser maior que zero!", "campo" => $campo]);	
-				}else{
 					array_push($return, ["tipo" => "erro", "msg" => "Por favor, preencha o campo<b> $campo.</b>", "campo" => $campo]);	
-				}
-				$erro = 1;
 			}else if($campo === 'categoria' && $dados["categoria"] === "Selecione..."){
 				array_push($return, ["tipo" => "erro", "msg" => "Por favor selecione uma <b> $campo.</b>", "campo" => $campo]);	
-				$erro = 1;
+			}else if ($campo == 'quantidade' && $dados['quantidade'] <= 0 ){
+					array_push($return, ["tipo" => "erro", "msg" => "O campo<b> $campo.</b> deve ser maior que zero!", "campo" => $campo]);	
 			}else{ //sucesso na validacao
-				array_push($return, ["tipo" => "sucesso", "msg" => "", "campo" => $campo]);
-				$erro = 0;
+				array_push($return, ["tipo" => "sucesso", "campo" => $campo]);
 			}
 		}
 		
-		if ($erro) { // se der erro retornar resposta para a pagina principal
-			echo json_encode($return);
-		}else{
-			/*
-			* TODO 
-			* fazer validação das imagens
-			* fazer upload das imagens
-			* salvar item no banco
-			* pegar o id do item no banco
-			* salvar imagens no banco com o id do item
-			*/
-			
-			date_default_timezone_set('America/Sao_Paulo');
+		/*
+		* TODO 
+		* fazer validação das imagens
+		* fazer upload das imagens
+		* pegar o id do item no banco
+		* pegar o id do usuario
+		* pegar o id da categoria
+		* salvar item no banco
+		* salvar imagens no banco com o id do item
+		*/
+		
+		date_default_timezone_set('America/Sao_Paulo');
 
-			$desc = preg_replace('/\s+/', '', $descricao);
+		$desc = preg_replace('/\s+/', '', $descricao);
 
-			$path = "./assets/img/uploads/".date("Y")."/".date("m")."/".date("d")."/".$desc.date("H.i.s");
-	
-			$dirname = iconv("UTF-8","Windows-1252",$path);
-	
-			if (!is_dir($dirname)) { //cria o diretorio para uploads se ele ja não existir
-				mkdir($dirname, 0777, true);
-			}
+		$path = "./assets/img/uploads/".date("Y")."/".date("m")."/".date("d")."/".$desc.date("H.i.s");
 
-			for ($i = 1; $i <= 5; $i++){
-				if (!empty($_FILES["imagem$i"]['name'])) {
-					
-					$config['upload_path']      = $dirname;
-	        		$config['allowed_types']    = 'gif|jpg|png';
-	        		$config['encrypt_name']		= TRUE;
-	        		$config['overwrite']		= TRUE;
-	        		$config['max_size']         = 100; //Kb
-	        		// $config['max_width']            = 1024;
-	        		// $config['max_height']           = 768;
-	        		
-	        
-	        		$this->load->library('upload', $config);
-	        		$this->upload->initialize($config);
-	            	if(!$this->upload->do_upload("imagem$i")){ //deu errado o upload
-	                	array_push($return, ["msg" => $this->upload->display_errors(), "tipo" => "erro", "campo" => "fotos"]);
-	                	// rmdir($dirname);
-	                	echo json_encode($return);
-	                	
-	            	}else{ // deu certo o upload
-	            		$success = $this->upload->data();
-	            		array_push($return,["msg" => $success, "tipo" => "sucesso", "path" => $success['file_path']]);
-	            		echo json_encode($return);
+		$dirname = iconv("UTF-8","Windows-1252",$path);
 
-	            		// $uploadData['file_name'] = $fileData['file_name'];
-	                	// $uploadData['created'] = date("Y-m-d H:i:s");
-	                	// $uploadData['modified'] = date("Y-m-d H:i:s");
-	            		
-	            	}	
-				}
+		if (!is_dir($dirname)) { //cria o diretorio para uploads se ele ja não existir
+			mkdir($dirname, 0777, true);
+		}
+
+		for ($i = 1; $i <= 5; $i++){
+			if (!empty($_FILES["imagem$i"]['name'])) {
+				
+				$config['upload_path']      = $dirname;
+        		$config['allowed_types']    = 'gif|jpg|png|jpeg';
+        		$config['encrypt_name']		= TRUE;
+        		$config['overwrite']		= TRUE;
+        		$config['max_size']         = 1024; //Kb
+        		// $config['max_width']            = 1024;
+        		// $config['max_height']           = 768;
+        		
+        
+        		$this->load->library('upload', $config);
+        		$this->upload->initialize($config);
+            	if(!$this->upload->do_upload("imagem$i")){ //deu errado o upload
+                	array_push($return, ["msg" => $this->upload->display_errors(), "tipo" => "erro", "campo" => "fotos"]);
+                	$apagarPasta = 1;
+            	}else{ // deu certo o upload
+            		$success = $this->upload->data();
+            		array_push($return,["msg" => $success, "tipo" => "sucesso", "path" => $success['file_path']]);
+            		// $uploadData['file_name'] = $fileData['file_name'];
+                	// $uploadData['created'] = date("Y-m-d H:i:s");
+                	// $uploadData['modified'] = date("Y-m-d H:i:s");
+            		
+            	}	
 			}
 		}
+		if ($apagarPasta) {
+			rmdir($dirname);
+		}
+
+		echo json_encode($return);
+		
 	}
 
 	public function carregaEstadosMenu(){

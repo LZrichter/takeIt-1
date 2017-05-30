@@ -15,13 +15,13 @@
 						<span class="qtd-itens-totais"> de 9</span>
 						<div class="dropdown">
 							<button class="btn btn-link btn-lg dropdown-toggle" data-toggle="dropdown">
-								<span class="fa fa-cog"><span class="caret"></span></span>
+								<span class="fa fa-cog"> <span class="caret"></span></span>
 							</button>
-						  <ul class="dropdown-menu">
-						    <li><a href="#">Enviar meus Contatos</a></li>
-						    <li><a href="#">Encerrar bate papo</a></li>
-						    <li><a href="#">Reportar bate papo</a></li>
-						  </ul>
+						  	<ul class="dropdown-menu">
+							    <li><a href="#">Enviar meus Contatos</a></li>
+							    <li><a href="#">Encerrar bate papo</a></li>
+							    <li><a href="#">Reportar bate papo</a></li>
+						  	</ul>
 						</div>
 						
 					</div>

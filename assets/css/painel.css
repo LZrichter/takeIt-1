@@ -52,7 +52,7 @@ h1 {
     margin-top: 0px;
 }
 
-.flex-item:hover{
+.flex-item:hover {
     background: #C9C9C9;
     border: 4px dashed #939393;
     cursor: pointer;
@@ -60,6 +60,25 @@ h1 {
 
 .flex-item a:hover {
     text-decoration: none;
+}
+
+.foto-perfil {
+    display: flex;
+    align-items: center;
+}
+
+.foto-perfil div {
+    display: flex;
+    align-items: center;
+}
+
+.foto-perfil .col-sm-4 {
+    padding-left: 0px;
+}
+
+#perfil_img {
+    border-radius: 10px;
+    border: 1px solid #AEAEAE;
 }
 
 #page-content-wrapper > div > div > div.panel-body > div > div > div > div.left-recebidos {

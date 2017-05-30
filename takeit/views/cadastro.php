@@ -127,7 +127,7 @@
 			  	<div class="form-group text-right">
 			  		<div class="col-sm-offset-6 col-sm-6">
 	        			<button type="submit" class="btn btn-success" id="btnSend">
-	        				<span class="fa fa-pencil-square-o"></span> Cadastrar
+	        				<span class="fa fa-pencil-square-o" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Cadastrando"></span> Cadastrar
         				</button>
 	        		</div>
         		</div>

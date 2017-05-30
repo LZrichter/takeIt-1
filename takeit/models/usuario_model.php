@@ -3,7 +3,7 @@
 class Usuario_model extends CI_Model{
 
 	protected $senha = "";
-	protected $senhaAddOn = "$2a$08$";
+	protected $senhaAddOn = "$2a$10$";
 	
 	private $id = "";
 	private $nivel = "";
@@ -39,13 +39,6 @@ class Usuario_model extends CI_Model{
 		else
         	$this->db->trans_commit();
 	}
-
-	// function __get($var){
-	// 	if(isset($this->$var) && $var != "senha")
-	// 		return $this->$var;
-	// 	else return false;
-	// }
-
 	/**
 	 * Insere um novo usuário no banco
 	 * @param  array $dados Array com os dados a serem inseridos
@@ -76,10 +69,14 @@ class Usuario_model extends CI_Model{
 					usuario_complemento, usuario_telefone, usuario_ativo, 
 					usuario_nivel, cidade_id
 				) VALUES (
-					".$this->db->escape($dados["nome"]).", ".$this->db->escape($dados["email"]).", 
-					".str_replace($this->senhaAddOn, "", $this->db->escape($this->pass->hash($dados["senha"]))).", ".$this->db->escape($dados["endereco"]).", 
-					".$this->db->escape($dados["bairro"]).", ".$this->db->escape($dados["numero"]).", 
-					".$this->db->escape($dados["complemento"]).", ".$this->db->escape($dados["telefone"]).", 
+					".$this->db->escape($dados["nome"]).", 
+					".$this->db->escape($dados["email"]).", 
+					".str_replace($this->senhaAddOn, "", $this->db->escape($this->pass->hash($dados["senha"]))).", 
+					".$this->db->escape($dados["endereco"]).", 
+					".$this->db->escape($dados["bairro"]).", 
+					".$this->db->escape($dados["numero"]).", 
+					".$this->db->escape($dados["complemento"]).", 
+					".$this->db->escape($dados["telefone"]).", 
 					1, 'Comum', ".$this->db->escape($dados["cidade"])."
 				)";
 

@@ -28,29 +28,20 @@ class Cadastro extends CI_Controller{
 		foreach($_REQUEST as $k => $v)
 			$$k = $v;
 
-		$this->load->model("Usuario_model", "user");
+		$this->load->model("Usuario_model", "usuario");
 
-		$resposta = $this->user->insereUsuario($_REQUEST);
+		if($tipo_usuario == "Pessoa"){
+			$this->load->model("Pessoa_model", "pessoa");
+			$resposta = $this->pessoa->inserePessoa($this->input->post());
 
-		if($resposta["tipo"] == "sucesso"){
-			if($tipo_usuario == "Pessoa"){
-				$this->load->model("Pessoa_model", "pessoa");
-
-				if($res = $this->pessoa->inserePessoa(["idUsuario" => $this->user->getId(), "cpf" => $cpf])){
-					echo json_encode(["tipo" => "sucesso", "msg" => "Cadastro efetuado com sucesso."]);
-				}else{
-					$this->user->db->query("rollback");
-					echo json_encode($res);
-
-					return;
-				}
-			}else{
-				echo "Instituição";
-			}
-		}else{
-			$this->user->db->query("rollback");
-			echo json_encode($resposta);	
-		} 
+			echo json_encode($resposta); 
+			return;
+		}else if($tipo_usuario == "Instituição"){
+			$this->load->model("Instituicao_model", "instituicao");
+			$resposta = $this->instituicao->insereInstituicao($this->input->post());
+			
+			echo json_encode($resposta); 
+		}else echo json_encode(["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"]);
 	}
 
 	/**

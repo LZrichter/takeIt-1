@@ -4,7 +4,7 @@ if(!class_exists('Bcrypt')){
 	class Bcrypt {
 		
 		protected static $_saltPrefix = '2a';
-		protected static $_defaultCost = 8;
+		protected static $_defaultCost = 10;
 		protected static $_saltLength = 22;
 
 		public function hash($string, $cost = null){

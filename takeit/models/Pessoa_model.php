@@ -1,8 +1,8 @@
 <?php defined('BASEPATH') OR exit('OPSSS... Não é permitido direto acesso ao script!!');
 
-class Pessoa_model extends CI_Model {
+class Pessoa_model extends Usuario_model{
 
-    public function __construct() {
+    public function __construct(){
         parent::__construct();
 
         $this->load->database();
@@ -22,25 +22,46 @@ class Pessoa_model extends CI_Model {
 	 *			"Error" => ""
 	 *		)
 	 */
-	public function inserePessoa($dados){
-		if(!isset($dados['idUsuario']))
-			return ["tipo" => "erro", "msg" => "Problema interno do sistema. Por favor, tente mais tarde!"];
-		else if(!isset($dados['cpf']))
-			return ["tipo" => "erro", "msg" => "Campos obrigatórios ainda não foram preenchidos.", "campo" => "cpf"];
-		else if($this->buscaPessoa($dados['cpf']))
-			return ["tipo" => "erro", "msg" => "CPF já registrado no sistema.", "campo" => "cpf"];
+	public function inserePessoa(array $dados){
+		$this->db->trans_begin();
+		$this->load->helper("validacao");
 
-		try{
-			$sql = "INSERT INTO pessoa (pessoa_id, pessoa_cpf) 
-			values (".$this->db->escape($dados['idUsuario']).", ".$this->db->escape($dados['cpf']).")";
+		$resposta = $this->usuario->insereUsuario($dados);
 
-			if(!$query = $this->db->query($sql)){
-				if($error = $this->db->error())
-					return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de cadastrar o usuário. Por favor, mude os dados inseridos ou tente mais tarde. Código: ".$error["code"]];
-			}else return true;
-			
-		}catch(Exception $E){
-			return ["tipo" => "erro", "msg" => "Problema interno do sistema. Por favor, tente mais tarde!"];
+		if($resposta["tipo"] == "sucesso"){
+			if(!isset($dados['cpf'])){
+				$this->db->trans_rollback();
+				return ["tipo" => "erro", "msg" => "Campos obrigatórios ainda não foram preenchidos.", "campo" => "cpf"];
+			}else if(!validaCPF($dados['cpf'])){
+				$this->db->trans_rollback();
+				return ["tipo" => "erro", "msg" => "CPF informado não é válido.", "campo" => "cpf"];
+			}else if($this->buscaPessoa($dados['cpf'])){
+				$this->db->trans_rollback();
+				return ["tipo" => "erro", "msg" => "CPF já registrado no sistema.", "campo" => "cpf"];
+			}
+
+			try{
+				$sql = "INSERT INTO pessoa (pessoa_id, pessoa_cpf) 
+				values (".$this->db->escape($this->usuario->getId()).", ".$this->db->escape($dados['cpf']).")";
+
+				if(!$query = $this->db->query($sql)){
+					if($error = $this->db->error()){
+						$this->db->trans_rollback();
+						return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de cadastrar a Pessoa. Por favor, mude os dados inseridos ou tente mais tarde. Código: ".$error["code"]];
+					}
+				}else{
+        			$this->db->trans_commit();
+					return ["tipo" => "sucesso", "msg" => "Cadastro efetuado com sucesso."];
+				}
+				
+			}catch(PDOException $PDOE){
+				return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+			}catch(Exception $E){
+				return ["tipo" => "erro", "msg" => "Problema interno do sistema. Por favor, tente mais tarde!"];
+			}
+		}else{
+			$this->db->trans_rollback();
+			return $resposta;
 		}
 	}
 
@@ -111,6 +132,11 @@ class Pessoa_model extends CI_Model {
 		}
 	}
 
+	/**
+	 * Busca uma pessoa pelo seu cpf (Mais usado na hora de cadastrar, para ver se o cpf já existe no sistema)
+	 * @param  string $cpf  CPF a ser buscado
+	 * @return boolean      TRUE se já existe uma pessoa cadastrada no sistema com esse CPF, FALSE se não.
+	 */
 	public function buscaPessoa($cpf){
 		if(!isset($cpf))
 			return ["tipo" => "erro", "msg" => "Problema interno do sistema. Por favor, tente mais tarde!"];

@@ -24,25 +24,50 @@ class Instituicao_model extends CI_Model {
 	 *		)
 	 */
 	public function insereInstituicao($dados){
-		if(!isset($dados['idUsuario']) || !isset($dados['cnpj']) || !isset($dados['site'])){
-			return array("Error" => "Insuficient information to execute the query");
-		}
+		$this->db->trans_begin();
+		$this->load->helper("validacao");
 
-		try{
+		$resposta = $this->usuario->insereUsuario($dados);
 
-			$sql = "INSERT INTO instituicao (instituicao_id, instituicao_cnpj, instituicao_site) 
-			values (".$dados['idUsuario'].", ".$dados['cnpj'].", ".$dados['site'].")";
-
-			if(!$query = $this->db->query($sql)){
-				if($this->db->error()){
-					return array("Error" => "$error[message]");
-				}
-			} else {
-				return true;
+		if($resposta["tipo"] == "sucesso"){
+			if(!isset($dados['cnpj'])){
+				$this->db->trans_rollback();
+				return ["tipo" => "erro", "msg" => "Campos obrigatórios ainda não foram preenchidos.", "campo" => "cnpj"];
+			}else if(!validaCNPJ($dados['cnpj'])){
+				$this->db->trans_rollback();
+				return ["tipo" => "erro", "msg" => "CNPJ informado não é válido.", "campo" => "cnpj"];
+			}else if($this->buscaInstituicao($dados['cnpj'])){
+				$this->db->trans_rollback();
+				return ["tipo" => "erro", "msg" => "CNPJ já registrado no sistema.", "campo" => "cnpj"];
 			}
-			
-		} catch(Exception $E) {
-			return array("Error" => "Server was unable to execute query");
+
+			try{
+				$sql = "INSERT INTO instituicao (instituicao_id, instituicao_cnpj, instituicao_site) 
+				values (".$this->db->escape($this->usuario->getId()).", ".$this->db->escape($dados['cnpj']).", ".$this->db->escape($dados['website']).")";
+
+				if(!$query = $this->db->query($sql)){
+					if($this->db->error()){
+						$this->db->trans_rollback();
+						return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de cadastrar a Instituição. Por favor, mude os dados inseridos ou tente mais tarde. Código: ".$error["code"]];
+					}else{
+						$this->db->trans_rollback();
+						return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de cadastrar a Instituição. Por favor, mude os dados inseridos ou tente mais tarde."];
+					}
+				}else{
+        			$this->db->trans_commit();
+					return ["tipo" => "sucesso", "msg" => "Cadastro efetuado com sucesso."];
+				}
+				
+			}catch(PDOException $PDOE){
+				$this->db->trans_rollback();
+				return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+			}catch(Exception $E){
+				$this->db->trans_rollback();
+				return ["tipo" => "erro", "msg" => "Problema interno do sistema. Por favor, tente mais tarde!"];
+			}
+		}else{
+			$this->db->trans_rollback();
+			return $resposta;	
 		}
 	}
 
@@ -94,7 +119,7 @@ class Instituicao_model extends CI_Model {
 	 *			"Error" => ""
 	 *		)
 	 */
-	public function buscaInstituicao($idInst){
+	public function selecionaInstituicao($idInst){
 		if(!isset($idInst)){
 			return array("Error" => "Insuficient information to execute the query");
 		}
@@ -117,50 +142,33 @@ class Instituicao_model extends CI_Model {
 		}
 	}
 
+	
 	/**
-	 * Busca no Banco de Dados as instituições e as retorna
-	 * @return 				Array com os dados buscados das instituições ou mensagem de erro
-	 *	Array format:
-	 *		array(
-	 *			array(
-	 *				"usuario_id" => "",
-	 *				"usuario_nome" => "",
-	 *				"cidade_nome" => "",
-	 *				"estado_uf" => ""
-	 *			),
-	 *			...
-	 *		)
-	 *	Ou:
-	 *		array(
-	 *			"Error" => ""
-	 *		)
+	 * Busca uma instituição pelo seu cnpj (Mais usado na hora de cadastrar, para ver se o cpf já existe no sistema)
+	 * @param  string $cnpj CNPJ a ser buscado
+	 * @return boolean       TRUE se já existe uma instituição cadastrada no sistema com esse CNPJ, FALSE se não.
 	 */
-    public function buscaInstituicoes(){ // Adicionar filtro por tipo_usuario quando ele for adicionado
-    	
-		try{
+    public function buscaInstituicao($cnpj){
+		if(!isset($cnpj))
+			return ["tipo" => "erro", "msg" => "Problema interno do sistema. Por favor, tente mais tarde!"];
 
-			$sql = "SELECT DISTINCT usuario_id, usuario_nome, cidade_nome, estado_uf
-			FROM estado NATURAL JOIN cidade NATURAL JOIN usuario";
+		try{
+			$sql = "SELECT instituicao_cnpj FROM instituicao
+			WHERE instituicao_cnpj = ".$this->db->escape($cnpj);
 
 			if(!$query = $this->db->query($sql)){
-				if($this->db->error()){
-					return array("Error" => "$error[message]");
+				if($error = $this->db->error()){
+					return ["tipo" => "erro", "msg" => "Ocorreu um problema ao tentar buscar a pessoa. Por favor, tente mais tarde! Código: ".$error["code"]];
 				}
-			} else if (empty($query->result())) {
-				return array("Error" => "No data found");
-			} else {
-				$count = 0;
-				foreach($query->result() as $row){
-					foreach ($row as $campo => $valor) {
-						$result[$count][$campo] = $valor;
-					}
-					$count++;
-				}
-				return $result;
+			}else{
+				if(!count($query->result()))
+					return false;
+
+				return true;
 			}
 			
-		} catch(Exception $E) {
-			return array("Error" => "Server was unable to execute query");
+		}catch(Exception $E){
+			return ["tipo" => "erro", "msg" => "Problema interno do sistema. Por favor, tente mais tarde!"];
 		}
     }
 

@@ -4,24 +4,23 @@
 </ul>
 
 <div class="container-fluid procurando-algo">
-
-    <div class="row">    
-        <div class="col-xs-4 col-md-7 col-md-offset-1">
+    <div class="row text-center">
+        <div class="col-xs-12 col-sm-7 col-md-7 col-md-offset-1">
 		    <div class="input-group">
-		        <input type="hidden" name="search_param" value="all" id="search_param">         
+		        <input type="hidden" name="search_param" value="all" id="search_param">
 		        <input type="text" class="form-control input-lg" name="x" placeholder="Procurando por algo?">
 		        <span class="input-group-btn">
 		            <button class="btn btn-primary btn-lg" type="button"><span class="fa fa-search"></span> Pesquisar</button>
 		        </span>
 		    </div>
 		</div>
-		<div class="col-xs-8 col-md-4">
-		   	<div  id="filtro-pesquisa" class="btn btn-info btn-lg" ><span class="fa fa-filter"> Quer filtrar sua pesquisa?</span></div>
+		<div class="col-xs-12 col-sm-5 col-md-3">
+		   	<div id="filtro-pesquisa" class="btn btn-info btn-lg" ><span class="fa fa-filter"> Quer filtrar sua pesquisa?</span></div>
 		</div>
 	</div>
 </div>
 <div class="container-fluid footer-align">
-	<div class="text-center center-block">
+	<div class="bloco-doacoes text-center center-block">
 	 	<div class="col-item"><!-- Cada Doação -->
 	   	    <div class="photo"> 
 	   	        <a href="doacoes/item/1" alt="Veja todas as fotos da doação.">
@@ -310,5 +309,5 @@
 	   	        </div>
 	   	    </div>
 		</div>
-</div>
+	</div>
 </div><!-- bloco das doações -->

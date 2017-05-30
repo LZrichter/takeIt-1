@@ -21,10 +21,20 @@ ul.breadcrumb li a:hover {
     text-decoration: underline;
 }
 
-.procurando-algo{ margin-bottom: 20px; margin-top: 20px; }
+.procurando-algo { 
+    margin-bottom: 20px; 
+    margin-top: 10px;
+}
 
-.col-item
-{
+.row div{
+    margin-bottom: 5px;
+}
+
+.bloco-doacoes {
+    margin-bottom: 25px;
+}
+
+.col-item {
     border: 1px solid #E1E1E1;
     border-radius: 5px;
     background: #FFF;
@@ -32,26 +42,23 @@ ul.breadcrumb li a:hover {
     width: 200px;
     display: inline-block;
 }
-.col-item .photo img
-{
+
+.col-item .photo img {
     margin: 0 auto;
     width: 200px; 
 }
 
-.col-item .info
-{
+.col-item .info {
     padding: 10px;
     border-radius: 0 0 5px 5px;
     margin-top: 1px;
 }
 
-.col-item .titulo h5
-{
+.col-item .titulo h5 {
     /* line-height: 20px; */
 }
 
-.col-item .separator
-{
+.col-item .separator {
     border-top: 1px solid #E1E1E1;
 }
 

@@ -63,6 +63,7 @@ $("#cadastroForm").on("submit", function(e){
     e.preventDefault();
 
     var flag = false;
+    $("#btnSend").button('loading');
 
     obrigatorio.forEach(function(item, index){
     	var obj = $('[name="' + item + '"]');
@@ -90,18 +91,29 @@ $("#cadastroForm").on("submit", function(e){
 			data: $("#cadastroForm").serialize(),
 			dataType: "json",
 			success: function(data){
-				console.log(data);
-
+				$("#btnSend").button('reset');
 				mensagem(data["tipo"], data["msg"], "mensagem");
 				$("#div_mensagem").show();
 
 				if(data["tipo"] == "erro")
 					changeClass($("[name='" + data["campo"] + "']"), "add");
-				else
+				else{
 					$("#cadastroForm")[0].reset();
+					$("#select_cidade option").remove();
+					$('#select_cidade').prop('disabled', true);
+					$("#select_cidade").append('<option>Selecione o estado.</option>');
+				}
+			},
+			error: function(data){
+				$("#btnSend").button('reset');
+				mensagem("erro", "Ocorreu um problema na hora de realizar o cadastro. Por favor, mude os dados inseridos ou tente mais tarde.", "mensagem");
+			},
+			finally: function(data){
+				$("#btnSend").button('reset');
 			}
 		});
     }else{
+		$("#btnSend").button('reset');
     	mensagem("erro", "Campos obrigatórios ainda não foram preenchidos.", "mensagem");
 		$("#div_mensagem").show();
 	}

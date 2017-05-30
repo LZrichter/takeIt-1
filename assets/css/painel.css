@@ -1,23 +1,5 @@
-ul.breadcrumb {
-    padding: 10px 16px;
-    list-style: none;
-    background-color: #eee;
-    font-size: 12px;
-}
-ul.breadcrumb li {display: inline;}
-
-ul.breadcrumb li+li:before {
-    padding: 8px;
-    color: black;
-    content: "/\00a0";
-}
-ul.breadcrumb li a {
-    color: #0275d8;
-    text-decoration: none;
-}
-ul.breadcrumb li a:hover {
-    color: #01447e;
-    text-decoration: underline;
+#main {
+    display: block;
 }
 
 #page-content-wrapper > div > div > div.panel-body > div > div > div > div.left-adquiridos {
@@ -35,6 +17,15 @@ ul.breadcrumb li a:hover {
     float: right;
 }
 
+.right-adquiridos {
+    margin-top: 40px;
+}
+
+.right-adquiridos button {
+    width: 75px;
+    margin: 1px;
+}
+
 #page-content-wrapper > div > div > div.panel-body > div > div > div > div.right-adquiridos > button.btn {
     margin-bottom: 2px;
 }
@@ -43,7 +34,18 @@ ul.breadcrumb li a:hover {
     padding: 5px !important;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
+
+    .right-adquiridos{
+        margin-top: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .right-adquiridos{
+        margin-top: 15px;
+    }
 
     #page-content-wrapper > div > div > div.panel-body > div > div > div > div.left-adquiridos {
         display: inline-block;
@@ -53,7 +55,7 @@ ul.breadcrumb li a:hover {
         display: inline-block;
     }
 
-    .photo { display: none !important; }
+    /*.photo { display: none !important; }*/
 
     #page-content-wrapper > div > div > div.panel-body > div > div > div > div.right-adquiridos {
         margin-top: 0%;

@@ -20,10 +20,9 @@ class Instituicoes extends CI_Controller{
 
 		$dados["titulo"] = "Instituições";
 		$dados["dataTable"] = true;
-		$dados["css"]    = "menuDoacoes.css";
-		$dados["css2"]   = "instituicoes.css";
-		$dados["js"]   = "menuDoacoes.js";
-		$dados["js2"]   = "instituicoes.js";
+		$dados["css"]   = "instituicoes.css";
+		$dados["css2"]   = "jquery.dataTables.min.css";
+		$dados["js"]   = "instituicoes.js";
 		
 		//echo "<br/><br/><br/><br/><br/><br/><pre>";
 		//print_r($result);
@@ -31,7 +30,6 @@ class Instituicoes extends CI_Controller{
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
-		$this->load->view('templates/menuDoacoes', $dados);
 		$this->load->view('instituicoes');
 		$this->load->view('templates/footer', $dados);
 	}

@@ -28,34 +28,20 @@ class Cadastro extends CI_Controller{
 		foreach($_REQUEST as $k => $v)
 			$$k = $v;
 
-		$this->load->model("Usuario_model", "user");
+		$this->load->model("Usuario_model", "usuario");
 
-		$resposta = $this->user->insereUsuario($_REQUEST);
+		if($tipo_usuario == "Pessoa"){
+			$this->load->model("Pessoa_model", "pessoa");
+			$resposta = $this->pessoa->inserePessoa($this->input->post());
 
-		echo json_encode($resposta);
-		return;
-		
-		if(isset($resposta["sucesso"])){
-			if($tipo_usuario == "Pessoa"){
-				$this->load->model("Pessoa_model", "pessoa");
-
-				// if($res = $this->pessoa->inserePessoa(["idUsuario" => $this->user->id, "cpf" => $cpf])){
-
-				// }else{
-				// 	echo json_encode();
-				// }
-
-				echo "Pessoa";
-			}else{
-				echo "Instituição";
-			}
-
-			$nome = $this->user->nome;
-			$teste_senha = $this->user->testaSenha("12345");
-		}else{
+			echo json_encode($resposta); 
+			return;
+		}else if($tipo_usuario == "Instituição"){
+			$this->load->model("Instituicao_model", "instituicao");
+			$resposta = $this->instituicao->insereInstituicao($this->input->post());
 			
-			echo json_encode($resposta);	
-		} 
+			echo json_encode($resposta); 
+		}else echo json_encode(["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"]);
 	}
 
 	/**

@@ -30,7 +30,7 @@
                     <a href="/doacoes/cadastrarItem"><span class="fa fa-heart"></span> Fazer Doação</a>
                 </li>
                 <li id="sair">
-                    <a href="/welcome"><span class="fa fa-sign-out"></span>Sair</a>
+                    <a href="/login/sair"><span class="fa fa-sign-out"></span>Sair</a>
                 </li>
             </ul>
         </div>

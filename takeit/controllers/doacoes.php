@@ -5,6 +5,10 @@ class Doacoes extends CI_Controller{
 	function __construct(){
 		parent::__construct();
 		$this->load->helper('url');
+		$this->load->helper('login');
+
+		testaLogin();
+
 		$this->load->model("CidadeEstado_model", "CEM");
 		$this->load->model("Categoria_model", "CM");
 

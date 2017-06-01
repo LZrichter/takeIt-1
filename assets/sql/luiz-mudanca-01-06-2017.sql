@@ -1,0 +1,1 @@
+ALTER TABLE `usuario` CHANGE COLUMN `usuario_nivel` `usuario_nivel` ENUM('Admin','Pessoa','Instituição') NOT NULL DEFAULT 'Pessoa' AFTER `usuario_ativo`;

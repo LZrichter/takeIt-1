@@ -6,8 +6,6 @@ class CidadeEstado_model extends CI_Model{
 		parent::__construct();
 
 		$this->load->database();
-		$this->load->helper('erro');
-		$this->erro = new Erro();
 	}
 
 	/**
@@ -18,9 +16,7 @@ class CidadeEstado_model extends CI_Model{
 		try{
 			if(!$query = $this->db->query("SELECT * FROM cidade")){
 				if($error = $this->db->error()){
-					$this->erro("sql", "Ocorreu um erro na tentativa de buscar as cidades: $error[code] - $error[message]");
-
-					return FALSE;
+					return ["tipo" => "erro", "msg" => "Ocorreu um erro na tentativa de buscar as cidades. Código: $error[code]"];
 				}
 			}else{
 				foreach($query->result()[0] as $campo => $valor){
@@ -31,15 +27,12 @@ class CidadeEstado_model extends CI_Model{
 				return $dados;
 			}
 		}catch(PDOException $PDOE){
-			$this->erro("pdo", "Excessão: " . $PDOE->getCode() . " - " . $PDOE->getMessage());
-			return FALSE;
-		}catch(Exception $SysE){
-			$this->erro("sys", "Excessão: " . $SysE->getCode() . " - " . $SysE->getMessage());
-			return FALSE;
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+		}catch(Exception $NE){
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
 		}
 
-		$this->erro("sys", "Ocorreu um erro inesperado no sistema.");
-		return FALSE;
+		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
 	}
 
 	/**
@@ -48,18 +41,13 @@ class CidadeEstado_model extends CI_Model{
 	 * @return array Array com todos os dados das cidades selecionadas
 	 */
 	public function selecionaCidades(int $id_estado){
-		if(!isset($id_estado) || empty($id_estado) || !is_int($id_estado)){
-			$this->erro("sys", "Variável passada não está correta.");
-			return FALSE;
-		}
+		if(!isset($id_estado) || empty($id_estado) || !is_int($id_estado))
+			return ["tipo" => "erro", "msg" => "Dados não informado"];
 
 		try{
 			if(!$query = $this->db->query("SELECT * FROM cidade WHERE estado_id = $id_estado")){
-				if($error = $this->db->error()){
-					$this->erro("sql", "Ocorreu um erro na tentativa de buscar as cidades: $error[code] - $error[message]");
-
-					return FALSE;
-				}
+				if($error = $this->db->error())
+					return ["tipo" => "erro", "msg" => "Ocorreu um erro na tentativa de buscar as cidades. Código: $error[code]"];
 			}else{
 				$dados = [];
 				
@@ -70,15 +58,12 @@ class CidadeEstado_model extends CI_Model{
 				return $dados;
 			}
 		}catch(PDOException $PDOE){
-			$this->erro("pdo", "Excessão: " . $PDOE->getCode() . " - " . $PDOE->getMessage());
-			return FALSE;
-		}catch(Exception $SysE){
-			$this->erro("sys", "Excessão: " . $SysE->getCode() . " - " . $SysE->getMessage());
-			return FALSE;
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+		}catch(Exception $NE){
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
 		}
 
-		$this->erro("sys", "Ocorreu um erro inesperado no sistema.");
-		return FALSE;
+		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
 	}
 
 	/**
@@ -88,11 +73,8 @@ class CidadeEstado_model extends CI_Model{
 	public function todosEstados(){
 		try{
 			if(!$query = $this->db->query("SELECT * FROM estado")){
-				if($error = $this->db->error()){
-					$this->erro("sql", "Ocorreu um erro na tentativa de buscar os estados: $error[code] - $error[message]");
-
-					return FALSE;
-				}
+				if($error = $this->db->error())
+					return ["tipo" => "erro", "msg" => "Ocorreu um erro na tentativa de buscar os estados. Código: $error[code]"];
 			}else{
 				foreach($query->result() as $linha => $val){
 					$dados[] = ["id" => $val->estado_id, "uf" => $val->estado_uf];
@@ -101,15 +83,12 @@ class CidadeEstado_model extends CI_Model{
 				return $dados;
 			}
 		}catch(PDOException $PDOE){
-			$this->erro("pdo", "Excessão: " . $PDOE->getCode() . " - " . $PDOE->getMessage());
-			return FALSE;
-		}catch(Exception $SysE){
-			$this->erro("sys", "Excessão: " . $SysE->getCode() . " - " . $SysE->getMessage());
-			return FALSE;
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+		}catch(Exception $NE){
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
 		}
 
-		$this->erro("sys", "Ocorreu um erro inesperado no sistema.");
-		return FALSE;
+		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
 	}
 
 } ?>

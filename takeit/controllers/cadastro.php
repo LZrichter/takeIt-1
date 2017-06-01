@@ -25,7 +25,7 @@ class Cadastro extends CI_Controller{
 	}
 
 	public function salvarUsuario(){
-		foreach($_REQUEST as $k => $v)
+		foreach($this->input->post() as $k => $v)
 			$$k = $v;
 
 		$this->load->model("Usuario_model", "usuario");
@@ -56,14 +56,14 @@ class Cadastro extends CI_Controller{
 		if(isset($id_estado) && !is_null($id_estado) && !empty($id_estado)){
 			$cidades = $this->CEM->selecionaCidades((int) $id_estado);	
 
-			if($cidades !== FALSE){
+			if($cidades !== FALSE && !isset($cidades["tipo"])){
 				echo json_encode(["cidades" => $cidades]);
 
 				return;
 			}
 		}
 
-		echo json_encode(["erro" => "Ocorreu um erro ao sistema, tente novamente mais tarde."]);
+		echo json_encode(["tipo" => "erro", "msg" => "Ocorreu um erro ao sistema, tente novamente mais tarde."]);
 	}
 
 	public function licencaUso(){

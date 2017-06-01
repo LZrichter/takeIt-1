@@ -29,12 +29,12 @@ $("#select_estado").on("change", function(a){
 			if(typeof JSON.parse(data) != "undefined"){
 				var json = JSON.parse(data);
 
-				if(typeof json["erro"] != "undefined"){
+				if(typeof json["tipo"] != "undefined" && json["tipo"] == "erro"){
 					$("#select_cidade option").remove();
 					$('#select_cidade').prop('disabled', true);
 
 					$("#group_mensagem").show();
-					mensagem("erro", json["erro"], "mensagem");
+					mensagem(json["tipo"], json["msg"], "mensagem");
 				}else{
 					$("#select_cidade option").remove();
 

@@ -25,6 +25,7 @@ class Usuario_model extends CI_Model{
 	public $cidade_nome = "";
 	public $estado_id = "";
 	public $estado_uf = "";
+	public $nivelUsuario = "";
 
 	function __construct(){
 		parent::__construct();
@@ -76,8 +77,9 @@ class Usuario_model extends CI_Model{
 					".$this->db->escape($dados["bairro"]).", 
 					".$this->db->escape($dados["numero"]).", 
 					".$this->db->escape($dados["complemento"]).", 
-					".$this->db->escape($dados["telefone"]).", 
-					1, 'Comum', ".$this->db->escape($dados["cidade"])."
+					".$this->db->escape($dados["telefone"]).", 1, 
+					".$this->db->escape($dados["tipo_usuario"]).",
+					".$this->db->escape($dados["cidade"])."
 				)";
 
 			// return [$sql];
@@ -144,7 +146,7 @@ class Usuario_model extends CI_Model{
 						$this->$campo = $valor;
 					}
 
-					return TRUE;
+					return true;
 				}
 			}
 		}catch(PDOException $PDOE){
@@ -208,12 +210,13 @@ class Usuario_model extends CI_Model{
 
 					return $dados;
 				}else{
-					foreach($query->result() as $campo => $valor){
+					foreach($query->result()[0] as $campo => $valor){
 						$campo = str_replace("usuario_", "", $campo);
+						if($campo == "nivel") 
+							$this->nivelUsuario = $valor;
 						$this->$campo = $valor;
-
-						return true;
 					}
+						return true;
 				}
 			}
 		}catch(PDOException $PDOE){
@@ -223,14 +226,6 @@ class Usuario_model extends CI_Model{
 		}
 
 		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
-	}
-
-	/**
-	 * Retorna o tipo de usuário selecionado na instância
-	 * @return string tipo do usuário (Pessoa, Instituição ou Admin)
-	 */
-	public function tipoUsuario(){
-
 	}
 
 	public function getId(){

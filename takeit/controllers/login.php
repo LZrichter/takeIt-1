@@ -42,6 +42,8 @@ class Login extends CI_Controller{
 						$this->session->set_userdata("user_id", $this->user->getId());
 						$this->session->set_userdata("user_email", $this->user->email);
 						$this->session->set_userdata("user_name", $this->user->nome);
+						$this->session->set_userdata("user_tipo", $this->user->nivelUsuario);
+						$this->session->set_userdata("user_cidade", $this->user->cidade_id);
 
 						echo json_encode(["tipo" => "ok"]);
 						return;

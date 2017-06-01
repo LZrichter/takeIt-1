@@ -39,3 +39,15 @@
    	left: auto !important;
    	right: 0 !important;
 }
+
+.user-img > img{
+	width: 24px;
+}
+
+.user-name{
+
+}
+
+.user-count{
+	text-align: left;
+}

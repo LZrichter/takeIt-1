@@ -20,7 +20,7 @@ if(!function_exists("testeLogin")){
 			if($ci->user->selecionaUsuario((int) $ci->session->userdata("user_id"))){
 				if($ci->user->ativo == "1") return true;
 				else{
-					$this->session->sess_destroy();
+					$ci->session->sess_destroy();
 
 					helperTestaLoginRedirect($retorna, $ci, $data);
 				}

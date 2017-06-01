@@ -4,7 +4,7 @@
 
 <div class="container footer-align" id="main">
 	<div class="panel-heading text-center">
-		<h1><span class="fa fa-dashboard"></span> Painel Administrativo</h1>
+		<h1><span class="fa fa-dashboard"></span> Meu Painel</h1>
 	</div>
 	<ul class="flex-container">
 		<!-- BOTÃO 1 -->
@@ -21,7 +21,7 @@
 		  	<a href="/painel/itens_doados">
 		  		<div>
 		  			<img src="<?=base_url()?>/assets/img/painel_doados.png">
-		  			<h2>Itens Doados</h2>
+		  			<h2>Minhas Doações</h2>
 		  		</div>
 		  	</a>
 	  	</li>
@@ -57,7 +57,7 @@
 		  	<a href="/painel/perfil">
 		  		<div>
 		  			<img src="<?=base_url()?>/assets/img/painel_perfil.png">
-		  			<h2>Perfil do Usuário</h2>
+		  			<h2>Dados da Conta</h2>
 		  		</div>
 		  	</a>
 	  	</li>

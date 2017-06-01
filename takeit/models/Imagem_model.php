@@ -28,18 +28,21 @@ class Imagem_model extends CI_Model {
 	public function insereImagem($dados){
 		if(!isset($dados['imagem_nome']) || !isset($dados['imagem_caminho']) || 
 			!isset($dados['imagem_tamanho']) || !isset($dados['item_id'])){
-			return array("Error" => "Insuficient information to execute the query");
+			return array("tipo" => "erro", "msg" => "Informação insuficiente para executar a consulta.");
 		}
 
 		try{
-
 			$sql = "INSERT INTO imagem (imagem_nome, imagem_caminho, imagem_tamanho, item_id) 
-			values (".$dados['imagem_nome'].", ".$dados['imagem_caminho'].", ".
-				$dados['imagem_tamanho'].", ".$dados['item_id'].")";
+			values ("
+				.$this->db->escape($dados['imagem_nome']).", "
+				.$this->db->escape($dados['imagem_caminho']).", "
+				.$this->db->escape($dados['imagem_tamanho']).", "
+				.$this->db->escape($dados['item_id']).
+			")";
 
 			if(!$query = $this->db->query($sql)){
 				if($this->db->error()){
-					return array("Error" => "$error[message]");
+					return array("tipo" => "erro", "msg" => $this->db->_error_message());
 				}
 			} else {
 				return true;
@@ -63,7 +66,7 @@ class Imagem_model extends CI_Model {
 	 *		)
 	 */
 	public function alteraInstituicao($imagem_id, $imagem_nome, $imagem_caminho, $imagem_tamanho){
-		if(!isset($imagem_id) || !isset($imagem_nome) || !isset($imagem_caminho) ||  || !isset($imagem_tamanho)){
+		if(!isset($imagem_id) || !isset($imagem_nome) || !isset($imagem_caminho) || !isset($imagem_tamanho)){
 			return array("Error" => "Insuficient information to execute the query");
 		}
 

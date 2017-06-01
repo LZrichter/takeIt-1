@@ -111,8 +111,9 @@ DROP TABLE IF EXISTS `takeit`.`item` ;
 
 CREATE TABLE IF NOT EXISTS `takeit`.`item` (
   `item_id` INT NOT NULL AUTO_INCREMENT,
-  `item_descricao` TEXT NULL,
-  `item_qtde` INT NULL,
+  `item_descricao` TEXT NOT NULL,
+  `item_qtde` INT NOT NULL,
+  `item_detalhes` TEXT NOT NULL,
   `item_data` DATE NULL,
   `item_status` ENUM('Disponível', 'Solicitado', 'Cancelado', 'Doado') NULL,
   `usuario_id` INT NOT NULL,
@@ -230,7 +231,7 @@ DROP TABLE IF EXISTS `takeit`.`imagem` ;
 CREATE TABLE IF NOT EXISTS `takeit`.`imagem` (
   `imagem_id` INT NOT NULL AUTO_INCREMENT,
   `imagem_nome` VARCHAR(255) NOT NULL,
-  `imagem_caminho` VARCHAR(255) NOT NULL,
+  `imagem_caminho` TEXT NOT NULL,
   `imagem_tamanho` INT NULL,
   `item_id` INT NOT NULL,
   PRIMARY KEY (`imagem_id`),
@@ -316,6 +317,18 @@ ALTER TABLE `pessoa` CHANGE COLUMN `pessoa_cpf` `pessoa_cpf` VARCHAR(255) NOT NU
 
 ALTER TABLE `instituicao` ALTER `instituicao_cnpj` DROP DEFAULT;
 ALTER TABLE `instituicao` CHANGE COLUMN `instituicao_cnpj` `instituicao_cnpj` VARCHAR(255) NOT NULL AFTER `instituicao_id`;
+
+-- -----------------------------------------------------
+-- MUDANÇAS LUIZ - ?/05/2017
+-- -----------------------------------------------------
+
+-- Colocando as chaves relacionadas ao usuário na pessoa como cascate, pra não da problema
+ALTER TABLE `pessoa` DROP FOREIGN KEY `fk_pessoa_usuario1`;
+ALTER TABLE `pessoa` ADD CONSTRAINT `fk_pessoa_usuario1` FOREIGN KEY (`pessoa_id`) REFERENCES `usuario` (`usuario_id`) ON UPDATE CASCADE ON DELETE CASCADE;
+
+-- Colocando as chaves relacionadas ao usuário na instituição como cascate, pra não da problema
+ALTER TABLE `instituicao` DROP FOREIGN KEY `fk_instituicao_usuario1`;
+ALTER TABLE `instituicao` ADD CONSTRAINT `fk_instituicao_usuario1` FOREIGN KEY (`instituicao_id`) REFERENCES `usuario` (`usuario_id`) ON UPDATE CASCADE ON DELETE CASCADE;
 
 -- -----------------------------------------------------
 -- INSERÇÃO DE CATEGORIAS

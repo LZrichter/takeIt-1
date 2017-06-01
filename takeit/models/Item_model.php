@@ -25,26 +25,35 @@ class Item_model extends CI_Model {
 		*		)
 		*/
 		public function insereItem($dados){
-			if(!isset($dados['descricao']) || !isset($dados['quantidade']) || 
-				!isset($dados['status']) || !isset($dados['idUsuario']) || !isset($dados['idCategoria'])){
-				return array("Error" => "Insuficient information to execute the query");
+			if(!isset($dados['descricao']) || !isset($dados['quantidade']) || !isset($dados['detalhes']) || !isset($dados['idUsuario']) || !isset($dados['idCategoria'])){
+				return array("tipo" => "erro", "msg" => "Informação insuficiente para executar a consulta.");
 			}
 
 			try{
-
-				$sql = "INSERT INTO item (item_descricao, item_qtde, item_data, item_status, usuario_id, categoria_id) 
-				values (".$dados['descricao'].", ".$dados['quantidade'].", ".date('Y/m/d').", ".$dados['status'].", ".$dados['idUsuario'].", ".$dados['idCategoria'].")";
+				$sql = "INSERT INTO item (item_descricao, item_qtde, item_detalhes, item_data, item_status, usuario_id, categoria_id) 
+				values ("
+					.$this->db->escape($dados['descricao']).","
+					.$this->db->escape($dados['quantidade']).", "
+					.$this->db->escape($dados['detalhes']).", "
+					.$this->db->escape(date('Y:m:d')).","
+					.$this->db->escape('Disponível').", "
+					.$this->db->escape($dados['idUsuario']).", "
+					.$this->db->escape($dados['idCategoria']).
+				")";
 
 				if(!$query = $this->db->query($sql)){
 					if($this->db->error()){
-						return array("Error" => "$error[message]");
+						return array("tipo" => "erro", "msg" => $this->db->_error_message());
 					}
-				} else {
-					return LAST_INSERT_ID();
+				}else{
+					$lastId = $this->db->insert_id();
+					return array("tipo" => "sucesso", "msg" => "Sucesso ao inserir sua doação.", "idItem" => $lastId);
 				}
 				
-			} catch(Exception $E) {
-				return array("Error" => "Server was unable to execute query");
+			}catch(Exception $NE) {
+				return array("tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode());
+			}catch(PDOException $PDOE){
+				return array("tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode());
 			}
 		}
 

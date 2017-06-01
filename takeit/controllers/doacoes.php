@@ -4,7 +4,7 @@ class Doacoes extends CI_Controller{
 
 	function __construct(){
 		parent::__construct();
-		$this->load->helper(array('url', 'form'));
+		$this->load->helper('url');
 		$this->load->model("CidadeEstado_model", "CEM");
 		$this->load->model("Categoria_model", "CM");
 
@@ -70,7 +70,8 @@ class Doacoes extends CI_Controller{
 			"detalhes"
 		];
 
-		$return = array();
+		$return = array(); // AJAX Response
+		$dadosImg = array(); //Dados das imagens
 		/* Validação dos Campos */
 		foreach($obrigatorio as $campo){
 			if(!in_array($campo, array_keys($dados)) || (isset($dados[$campo]) && empty(trim($dados[$campo])))){
@@ -114,7 +115,7 @@ class Doacoes extends CI_Controller{
         		$config['allowed_types']    = 'gif|jpg|png|jpeg';
         		$config['encrypt_name']		= TRUE;
         		$config['overwrite']		= TRUE;
-        		$config['max_size']         = 1024; //Kb
+        		$config['max_size']         = 2048; //Kb
         		// $config['max_width']            = 1024;
         		// $config['max_height']           = 768;
         		
@@ -127,18 +128,38 @@ class Doacoes extends CI_Controller{
             	}else{ // deu certo o upload
             		$success = $this->upload->data();
             		array_push($return,["msg" => $success, "tipo" => "sucesso", "path" => $success['file_path']]);
-            		// $uploadData['file_name'] = $fileData['file_name'];
-                	// $uploadData['created'] = date("Y-m-d H:i:s");
-                	// $uploadData['modified'] = date("Y-m-d H:i:s");
+
+            		array_push($dadosImg, ["imagem_nome" => $success['file_name'], "imagem_caminho" => $path, "imagem_tamanho" => $success['file_size'] ]);
             		
             	}	
 			}
 		}
-		if ($apagarPasta) {
+		if (isset($apagarPasta))
 			rmdir($dirname);
+		else{ //SALVAR TUDO NO BANCO, ITEM PRIMEIRO IMAGENS DEPOIS
+			$this->load->model('Item_model', 'IM');
+			$this->db->trans_begin();
+			$return = $this->IM->insereItem($dados);
+			if($return["tipo"] == "sucesso" && isset($return["idItem"])){ //SALVAR IMAGENS
+				$this->load->model('Imagem_model', 'IMG');				
+				foreach($dadosImg as $row => $value){
+					$dadosImg[$row] = array_merge($dadosImg[$row], ["item_id" => $return["idItem"]]);
+					
+					$insertImage = $this->IMG->insereImagem($dadosImg[$row]);
+					if(!$insertImage && $this->db->trans_status() === FALSE){ //deu errado a imagem
+						array_push($return, $insereImage);
+						$this->db->trans_rollback(); //rollback no banco
+						rmdir($dirname);
+						break;
+					}
+				}	
+				
+				$this->db->trans_commit();	
+			}
 		}
 
 		echo json_encode($return);
+		return;
 		
 	}
 
@@ -162,8 +183,5 @@ class Doacoes extends CI_Controller{
 		* TODO
 		* filtra doaçoes pela categoria e cidade pelo menu lateral 
 		*/
-	
-		
-
 	}
 }

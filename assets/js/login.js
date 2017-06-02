@@ -11,6 +11,7 @@ $("#loginForm").on("submit", function(e){
     	mensagem("erro", "E-mail e senha devem ser preenchidos!.", "mensagem");
 		$("#div_mensagem").show();
     }else{
+    	console.log($("#uri_redirect").val());
     	$.ajax({
 			url: 'login/entrar',
 			type: 'POST',
@@ -25,7 +26,7 @@ $("#loginForm").on("submit", function(e){
 
 					mensagem(data["tipo"], data["msg"], "mensagem");
 					$("#div_mensagem").show();
-				}else window.location.href = "/doacoes";
+				}else window.location.href = $("#uri_redirect").val();
 			},
 			error: function(data){
 				console.log(data);

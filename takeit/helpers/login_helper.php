@@ -38,6 +38,7 @@ if(!function_exists("testeLogin")){
 			exit;
 		}else{
 			$ci->load->helper('url');
+			$ci->session->set_userdata("current_uri", base_url() . $ci->uri->uri_string());
 			redirect(base_url() . "login", "refresh"); 
 
 			exit;

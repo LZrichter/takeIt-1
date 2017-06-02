@@ -5,6 +5,10 @@ class Welcome extends CI_Controller{
 	function __construct(){
 		parent::__construct();
 		$this->load->helper('url');
+		$this->load->helper('login');
+
+		if(testaLogin(true)) 
+			redirect(base_url() . "doacoes", "refresh");
 	}
 
 	public function index(){

@@ -16,6 +16,7 @@
             <div class="form-group" id="div_mensagem" style="display: none;">
                 <div id="mensagem"></div>
             </div>
+            <input type="hidden" id="uri_redirect" value="<?= $uri; ?>">
 	        <!-- <div class="checkbox"><label><input type="checkbox" value="remember-me"> Remember me</label></div> -->
 	        <button id="btnLogin" class="btn btn-lg btn-primary btn-block" type="submit">Entrar <span class="fa fa-sign-in"></span></button>
 	    </form>

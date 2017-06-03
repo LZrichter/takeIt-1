@@ -20,7 +20,7 @@ if(!function_exists("testeLogin")){
 			if($ci->user->selecionaUsuario((int) $ci->session->userdata("user_id"))){
 				if($ci->user->ativo == "1") return true;
 				else{
-					$this->session->sess_destroy();
+					$ci->session->sess_destroy();
 
 					helperTestaLoginRedirect($retorna, $ci, $data);
 				}
@@ -38,6 +38,7 @@ if(!function_exists("testeLogin")){
 			exit;
 		}else{
 			$ci->load->helper('url');
+			$ci->session->set_userdata("current_uri", base_url() . $ci->uri->uri_string());
 			redirect(base_url() . "login", "refresh"); 
 
 			exit;

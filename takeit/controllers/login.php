@@ -11,10 +11,11 @@ class Login extends CI_Controller{
 			redirect(base_url() . "doacoes", "refresh");
 	}
 
-	public function index(){		
-		$dados["css"]    = "welcome.css";
-		$dados["js"]	 = "welcome.js";
-		$dados["js2"]	 = "login.js";
+	public function index(){
+		$dados["css"] = "welcome.css";
+		$dados["js"]  = "welcome.js";
+		$dados["js2"] = "login.js";
+		$dados["uri"] = $this->session->userdata("current_uri");
 
 		//$this->load->model("usuario_model","user");
 		$this->load->view('templates/head', $dados);
@@ -42,6 +43,8 @@ class Login extends CI_Controller{
 						$this->session->set_userdata("user_id", $this->user->getId());
 						$this->session->set_userdata("user_email", $this->user->email);
 						$this->session->set_userdata("user_name", $this->user->nome);
+						$this->session->set_userdata("user_tipo", $this->user->nivelUsuario);
+						$this->session->set_userdata("user_cidade", $this->user->cidade_id);
 
 						echo json_encode(["tipo" => "ok"]);
 						return;
@@ -58,7 +61,9 @@ class Login extends CI_Controller{
 	}
 
 	public function sair(){
+		$uri = ($this->session->has_userdata("current_uri")) ? $this->session->has_userdata("current_uri") : base_url()."doacoes";
 		$this->session->sess_destroy();
+		$this->session->set_userdata("current_uri", $uri);
 
 		redirect(base_url());
 	}

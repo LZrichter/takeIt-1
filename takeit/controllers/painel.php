@@ -4,7 +4,8 @@ class Painel extends CI_Controller{
 
 	function __construct(){
 		parent::__construct();
-		$this->load->helper('url');
+		$this->load->helper(array('url', 'login'));
+		testaLogin();
 	}
 
 	public function index(){
@@ -47,6 +48,22 @@ class Painel extends CI_Controller{
 		$this->load->view('templates/menu', $dados);
 		$this->load->view('templates/menuChat', $dados);
 		$this->load->view('chat', $dados);
+		$this->load->view('templates/footer');
+	}
+
+	public function ofertas(){
+		$this->load->model('Item_model', 'IM');
+
+		$dados["titulo"] = "Itens para Doar";
+		$dados["css"]    = "painel.css";
+		$dados["css2"]   = "paraDoar.css";
+
+		$dados["user_id"] = $this->session->userdata('user_id');
+		$dados["busca_item"] = $this->IM->buscaItemUsuario($dados["user_id"]);
+
+		$this->load->view('templates/head', $dados);
+		$this->load->view('templates/menu', $dados);
+		$this->load->view('itens_paraDoar', $dados);
 		$this->load->view('templates/footer');
 	}
 }

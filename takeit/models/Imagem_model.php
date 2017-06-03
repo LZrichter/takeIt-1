@@ -49,7 +49,7 @@ class Imagem_model extends CI_Model {
 			}
 			
 		} catch(Exception $E) {
-			return array("Error" => "Server was unable to execute query");
+			return array("tipo" => "erro", "msg" => "Impossível de fazer a consulta neste momento! Tenta mai tarde.");
 		}
 	}
 
@@ -65,7 +65,7 @@ class Imagem_model extends CI_Model {
 	 *			"Error" => ""
 	 *		)
 	 */
-	public function alteraInstituicao($imagem_id, $imagem_nome, $imagem_caminho, $imagem_tamanho){
+	public function alteraImagem($imagem_id, $imagem_nome, $imagem_caminho, $imagem_tamanho){
 		if(!isset($imagem_id) || !isset($imagem_nome) || !isset($imagem_caminho) || !isset($imagem_tamanho)){
 			return array("Error" => "Insuficient information to execute the query");
 		}
@@ -105,17 +105,16 @@ class Imagem_model extends CI_Model {
 	 */
 	public function buscaPrimeiraImagem($item_id){
 		if(!isset($item_id)){
-			return array("Error" => "Insuficient information to execute the query");
+			return array("tipo" => "erro", "msg" => "Informação insuficiente para executar a consulta.");
 		}
 
 		try{
 
-			$sql = "SELECT imagem_nome, imagem_caminho, imagem_tamanho FROM imagem NATURAL JOIN item
-			WHERE item_id = ".$item_id." LIMIT 1";
+			$sql = "SELECT imagem_nome, imagem_caminho FROM imagem WHERE item_id = ".$item_id." LIMIT 1";
 
 			if(!$query = $this->db->query($sql)){
 				if($this->db->error()){
-					return array("Error" => "$error[message]");
+					return array("tipo" => "erro", "msg" => $this->db->_error_message());
 				}
 			} else {
 				return true;
@@ -145,19 +144,21 @@ class Imagem_model extends CI_Model {
 	 *			"Error" => ""
 	 *		)
 	 */
-    public function buscaImagens(){
-    	
+    public function buscaImagensPorItem($item_id){
+    	if(!isset($item_id)){
+			return array("tipo" => "erro", "msg" => "Informação insuficiente para executar a consulta.");
+		}
 		try{
 
 			$sql = "SELECT DISTINCT imagem_nome, imagem_caminho, imagem_tamanho
-			FROM imagem NATURAL JOIN item WHERE item_id = ".$item_id;
+			FROM imagem WHERE item_id = ".$item_id;
 
 			if(!$query = $this->db->query($sql)){
 				if($this->db->error()){
-					return array("Error" => "$error[message]");
+					return array("tipo" => "erro", "msg" => $this->db->_error_message());
 				}
 			} else if (empty($query->result())) {
-				return array("Error" => "No data found");
+				return array("tipo" => "erro", "msg" => "Nenhum dado encontrado!");
 			} else {
 				$count = 0;
 				foreach($query->result() as $row){
@@ -170,7 +171,7 @@ class Imagem_model extends CI_Model {
 			}
 			
 		} catch(Exception $E) {
-			return array("Error" => "Server was unable to execute query");
+			return array("tipo" => "erro", "msg" => "Impossível de fazer a consulta neste momento! Tente mais tarde.");
 		}
     }
 

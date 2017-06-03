@@ -96,6 +96,8 @@
   							
   							<button class="btn btn-success btn-lg" name="doacaoSubmit" type="submit"><span class="fa fa-pencil-square-o"></span> Cadastrar</button>
   						</div>
+  						<input type="hidden" name="ajax" value="1">
+  						<input type="hidden" name="user_id" id="user_id" value="<?= $user_id ?>">
 					</form>
 					
 	  			</div>

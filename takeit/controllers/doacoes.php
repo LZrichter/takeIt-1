@@ -6,6 +6,7 @@ class Doacoes extends CI_Controller{
 		parent::__construct();
 		$this->load->helper('url');
 		$this->load->helper('login');
+		$this->load->library('session');
 
 		testaLogin();
 
@@ -15,15 +16,10 @@ class Doacoes extends CI_Controller{
 	}
 
 	public function index(){
-		
 		$dados["titulo"] = "Doações";
 		$dados["css"]    = "menuDoacoes.css";
 		$dados["css2"]   = "doacoes.css";
 		$dados["js"]     = "menuDoacoes.js";
-
-		// $this->load->model("inicio_model","ini");
-		// $dados["teste"] = $this->ini->teste();
-		// $this->load->model("usuario_model","user");
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
@@ -32,12 +28,19 @@ class Doacoes extends CI_Controller{
 		$this->load->view('templates/footer');
 	}
 	
-	public function item($id = 0){
+	public function item($id = NULL){
 
 		$dados["itemId"] = $id;
 		$dados["titulo"] = "Doações";
 		$dados["css"]    = "item.css";
 		$dados["js"]    = "imageZoom.js";
+
+		$this->load->model('Item_model', 'IM');
+		$this->load->model('Imagem_model', 'IMG');
+
+		$dados["item"] = $this->IM->buscaItemPorId($id);
+		$dados["imagens"] = $this->IMG->buscaImagensPorItem($id);
+		$dados["user_id"] = $this->session->userdata('user_id');
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
@@ -53,6 +56,7 @@ class Doacoes extends CI_Controller{
 		$dados["js2"]     = "doacao.js";
 
 		$dados["categorias"] = $this->CM->buscaCategorias();
+		$dados["user_id"] = $this->session->userdata('user_id');
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);

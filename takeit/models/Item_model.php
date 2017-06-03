@@ -110,31 +110,39 @@ class Item_model extends CI_Model {
 		*			"Error" => ""
 		*		)
 		*/
-		public function buscaItem($idItem){
-			if(!isset($idItem)){
-				return array("Error" => "Insuficient information to execute the query");
+		public function buscaItemUsuario($idUsuario){		
+
+			if(!isset($idUsuario)){
+				return array( "tipo" => "erro", "msg" => "Informação insuficiente para executar a consulta.");
 			}
 
-			try{
+			$result = array();
 
-				$sql = "SELECT item_descricao, item_qtde, item_data, item_status, usuario_id, categoria_id FROM item
-				WHERE item_id = ".$idItem;
+			try{
+				$sql ="
+					SELECT item_id, item_descricao, item_qtde, item_data, item_status, usuario_id, categoria_id, 
+					(SELECT imagem_caminho FROM imagem WHERE imagem.item_id = i.item_id LIMIT 1) AS imagem_caminho , 
+					(SELECT imagem_nome FROM imagem WHERE imagem.item_id = i.item_id LIMIT 1) AS imagem_nome 
+					FROM item i
+					WHERE usuario_id = ".$idUsuario." ORDER BY item_data DESC";
 
 				if(!$query = $this->db->query($sql)){
 					if($this->db->error()){
-						return array("Error" => "$error[message]");
+						return array("tipo" => "erro", "msg" => $this->db->_error_message());
 					}
-				} else {
+				}else {
+					$count = 0;
 					foreach($query->result() as $row){
 						foreach ($row as $campo => $valor) {
-							$result[$campo] = $valor;
+							$result[$count][$campo] = $valor;
 						}
+						$count++;
 					}
 					return $result;
 				}
 
-			} catch(Exception $E) {
-				return array("Error" => "Server was unable to execute query");
+			}catch(Exception $E) {
+				return array("tipo" => "erro", "msg" => "Erro inexperado ao realizar a consulta, por favor tenta mais tarde!!!");
 			}
 		}
 
@@ -153,7 +161,7 @@ class Item_model extends CI_Model {
 		*			"Error" => ""
 		*		)
 		*/
-        public function buscaItens($idCidade){
+        public function buscaItemCidade($idCidade){
         	
 			try{
 
@@ -179,6 +187,30 @@ class Item_model extends CI_Model {
 				
 			} catch(Exception $E) {
 				return array("Error" => "Server was unable to execute query");
+			}
+        }
+
+        public function buscaItemPorId($idItem){
+        	try{
+				$sql =" SELECT * from item where item_id =".$idItem;
+
+				if(!$query = $this->db->query($sql)){
+					if($this->db->error()){
+						return array("tipo" => "erro", "msg" => $this->db->_error_message());
+					}
+				}else {
+					$count = 0;
+					foreach($query->result() as $row){
+						foreach ($row as $campo => $valor) {
+							$result[$count][$campo] = $valor;
+						}
+						$count++;
+					}
+					return $result;
+				}
+
+			}catch(Exception $E) {
+				return array("tipo" => "erro", "msg" => "Erro inexperado ao realizar a consulta, por favor tenta mais tarde!!!");
 			}
         }
 

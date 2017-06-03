@@ -2,8 +2,9 @@ var obrigatorio      = 0;
 var input_descricao  = $('#input_descricao');
 var select_categoria = $('#select_categoria');
 var input_qtde       = $('#input_qtde');
-var area_detalhes   = $('#area_detalhes');
+var area_detalhes    = $('#area_detalhes');
 var div_mensagem     = $('#div_mensagem');
+var user_id          = $('#user_id');
 var input_img_1      = $('#imagem1');
 var input_img_2      = $('#imagem2');
 var input_img_3      = $('#imagem3');
@@ -55,6 +56,7 @@ function loadImagem(input, loadImg, img){
         mensagem("erro", "Apenas arquivos com extensões <b>.jpg .jpeg .png .gif</b> serão aceitos.   ", "mensagem");
         div_mensagem.show();
         input.val("");
+        img.attr("src", "http://takeit/assets/img/add-img.png");
     }else{
     	readURL(loadImg, img);
     	img.css('border', 'none');	
@@ -119,8 +121,6 @@ $(document).ready(function(){
 			obrigatorio += 1;	
 		}
 		
-		
-
 		inputIsEmpty(input_descricao.val(), group_descricao);
 		inputIsEmpty(option_categoria.text(), group_categoria);
 		inputIsEmpty(input_qtde.val(), group_qtde);
@@ -140,7 +140,7 @@ $(document).ready(function(){
 			idCategoria: option_categoria.attr("id"),
 			quantidade: input_qtde.val(),
 			detalhes: area_detalhes.val(),
-			idUsuario: 1 //DEVE SER ALTERADO PARA VALOR DA SESSÃO DO USUARIO
+			idUsuario:  user_id.val()
 			},function(success){	
 				console.log("AJAX response => ", success);
 				var msg = " ";

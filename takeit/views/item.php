@@ -7,6 +7,11 @@
 </ul>
 
 <div class="container">
+	<? 
+	if(isset($item) && isset($imagens))
+		var_dump($item);
+		var_dump($imagens);
+	 ?>
 	<div class="row">
 	  	<div class="panel panel-default">
 	  		<div class="panel-heading">
@@ -62,10 +67,22 @@
 	  			</div>
 				<div class="col-sm-6 col-md-6 col-lg-8">
 					<div class="center-block text-left">
-						<p><strong>Quantidade:</strong> 1</p>
+						<p><strong>Quantidade:</strong> <? $item[0]["item_qtde"] ?></p>
 						<p><strong>Doador:</strong> Anthony Tailer</p>
 						<p><strong>Cidade/UF:</strong> Santa Maria, RS</p>
-						<p><strong>Status:</strong> <span class="badge"> Disponível</span></p>
+						<p><strong>Status:</strong>
+							<? if ($item[0]["item_status"] == 'Disponível'):?>
+								<span class="label label-success"><?= $item[0]["item_status"] ?></span>
+							<? elseif( $item[0]["item_status"] == 'Solicitado' ):?>
+								<span class="label label-warning"><?= $item[0]["item_status"] ?></span>
+							<? elseif( $item[0]["item_status"] == 'Cancelado' ):?>
+								<span class="label label-danger"><?= $item[0]["item_status"] ?></span>
+							<? elseif( $item[0]["item_status"] == 'Doado' ):?>
+								<span class="label label-primary"><?= $item[0]["item_status"] ?></span>
+							<? else: ?>
+								<span class="label label-default"><?= $item[0]["item_status"] ?></span>
+							<? endif; ?>
+						</p>
 						<p class="text-justify"><strong>Descrição:</strong> Aqui é Body Builder Ipsum PORRA! Boraaa, Hora do Show Porra. É 37 anos caralho! Sabe o que é isso daí? Trapézio descendente é o nome disso aí. Ajuda o maluco que tá doente. AHHHHHHHHHHHHHHHHHHHHHH..., porra! Sai filho da puta!
 
 						É 37 anos caralho! Aqui nóis constrói fibra, não é água com músculo. É nóis caraio é trapezera buscando caraio! Sabe o que é isso daí? Trapézio descendente é o nome disso aí. Eita porra!, tá saindo da jaula o monstro! Vamo monstro!
@@ -73,11 +90,13 @@
 					</div>
 				</div>
 	  		</div>
-	  		<div class="panel-footer text-center">
-	  			<button class="btn btn-primary btn-lg" type="button"><span class="fa fa-heart"></span> Manisfestar Interesse</button>
+	  		<? if($item[0]["usuario_id"] != $user_id): ?>
+		  		<div class="panel-footer text-center">
+		  			<button class="btn btn-primary btn-lg" type="button"><span class="fa fa-heart"></span> Manisfestar Interesse</button>
 
-	  			<button class="btn btn-danger btn-lg" type="button"><span class="fa fa-flag"></span> Reportar Doação</button>
-	  		</div>
+		  			<button class="btn btn-danger btn-lg" type="button"><span class="fa fa-flag"></span> Reportar Doação</button>
+		  		</div>
+			<? endif; ?>
 	  	</div>
   	</div>
   </div>

@@ -81,83 +81,60 @@ h1 {
     border: 1px solid #AEAEAE;
 }
 
-#page-content-wrapper > div > div > div.panel-body > div > div > div > div.left-recebidos {
-    display: inline-flex;
-    /* margin-left: 90px; */
-    align-items: center;
+.left-recebidos {
+ align-items: flex-start;
+ display: flex;
 }
 
-#page-content-wrapper > div > div > div.panel-body > div > div > div > div.left-recebidos > div{
+.left-recebidos > div{
     padding: 15px;
 }
 
-#page-content-wrapper > div > div > div.panel-body > div > div > div > div.right-recebidos {
-    margin-top: 4%;
-    float: right;
+.left-recebidos > div > p {
+  font-size: 14pt;
 }
 
 .right-recebidos {
-    margin-top: 40px;
+    height: 185px;
+    display: flex;
+    align-items: center;
 }
 
 .right-recebidos button {
-    width: 75px;
-    margin: 1px;
-}
-
-#page-content-wrapper > div > div > div.panel-body > div > div > div > div.right-recebidos > button.btn {
-    margin-bottom: 2px;
+    /*width: 80px;*/
+    /*margin-right: 2px;*/
 }
 
 #body-recebidos {
     padding: 5px !important;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 900px) {
 
     .right-recebidos{
-        margin-top: 25px;
+        display: grid !important;
+        margin:0px !important;
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
+  .right-recebidos{
+    height: 100% !important;
+  }
 
-    .right-recebidos{
-        margin-top: 15px;
-    }
-
-    #page-content-wrapper > div > div > div.panel-body > div > div > div > div.left-recebidos {
-        display: inline-block;
-    }
-
-    #body-recebidos > div > div.left-recebidos > div {
-        display: inline-block;
-    }
-
-    /*.photo { display: none !important; }*/
-
-    #page-content-wrapper > div > div > div.panel-body > div > div > div > div.right-recebidos {
-        margin-top: 0%;
-    }
+  .left-recebidos > div {
+   margin: 0 auto;
+  }
 }
 
 @media (max-width: 454px) {
 
-    #page-content-wrapper > div > div > div.panel-body > div > div > div > div.left-recebidos {
-        display: inline-flex;
-    }
+    .photo { display: none !important; }
 
     #body-recebidos > div > div.left-recebidos > div {
         display: inline-grid;
         align-items: top;
     }
 
-    .photo { display: none !important; }
 }
-
-@media (max-width: 454px) {
-
-   #body-recebidos > div > div.left-recebidos > div{
-        font-size: 12px;
-   }
 }

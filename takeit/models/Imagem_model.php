@@ -150,7 +150,7 @@ class Imagem_model extends CI_Model {
 		}
 		try{
 
-			$sql = "SELECT DISTINCT imagem_nome, imagem_caminho, imagem_tamanho
+			$sql = "SELECT DISTINCT imagem_nome, imagem_caminho
 			FROM imagem WHERE item_id = ".$item_id;
 
 			if(!$query = $this->db->query($sql)){

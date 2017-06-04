@@ -74,6 +74,10 @@
              border-radius: 100%
 }
 
+#mainItem > div > div > div > div.panel-body > div.col-sm-6.col-md-6.col-lg-8 > div{
+  font-size: 16pt;
+}
+
 @media (max-width: 360px){
 	#myCarousel {
 		height: 250px !important;

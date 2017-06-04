@@ -28,14 +28,69 @@ class Painel extends CI_Controller{
 		$this->load->view('templates/footer');
 	}
 
+	public function ofertas(){
+		$this->load->model('Item_model', 'IM');
+		$dados["titulo"] = "Itens para Doar";
+		$dados["css"]    = "painel.css";
+		$dados["css2"]   = "paraDoar.css";
+		$dados["qualTela"] = 1;
 
-	public function itens_recebidos(){
-		$dados["titulo"] = "Itens Recebidos";
-		$dados["css"]   = "painel.css";
+		$dados["user_id"] = $this->session->userdata('user_id');
+		$dados["busca_item"] = $this->IM->buscaItemUsuario($dados["user_id"]);
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
-		$this->load->view('itens_recebidos');
+		$this->load->view('itens_painel', $dados);
+		$this->load->view('templates/footer');
+	}
+
+	public function doados(){
+		$this->load->model('Item_model', 'IM');
+		$dados["titulo"] = "Itens Doados";
+		$dados["css"]    = "painel.css";
+		$dados["css2"]   = "paraDoar.css";
+		$dados["qualTela"] = 2;
+
+		$dados["user_id"] = $this->session->userdata('user_id');
+		$dados["busca_item"] = $this->IM->buscaItemUsuario($dados["user_id"]);
+
+		$this->load->view('templates/head', $dados);
+		$this->load->view('templates/menu', $dados);
+		$this->load->view('itens_painel', $dados);
+		$this->load->view('templates/footer');
+
+	}
+
+	public function interesses(){
+		$this->load->model('Item_model', 'IM');
+		$dados["titulo"] = "Itens Para Receber";
+		$dados["css"]    = "painel.css";
+		$dados["css2"]   = "paraDoar.css";
+		$dados["qualTela"] = 3;
+
+		$dados["user_id"] = $this->session->userdata('user_id');
+		$dados["busca_item"] = $this->IM->buscaItemUsuario($dados["user_id"]);
+
+		$this->load->view('templates/head', $dados);
+		$this->load->view('templates/menu', $dados);
+		$this->load->view('itens_painel', $dados);
+		$this->load->view('templates/footer');
+
+	}
+
+
+	public function recebidos(){
+		$this->load->model('Item_model', 'IM');
+		$dados["titulo"] = "Itens Recebidos";
+		$dados["css"]   = "painel.css";
+		$dados["qualTela"] = 4;
+
+		$dados["user_id"] = $this->session->userdata('user_id');
+		$dados["busca_item"] = $this->IM->buscaItemUsuario($dados["user_id"]);
+
+		$this->load->view('templates/head', $dados);
+		$this->load->view('templates/menu', $dados);
+		$this->load->view('itens_painel');
 		$this->load->view('templates/footer');
 	}
 
@@ -51,19 +106,5 @@ class Painel extends CI_Controller{
 		$this->load->view('templates/footer');
 	}
 
-	public function ofertas(){
-		$this->load->model('Item_model', 'IM');
-
-		$dados["titulo"] = "Itens para Doar";
-		$dados["css"]    = "painel.css";
-		$dados["css2"]   = "paraDoar.css";
-
-		$dados["user_id"] = $this->session->userdata('user_id');
-		$dados["busca_item"] = $this->IM->buscaItemUsuario($dados["user_id"]);
-
-		$this->load->view('templates/head', $dados);
-		$this->load->view('templates/menu', $dados);
-		$this->load->view('itens_paraDoar', $dados);
-		$this->load->view('templates/footer');
-	}
+	
 }

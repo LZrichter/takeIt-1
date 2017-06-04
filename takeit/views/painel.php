@@ -18,7 +18,7 @@
 	  	</li>
 	  	<!-- BOTÃO 2 -->
 	  	<li class="flex-item">
-		  	<a href="/painel/itens_doados">
+		  	<a href="/painel/doados">
 		  		<div>
 		  			<img src="<?=base_url()?>/assets/img/painel_doados.png">
 		  			<h2>Minhas Doações</h2>
@@ -45,7 +45,7 @@
 	  	</li>
 	  	<!-- BOTÃO 5 -->
 	  	<li class="flex-item">
-		  	<a href="/painel/itens_recebidos">
+		  	<a href="/painel/recebidos">
 		  		<div>
 		  			<img src="<?=base_url()?>/assets/img/painel_recebidos.png">
 		  			<h2>Itens Recebidos</h2>

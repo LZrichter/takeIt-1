@@ -52,4 +52,42 @@ class Categoria_model extends CI_Model {
 			}
         }
 
+        public function buscaCategoriaPorId($id){
+
+        	if (!isset($id)) {
+        		return array("tipo" => "erro", "msg" => "Categoria não informada para a busca");
+        	}
+
+			try{
+
+				$sql = "SELECT categoria_nome FROM categoria WHERE categoria_id =".$id;
+
+				if(!$query = $this->db->query($sql)){
+					if($this->db->error()){
+						return ["tipo" => "erro", "msg" => "Não foi possivel buscar a categoria"];
+					}
+				} else if (empty($query->result())) {
+					return ["tipo" => "erro", "msg" => "Categoria não encontrada"];
+				} else {
+					$count = 0;
+					foreach($query->result() as $row){
+						foreach ($row as $campo => $valor) {
+							$result[$count][$campo] = $valor;
+						}
+						$count++;
+					}
+					return $result;
+				}
+				
+			}catch(PDOException $PDOE){
+				return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+			}catch(Exception $NE){
+				return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
+			}
+        }
+
+
+
+
+
 }

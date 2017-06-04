@@ -59,36 +59,41 @@ class Item_model extends CI_Model {
 
 		/**
 		* Altera a descrição, quantidade e id da Categoria de um item no Banco de Dados
-		* @param 	$idItem			ID do item a ser alterado
-		* @param 	$descricao		Descrição do item
-		* @param  	$quantidade 	Nova quantidade de itens
-		* @param  	$idCategoria 	Nova categoria
+		* @param  $dados 	Array com os dados necessários para a realização da inserção
+		*	Array format:
+		*		array(
+		*			"descricao" => "",
+		*			"quantidade" => "",
+		*			"idUsuario" => "",
+		*			"idCategoria" => ""
+		*		)
 		* @return 					Boolean indicando o sucesso da alteração ou array com mensagem de erro
 		*	Array format:
 		*		array(
 		*			"Error" => ""
 		*		)
 		*/
-		public function alteraItem($idItem, $descricao, $quantidade, $idCategoria){
-			if(!isset($idItem) || !isset($descricao) || !isset($quantidade) || !isset($idCategoria)){
-				return array("Error" => "Insuficient information to execute the query");
+		public function alteraItem($dados){
+			if(!isset($dados['idItem']) || !isset($dados['descricao']) || !isset($dados['quantidade']) || !isset($dados['idCategoria']) || !isset($dados['detalhes'])){
+				return array("tipo" => "erro", "msg" => "Informação insufiiente para executar a consulta.");
 			}
 
 			try{
 
-				$sql = "UPDATE item SET item_descricao = ".$descricao.", item_qtde = ".$quantidade."
-				, categoria_id = ".$idCategoria." WHERE item_id = ".$idItem;
+				$sql = "UPDATE item SET item_descricao = ".$this->db->escape($dados['descricao']).", item_qtde = ".$this->db->escape($dados['quantidade']).", categoria_id = ".$this->db->escape($dados['idCategoria']).", item_detalhes =".$this->db->escape($dados['detalhes'])." WHERE item_id = ".$this->db->escape($dados['idItem']);
 
 				if(!$query = $this->db->query($sql)){
 					if($this->db->error()){
-						return array("Error" => "$error[message]");
+						return array("tipo" => "erro", "msg" => $this->db->_error_message());
 					}
 				} else {
 					return true;
 				}
 				
-			} catch(Exception $E) {
-				return array("Error" => "Server was unable to execute query");
+			}catch(Exception $NE) {
+				return array("tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode());
+			}catch(PDOException $PDOE){
+				return array("tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode());
 			}
 		}
 

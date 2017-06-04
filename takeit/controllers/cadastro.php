@@ -24,6 +24,10 @@ class Cadastro extends CI_Controller{
 		$this->load->view('templates/footer');
 	}
 
+	/**
+	 * Salva o usuário preenchido no formulário
+	 * @return void Da echo em um json de resultado
+	 */
 	public function salvarUsuario(){
 		foreach($this->input->post() as $k => $v)
 			$$k = $v;
@@ -74,5 +78,29 @@ class Cadastro extends CI_Controller{
 		$this->load->view('templates/head', $dados);
 		$this->load->view('licenca_uso', $dados);
 		$this->load->view('templates/footer');
+	}
+
+	public function teste(){
+		$dados["titulo"] = "Cadastre-se";
+		$dados["slogan"] = "TakeIt - Ajude quem precisa, doando o que você não precisa.";
+		$dados["css"]    = "welcome.css";
+		$dados["css2"]   = "cadastro.css";	
+		$dados["js"]	 = "jquery.mask.js";
+		$dados["js2"] 	 = "cadastro.js";
+
+		$this->load->model("Usuario_model", "usuario");
+		$this->load->model("Instituicao_model", "instituicao");
+
+		$this->load->view('templates/head', $dados);
+		$this->load->view('templates/menuWelcome'); ?>
+		
+		<main id="mainCadastro" class="footer-align">
+			<div class="container">
+				<? $this->instituicao->selecionaInstituicao(7);
+				var_dump($this->instituicao->associarInstituicaoCategorias([5,3,6,7,8])); ?>
+			</div>
+		</main>
+
+		<? $this->load->view('templates/footer');
 	}
 }

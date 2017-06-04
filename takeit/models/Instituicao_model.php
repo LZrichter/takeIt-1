@@ -1,8 +1,8 @@
 <?php defined('BASEPATH') OR exit('OPSSS... Não é permitido direto acesso ao script!!');
 
-class Instituicao_model extends CI_Model {
+class Instituicao_model extends Usuario_model{
 
-    public function __construct() {
+    public function __construct(){
         parent::__construct();
 
         $this->load->database();
@@ -17,31 +17,27 @@ class Instituicao_model extends CI_Model {
 		$this->db->trans_begin();
 		$this->load->helper("validacao");
 
-		$resposta = $this->usuario->insereUsuario($dados);
+		if(!isset($dados['cnpj']))
+			return ["tipo" => "erro", "msg" => "Campos obrigatórios ainda não foram preenchidos.", "campo" => "cnpj"];
+		else if(!validaCNPJ($dados['cnpj']))
+			return ["tipo" => "erro", "msg" => "CNPJ informado não é válido.", "campo" => "cnpj"];
+		else if($this->buscaInstituicao($dados['cnpj']))
+			return ["tipo" => "erro", "msg" => "CNPJ já registrado no sistema.", "campo" => "cnpj"];
+
+		$resposta = $this->insereUsuario($dados);
 
 		if($resposta["tipo"] == "sucesso"){
-			if(!isset($dados['cnpj'])){
-				$this->db->trans_rollback();
-				return ["tipo" => "erro", "msg" => "Campos obrigatórios ainda não foram preenchidos.", "campo" => "cnpj"];
-			}else if(!validaCNPJ($dados['cnpj'])){
-				$this->db->trans_rollback();
-				return ["tipo" => "erro", "msg" => "CNPJ informado não é válido.", "campo" => "cnpj"];
-			}else if($this->buscaInstituicao($dados['cnpj'])){
-				$this->db->trans_rollback();
-				return ["tipo" => "erro", "msg" => "CNPJ já registrado no sistema.", "campo" => "cnpj"];
-			}
-
 			try{
 				$sql = "INSERT INTO instituicao (instituicao_id, instituicao_cnpj, instituicao_site) 
-				values (".$this->db->escape($this->usuario->getId()).", ".$this->db->escape($dados['cnpj']).", ".$this->db->escape($dados['website']).")";
+				values (".$this->db->escape($this->getId()).", ".$this->db->escape($dados['cnpj']).", ".$this->db->escape($dados['website']).")";
 
 				if(!$query = $this->db->query($sql)){
+					if($this->usuario->excluiUsuario($this->getId()) !== true)
+						return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de cadastrar a Instituição. Por favor, mude os dados inseridos ou tente mais tarde."];
+
 					if($this->db->error()){
 						$this->db->trans_rollback();
 						return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de cadastrar a Instituição. Por favor, mude os dados inseridos ou tente mais tarde. Código: ".$error["code"]];
-					}else{
-						$this->db->trans_rollback();
-						return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de cadastrar a Instituição. Por favor, mude os dados inseridos ou tente mais tarde."];
 					}
 				}else{
         			$this->db->trans_commit();
@@ -96,42 +92,66 @@ class Instituicao_model extends CI_Model {
 	}
 
 	/**
-	 * Busca no Banco de Dados o CNPJ e site de uma instituição e os retorna
-	 * @param 	$idInst		ID da instituição a ser buscada
-	 * @return 				Array com os dados buscados da instituição ou mensagem de erro
-	 *	Array format:
-	 *		array(
-	 *			"cnpjInst" => "",
-	 *			"siteInst" => ""
-	 *		)
-	 *	Ou:
-	 *		array(
-	 *			"Error" => ""
-	 *		)
+	 * Busca no banco a Instituição a partir de seu ID
+	 * @param  int          $idInst  	  ID da instituição a ser buscada
+	 * @param  bool|boolean $return_array Se deseja que os dados sejam retornados em forma de array
+	 * @return bool|array                 Se $returns for true, retorna um array com todos os dados, se não retorna true se a instituição foi selecionada	
 	 */
-	public function selecionaInstituicao($idInst){
-		if(!isset($idInst)){
-			return array("Error" => "Insuficient information to execute the query");
-		}
+	public function selecionaInstituicao(int $idInst, bool $return_array = false){
+		if(!isset($idInst) or empty(trim($idInst)))
+			return ["tipo" => "erro", "msg" => "ID não informado para a busca."];
+
+		$resposta = $this->selecionaUsuario($idInst, $return_array);
+
+		if($return_array && isset($resposta["tipo"]) && $resposta["tipo"] == "erro")
+			return ["tipo" => "erro", "msg" => "Não foi possivel selecionar a instituição. Por favor, tente mais tarde!"];
+		else if(!$return_array && $resposta !== true)
+			return ["tipo" => "erro", "msg" => "Não foi possivel selecionar a instituição. Por favor, tente mais tarde!"];
 
 		try{
-
 			$sql = "SELECT instituicao_cnpj, instituicao_site FROM instituicao
-			WHERE instituicao_id = ".$idInst;
+			WHERE instituicao_id = ".$this->db->escape($idInst);
 
 			if(!$query = $this->db->query($sql)){
-				if($this->db->error()){
-					return array("Error" => "$error[message]");
+				if($this->db->error())
+					return ["tipo" => "erro", "msg" => "Não foi possivel selecionar a instituição. Por favor, tente mais tarde!"];
+			}else{
+				if(!count($query->result()))
+					return false;
+
+				if($return_array === true){
+					foreach($query->result()[0] as $campo => $valor)
+						$dados[$campo] = $this->$campo = $valor;
+
+					$dados = array_merge($dados, $resposta);
+
+					return $dados;
+				}else{
+					foreach($query->result()[0] as $campo => $valor)
+						$this->$campo = $valor;
+
+					return true;
 				}
-			} else {
-				return true;
-			}
-			
-		} catch(Exception $E) {
-			return array("Error" => "Server was unable to execute query");
+			}			
+		}catch(PDOException $PDOE){
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+		}catch(Exception $NE){
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
 		}
+
+		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
 	}
 
+	/**
+	 * Seleciona todas as instituições cadastradas no banco
+	 * @return array Array com todas as instituições no formato:
+	 *     [0][
+	 *     		"usuario_id" => "Valor",
+	 *       	"usuario_nome" => "Valor",
+	 *        	"cidade_nome" => "Valor",
+	 *         	"estado_uf" => "Valor"
+	 *     ]
+	 */
 	public function todasInstituicoes(){
 		try{
 			$sql = "SELECT DISTINCT usuario_id, usuario_nome, cidade_nome, estado_uf
@@ -160,7 +180,6 @@ class Instituicao_model extends CI_Model {
 			return ["tipo" => "erro", "msg" => "Problema interno do sistema. Por favor, tente mais tarde! - Código: " . $E->getCode()];
   		}
 	}
-
 	
 	/**
 	 * Busca uma instituição pelo seu cnpj (Mais usado na hora de cadastrar, para ver se o cpf já existe no sistema)
@@ -190,44 +209,39 @@ class Instituicao_model extends CI_Model {
 			return ["tipo" => "erro", "msg" => "Problema interno do sistema. Por favor, tente mais tarde!"];
 		}
     }
-
-    /**
-	 * Insere no Banco de Dados as categorias das quais uma instituição tem interesse
-	 * @param 	$idInst		ID da instituição a ser buscada
-	 * @param 	$categs 	Array com os ids das categorias a serem associadas
-	 *	Array format:
-	 *		array($idCat1, $idCat2,...)
-	 * @return 			Boolean indicando o sucesso da inserção ou array com mensagem de erro
-	 *	Array format:
-	 *		array(
-	 *			"Error" => ""
-	 *		)
+	
+	/**
+	 * Associa categorias a uma instituição
+	 * @param  array  $idsCat Array com IDs das categorias a serem inseridas
+	 * @return bool|array     Array caso ocorra um erro ou true se deu tudo certo
 	 */
-    public function associarInstituicaoCategorias(){
-    	if(!isset($idInst) || !isset($categs)){
-			return array("Error" => "Insuficient information to execute the query");
-		}
+    public function associarInstituicaoCategorias(array $idsCat){
+    	if(!isset($idsCat) || !is_array($idsCat) || empty(array_filter($idsCat)))
+			return ["tipo" => "erro", "msg" => "Nenhuma categoria informada"];
+
+		if(empty($this->getId()))
+			return ["tipo" => "erro", "msg" => "Nenhuma instituição selecionada para a inserção das categorias."];
 
 		try{
+			$sql = "INSERT INTO instituicao_categoria (instituicao_id, categoria_id) VALUES ";
 
-			for($i = 0; $i < sizeof($categs); $i++){
-				$sql = "INSERT INTO instituicao_categoria (instituicao_id, categoria_id) 
-				values (".$idInst.", ".$categs[$i].")";
-			}
+			foreach($idsCat as $i => $idCat)
+				$sql .= "(".$this->db->escape($this->getId()).", ".$this->db->escape($idCat)."), ";
 
-			
+			$sql = substr($sql, 0, -2)."";
 
 			if(!$query = $this->db->query($sql)){
-				if($this->db->error()){
-					return array("Error" => "$error[message]");
-				}
-			} else {
+				if($this->db->error())
+					return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de cadastrar as categorias para a Instituição. Por favor, mude os dados inseridos ou tente mais tarde."];
+			}else 
 				return true;
-			}
-			
-		} catch(Exception $E) {
-			return array("Error" => "Server was unable to execute query");
+		}catch(PDOException $PDOE){
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+		}catch(Exception $NE){
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
 		}
+
+		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
     }
 
 }

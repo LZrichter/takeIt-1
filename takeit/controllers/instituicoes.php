@@ -8,6 +8,7 @@ class Instituicoes extends CI_Controller{
 	}
 
 	public function index(){
+		$this->load->model("Usuario_model","usuario");
 		$this->load->model("Instituicao_model","model");
 		$result = $this->model->todasInstituicoes();
 

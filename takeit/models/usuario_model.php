@@ -40,6 +40,7 @@ class Usuario_model extends CI_Model{
 		else
         	$this->db->trans_commit();
 	}
+
 	/**
 	 * Insere um novo usuário no banco
 	 * @param  array $dados Array com os dados a serem inseridos
@@ -82,7 +83,6 @@ class Usuario_model extends CI_Model{
 					".$this->db->escape($dados["cidade"])."
 				)";
 
-			// return [$sql];
 			if(!$query = $this->db->query($sql)){
 				if($error = $this->db->error()) 
 					return ["tipo" => "erro", "msg" => "Não foi possivel inserir o usuário"];
@@ -107,7 +107,26 @@ class Usuario_model extends CI_Model{
 	 * @return boolean 		true se exclusão concluida, false se ocorreu erro
 	 */
 	public function excluiUsuario(int $id){
+		if(!isset($id)) 
+			return ["tipo" => "erro", "msg" => "Dados não informado"];
 
+		if(!self::selecionaUsuario($id))
+			return true;
+
+		try{
+			$sql = "DELETE FROM usuario WHERE usuario_id = '$id'";
+
+			if(!$query = $this->db->query($sql)){
+				if($error = $this->db->error()) 
+					return ["tipo" => "erro", "msg" => "Não foi possivel excluir o usuário."];
+			}else return true;
+		}catch(PDOException $PDOE){
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+		}catch(Exception $NE){
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
+		}
+
+		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
 	}
 
 	/**
@@ -116,8 +135,8 @@ class Usuario_model extends CI_Model{
 	 * @param  boolean $return_array Campo não obrigatório, true se deseja que seja retornado o array com os dados 
 	 * @return boolean/array         True se usuário foi encontrado, false se não ou erro, ou retorna o array com os dados do usuário
 	 */
-	public function selecionaUsuario(int $id, bool $return_array = FALSE){
-		if(!isset($id) or empty($id))
+	public function selecionaUsuario(int $id, bool $return_array = false){
+		if(!isset($id) or empty(trim($id)))
 			return ["tipo" => "erro", "msg" => "ID não informado para a busca."];
 
 		try{
@@ -128,7 +147,7 @@ class Usuario_model extends CI_Model{
 			";
 
 			if(!$query = $this->db->query($sql))
-				return ["tipo" => "erro", "msg" => "Não foi possivel inserir o usuário"];
+				return ["tipo" => "erro", "msg" => "Não foi possivel selecionar o usuário"];
 			else{
 				if(!count($query->result())) 
 					return false;
@@ -157,7 +176,6 @@ class Usuario_model extends CI_Model{
 
 		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
 	}
-
 
 	/**
 	 * Busca um usuário através de vários campos apresentados, transformando o objeto no usuário

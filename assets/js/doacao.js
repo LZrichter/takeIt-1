@@ -65,10 +65,9 @@ function loadImagem(input, loadImg, img){
 
 function limpaCampos(){
 	input_descricao.val("");
-	select_categoria.val(0);
+	$('select#select_categoria').val("Selecione...");
 	input_qtde.val("1");
 	area_detalhes.val("");
-	div_mensagem.hide();
 	$('.add-img').attr("src", "http://takeit/assets/img/add-img.png");
 	group_descricao.removeClass('has-error');
 	group_descricao.removeClass('has-success');
@@ -105,7 +104,12 @@ $(document).ready(function(){
 		group_fotos.removeClass('has-error');
 		obrigatorio = 0;
 		var option_categoria = $('#select_categoria option:selected');
-		console.log(option_categoria.text());
+
+		var count = 0; 
+		for (var i = 1; i <= 5; i++) {
+			if (!$("#imagem"+i).val().split('\\').pop().trim()) //se nenhuma imagem for selecionada.
+				count += 1;	
+		}
 
 		group_descricao.removeClass('has-error');
 		group_categoria.removeClass('has-error');
@@ -123,12 +127,6 @@ $(document).ready(function(){
 			
 			var old_path = $('input[name=old_path]');
 			var item_id = $('input[name=item_id]');
-
-			var count = 0; 
-			for (var i = 1; i <= 5; i++) {
-				if (!$("#imagem"+i).val().split('\\').pop().trim()) //se nenhuma imagem for selecionada.
-					count += 1;	
-			}
 
 
 			if (obrigatorio == 0 && count != 5 ){// ao menos uma imagem foi alterada
@@ -163,9 +161,6 @@ $(document).ready(function(){
 							if (campo["msg"] != undefined){
 								mensagem("sucesso", campo["msg"], "mensagem");
 								div_mensagem.show();
-								limpaCampos();
-							}else{
-								div_mensagem.hide();	
 							}
 						}
 					});
@@ -222,9 +217,6 @@ $(document).ready(function(){
 							if (campo["msg"] != undefined){
 								mensagem("sucesso", campo["msg"], "mensagem");
 								div_mensagem.show();
-								limpaCampos();
-							}else{
-								div_mensagem.hide();	
 							}
 						}
 					});
@@ -272,7 +264,8 @@ $(document).ready(function(){
 					var tipo;
 					$.each(success, function(index, campo) {
 						//if (!jQuery.isEmptyObject(campo["msg"])) //teste se string está vazia
-						tipo = campo["tipo"];
+						tipo = success[index]['tipo'];
+						console.log(tipo);
 
 						if (tipo == 'erro') {
 							msg += "<br>"+campo["msg"];
@@ -288,8 +281,6 @@ $(document).ready(function(){
 								mensagem("sucesso", campo["msg"], "mensagem");
 								div_mensagem.show();
 								limpaCampos();
-							}else{
-								div_mensagem.hide();	
 							}
 						}
 					});

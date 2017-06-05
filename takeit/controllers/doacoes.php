@@ -126,7 +126,7 @@ class Doacoes extends CI_Controller{
                 	$apagarPasta = 1;
             	}else{ // deu certo o upload
             		$success = $this->upload->data();
-            		array_push($return,["msg" => $success, "tipo" => "sucesso", "path" => $success['file_path']]);
+            		array_push($return,["tipo" => "sucesso", "campo" => "fotos"]);
 
             		array_push($dadosImg, ["imagem_nome" => $success['file_name'], "imagem_caminho" => $path, "imagem_tamanho" => $success['file_size'] ]);
             		
@@ -138,11 +138,12 @@ class Doacoes extends CI_Controller{
 		else{ //SALVAR TUDO NO BANCO, ITEM PRIMEIRO IMAGENS DEPOIS
 			$this->load->model('Item_model', 'IM');
 			$this->db->trans_begin();
-			$return = $this->IM->insereItem($dados);
-			if($return["tipo"] == "sucesso" && isset($return["idItem"])){ //SALVAR IMAGENS
-				$this->load->model('Imagem_model', 'IMG');				
+			$itemReturn = $this->IM->insereItem($dados);
+			if($itemReturn["tipo"] == "sucesso" && isset($itemReturn["idItem"])){ //SALVAR IMAGENS
+				$this->load->model('Imagem_model', 'IMG');
+				array_push($return, $itemReturn);
 				foreach($dadosImg as $row => $value){
-					$dadosImg[$row] = array_merge($dadosImg[$row], ["item_id" => $return["idItem"]]);
+					$dadosImg[$row] = array_merge($dadosImg[$row], ["item_id" => $itemReturn["idItem"]]);
 					
 					$insertImage = $this->IMG->insereImagem($dadosImg[$row]);
 					if(!$insertImage && $this->db->trans_status() === FALSE){ //deu errado a imagem
@@ -187,12 +188,6 @@ class Doacoes extends CI_Controller{
 		 	$$k = $v;
 		
 		$dados = $_REQUEST;
-
-		if (!isset($dados)) {
-			echo json_encode(["tipo" => "erro", "msg" => "Erro inesperado! Por favor tente mais tarde"]);
-			return;	
-		}
-		
 		
 		$obrigatorio = [
 			"descricao", "categoria", "quantidade", 
@@ -240,7 +235,7 @@ class Doacoes extends CI_Controller{
             				$erroNaImagem = 1;
         				}else{ // deu certo o upload
         					$success = $this->upload->data();
-        					array_push($return,["tipo" => "sucesso", "path" => $success['file_path']]);
+        					array_push($return,["tipo" => "sucesso", "campo" => "fotos"]);
         				}
     				}else{
     					$config['encrypt_name']	= TRUE;
@@ -254,7 +249,7 @@ class Doacoes extends CI_Controller{
             				$erroNaImagem = 1;
         				}else{ // deu certo o upload
         					$success = $this->upload->data();
-        					array_push($return,[ "tipo" => "sucesso", "path" => $success['file_path']]);
+        					array_push($return,[ "tipo" => "sucesso", "campo" => "fotos"]);
 
         					array_push($dadosImg, ["imagem_nome" => $success['file_name'], "imagem_caminho" => $dirname, "imagem_tamanho" => $success['file_size'], "item_id" => $idItem ]);
         				}

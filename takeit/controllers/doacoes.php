@@ -133,8 +133,14 @@ class Doacoes extends CI_Controller{
             	}	
 			}
 		}
-		if (isset($apagarPasta))
+		if (isset($apagarPasta)){
+			foreach(scandir($dirname) as $file) {
+		        if ('.' === $file || '..' === $file) continue;
+		        if (is_dir("$dirname/$file")) rmdir_recursive("$dirname/$file");
+		        else unlink("$dirname/$file");
+		    }
 			rmdir($dirname);
+		}
 		else{ //SALVAR TUDO NO BANCO, ITEM PRIMEIRO IMAGENS DEPOIS
 			$this->load->model('Item_model', 'IM');
 			$this->db->trans_begin();

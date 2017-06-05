@@ -32,11 +32,11 @@ class Painel extends CI_Controller{
 		$this->load->model('Item_model', 'IM');
 		$dados["titulo"] = "Itens para Doar";
 		$dados["css"]    = "painel.css";
-		$dados["css2"]   = "paraDoar.css";
+		$dados["js"]     = "ofertas.js";
 		$dados["qualTela"] = 1;
 
 		$dados["user_id"] = $this->session->userdata('user_id');
-		$dados["busca_item"] = $this->IM->buscaItemUsuario($dados["user_id"]);
+		$dados["busca_item"] = $this->IM->buscaItemUsuario($dados["user_id"], $status=['Disponível', 'Solicitado']);
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
@@ -48,11 +48,10 @@ class Painel extends CI_Controller{
 		$this->load->model('Item_model', 'IM');
 		$dados["titulo"] = "Itens Doados";
 		$dados["css"]    = "painel.css";
-		$dados["css2"]   = "paraDoar.css";
 		$dados["qualTela"] = 2;
 
 		$dados["user_id"] = $this->session->userdata('user_id');
-		$dados["busca_item"] = $this->IM->buscaItemUsuario($dados["user_id"]);
+		$dados["busca_item"] = $this->IM->buscaItemUsuario($dados["user_id"], $status='Doado');
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
@@ -65,11 +64,10 @@ class Painel extends CI_Controller{
 		$this->load->model('Item_model', 'IM');
 		$dados["titulo"] = "Itens Para Receber";
 		$dados["css"]    = "painel.css";
-		$dados["css2"]   = "paraDoar.css";
 		$dados["qualTela"] = 3;
 
 		$dados["user_id"] = $this->session->userdata('user_id');
-		$dados["busca_item"] = $this->IM->buscaItemUsuario($dados["user_id"]);
+		//$dados["busca_item"] = $this->IM->buscaItemUsuario($dados["user_id"]);
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
@@ -86,7 +84,7 @@ class Painel extends CI_Controller{
 		$dados["qualTela"] = 4;
 
 		$dados["user_id"] = $this->session->userdata('user_id');
-		$dados["busca_item"] = $this->IM->buscaItemUsuario($dados["user_id"]);
+		//$dados["busca_item"] = $this->IM->buscaItemUsuario($dados["user_id"]);
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);

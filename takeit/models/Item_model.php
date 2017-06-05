@@ -98,9 +98,10 @@ class Item_model extends CI_Model {
 		}
 
 		/**
-		* Busca no Banco de Dados a descrição, quantidade e id da Categoria de um item e os retorna
-		* @param 	$idItem		ID do item a ser buscada
-		* @return 				Array com os dados buscados do item ou mensagem de erro
+		* Busca no Banco de Dados a os dados de um item COM APENAS UMA FOTO DO MESMO com base no id do usuario e os retorna.
+		* @param  $idUsuario -> ID do usuario a ser buscada
+		* @param  $status -> Status do item ou Array com vários estados, se não setado busca em todos status
+		* @return Array com os dados buscados do item ou mensagem de erro
 		*	Array format:
 		*		array(
 		*			"item_descricao" => "",
@@ -108,28 +109,53 @@ class Item_model extends CI_Model {
 		*			"item_data" => "",
 		*			"item_status" => "",
 		*			"usuario_id" => "",
-		*			"categoria_id" => ""
+		*			"categoria_id" => "",
+		*			"imagem_caminho" => "",
+		*			"imagem_nome" => "",
 		*		)
 		*	Ou:
 		*		array(
-		*			"Error" => ""
+		*			"tipo" => "erro", "msg" => ""
 		*		)
 		*/
-		public function buscaItemUsuario($idUsuario){		
+		public function buscaItemUsuario($idUsuario, $status = NULL){		
 
 			if(!isset($idUsuario)){
 				return array( "tipo" => "erro", "msg" => "Informação insuficiente para executar a consulta.");
-			}
-
-			$result = array();
-
-			try{
+			}elseif ( $status == NULL ) { //retorna item com qualquer status
 				$sql ="
 					SELECT item_id, item_descricao, item_qtde, item_data, item_status, usuario_id, categoria_id, 
 					(SELECT imagem_caminho FROM imagem WHERE imagem.item_id = i.item_id LIMIT 1) AS imagem_caminho , 
 					(SELECT imagem_nome FROM imagem WHERE imagem.item_id = i.item_id LIMIT 1) AS imagem_nome 
 					FROM item i
 					WHERE usuario_id = ".$idUsuario." ORDER BY item_data DESC";
+			}else{ //retorna item com status especifico
+
+				$sql ="
+						SELECT item_id, item_descricao, item_qtde, item_data, item_status, usuario_id, categoria_id, 
+						(SELECT imagem_caminho FROM imagem WHERE imagem.item_id = i.item_id LIMIT 1) AS imagem_caminho , 
+						(SELECT imagem_nome FROM imagem WHERE imagem.item_id = i.item_id LIMIT 1) AS imagem_nome 
+						FROM item i
+						WHERE usuario_id = ".$idUsuario;
+
+				if ( is_array($status)){
+					$sql .= ' AND item_status=';
+					foreach ($status as $key => $value){
+						if( $key == count($status)-1 )
+							$sql .= $this->db->escape($value);	
+						else
+							$sql .= $this->db->escape($value)." OR item_status=";
+					}
+				}else{
+					$sql .= " AND item_status=".$this->db->escape($status);
+				}
+
+				$sql .= " ORDER BY item_data DESC";
+			}
+
+			$result = array();
+
+			try{
 
 				if(!$query = $this->db->query($sql)){
 					if($this->db->error()){
@@ -146,7 +172,7 @@ class Item_model extends CI_Model {
 					return $result;
 				}
 
-			}catch(Exception $E) {
+			}catch(Exception $E){
 				return array("tipo" => "erro", "msg" => "Erro inexperado ao realizar a consulta, por favor tenta mais tarde!!!");
 			}
 		}
@@ -195,6 +221,25 @@ class Item_model extends CI_Model {
 			}
         }
 
+
+        /**
+		* Busca no Banco de Dados os dados de um item com base no id do mesmo e os retorna.
+		* @param  $idItem -> ID do item a ser buscada
+		* @return Array com os dados buscados do item ou mensagem de erro
+		*	Array format:
+		*		array(
+		*			"item_descricao" => "",
+		*			"item_qtde" => "",
+		*			"item_data" => "",
+		*			"item_status" => "",
+		*			"usuario_id" => "",
+		*			"categoria_id" => "",
+		*		)
+		*	Ou:
+		*		array(
+		*			"tipo" => "erro", "msg" => ""
+		*		)
+		*/
         public function buscaItemPorId($idItem){
         	try{
 				$sql =" SELECT * from item where item_id =".$idItem;
@@ -217,6 +262,43 @@ class Item_model extends CI_Model {
 			}catch(Exception $E) {
 				return array("tipo" => "erro", "msg" => "Erro inexperado ao realizar a consulta, por favor tenta mais tarde!!!");
 			}
+        }
+
+
+        /**
+         * Descrição: Altera o status do item passado como parâmetro
+         * 
+         * @param  $idItem -> Id do item a ser alterado o status
+         * @param $status -> novo status do item
+         * @return  Boolean de confirmação
+         */
+        public function alteraStatusItemPorId($idItem, $status){
+
+        	if(!isset($idItem) || !isset($status)){
+        		return array( "tipo" => "erro", "msg" => "Informação insuficiente para executar a consulta.");
+        	}
+        	$aceitos = ["Disponível", 1, "Solicitado", 2, "Doado", 3, "Cancelado", 4];
+
+        	if( in_array($status, $aceitos) ){
+        		$sql = " UPDATE item SET item_status =".$this->db->escape($status)." WHERE item_id =".$this->db->escape($idItem);
+
+	        	try{
+
+					if(!$query = $this->db->query($sql)){
+						if($this->db->error()){
+							return array("tipo" => "erro", "msg" => $this->db->_error_message());
+						}
+					}else {
+						return true;
+					}
+
+				}catch(Exception $E){
+					return array("tipo" => "erro", "msg" => "Erro inexperado ao realizar a consulta, por favor tenta mais tarde!!!");
+				}
+        	}else{
+        		return false;
+        	}
+
         }
 
 }

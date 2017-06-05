@@ -1,10 +1,11 @@
 <div id="main" class="footer-align">
+	
 	<ul class="breadcrumb">
 	  	<li><a href="/doacoes">Doações</a></li>
 	  	<li><a href="/painel">Painel</a></li>
-	  	<li><a href="#">Itens para Doar</a></li>
+	  	<li><a href="#"><?= $titulo ?></a></li>
 	</ul>
-
+	
 	<div class="container recebidos">
 		<div class="panel panel-default">
 			<div class="panel-heading text-center">
@@ -13,7 +14,7 @@
 				<div class="panel-body">
 					<? if ( isset($busca_item) && !empty($busca_item) ): ?>
 						<? for($i=0; $i < count($busca_item); $i++): ?>
-						<div class="panel panel-default">
+						<div class="panel panel-default " id="panel-<?= $busca_item[$i]['item_id']?>">
 						<div class="panel-body" id="body-recebidos">
 							<div class="row">
 								<div class="col-sm-9 col-md-8 text-center left-recebidos">
@@ -51,13 +52,16 @@
 								</div>
 								<div class=" col-sm-3 col-md-4 text-center right-recebidos">
 									<div class="btn-group">
-										<p class="btn-group-vertical">
-											<a href="/doacoes/alterarItem/<?= $busca_item[$i]['item_id'] ?>" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Alterar</a>
-											<button  class="btn btn-danger"><i class="fa fa-trash"></i> Cancelar</button>
-										</p>
+										<? if( isset($qualTela) && $qualTela == 1 ): ?>
+											<p class="btn-group-vertical">
+												<a href="/doacoes/alterarItem/<?= $busca_item[$i]['item_id'] ?>" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Alterar</a>
+												<button id="<?= $busca_item[$i]['item_id']?>" class="btn btn-danger btn-modal" data-toggle="modal" data-target="#delete-modal"><i class="fa fa-trash"></i> Cancelar</button>
+
+											</p>
+										<? endif; ?>
 										<p class="btn-group-vertical">
 											<a class="btn btn-success" href="/doacoes/item/<?= $busca_item[$i]['item_id'] ?>"><i class="fa fa-eye"></i> Ver</a>
-											<button  class="btn btn-primary"><i class="fa fa-comments-o"></i> Abrir Chat</button>
+											<a href="#" class="btn btn-primary"><i class="fa fa-comments-o"></i> Abrir Chat</a>
 										</p>
 									</div>
 								</div>
@@ -66,20 +70,57 @@
 						</div>
 						<? endfor; ?>
 					<?else:?>
-					<div class="panel panel-default">
-					<div class="panel-body" id="body-recebidos">
-						<div class="alert alert-warning text-center">
-							<div class="row">
-								<div class="col-md-6 col-md-offset-3"><p>Opps! Você ainda não tem nenhuma doação por aqui. <span class="fa fa-frown-o"></span></p>
-								
+							<div class="alert alert-warning text-center">
+								<div class="row">
+									<div class="col-md-6 col-md-offset-3"><h3>Opps! Você ainda não tem nenhuma doação por aqui. <span class="fa fa-frown-o"></span></h3>
+									
+									</div>
 								</div>
 							</div>
-							
-						</div>
-					</div>
-					</div>
 					<? endif;?>
 				</div>
 		</div>	
 	</div>
 </div>
+
+<? if( isset($qualTela) && $qualTela == 1 ): ?>
+<!-- Modal -->
+<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Cancelar Doação?</h4>
+      </div>
+      <div class="modal-body">
+        Deseja realmente cancelar esta doação? OBS: Ela não se tornará mais disponível, toda e qualquer transação realizada com esta doação será perdida..
+      </div>
+      <div class="modal-footer">
+        <button id="cancelarDoacao" type="button" class="btn btn-primary">Sim</button>
+ 		<button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
+      </div>
+    </div>
+  </div>
+</div> <!-- /.modal -->
+
+<!-- Modal de mensagem -->
+<div class="modal fade" id="mensagem-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalLabel"></h4>
+      </div>
+      <div class="modal-body" id="modalMsg">
+        
+      </div>
+      <div class="modal-footer">
+ 		<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div> <!-- /.modal -->
+
+
+
+<? endif; ?>

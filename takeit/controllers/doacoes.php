@@ -295,7 +295,18 @@ class Doacoes extends CI_Controller{
 		echo json_encode($return);
 	}
 
-	
+	public function cancelaItemAjax(){
+		if (isset($_POST['idItem'])) {
+			
+			$idItem = $_POST['idItem'];
+			$result = $this->IM->alteraStatusItemPorId($idItem, 'Cancelado');
+
+			if ($result)
+				echo json_encode(["tipo" => "sucesso", "msg" => "Seu item foi removido com sucesso"]);
+			else
+				echo json_encode($result);
+		}
+	}
 
 	public function carregaEstadosMenu(){
 		$dados = $this->CEM->todosEstados();

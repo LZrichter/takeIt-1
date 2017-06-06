@@ -30,11 +30,16 @@ var group_fotos      = $('.fotos-group');
 function readURL(input, imgTag){
 	
     if (input.files && input.files[0]) {
+    	if((input.files[0].size/1000) > 2048){
+    		return false;
+    	}
         var reader = new FileReader();
         reader.onload = function (e) {
             imgTag.attr('src', e.target.result);
+
         }
         reader.readAsDataURL(input.files[0]);
+        return true;
     }
 }
 
@@ -51,15 +56,20 @@ function inputIsEmpty(valor, form_group){
 }
 
 function loadImagem(input, loadImg, img){
+	var old_img_src = img.attr("src"); 
 	var fileExtension = ['jpeg', 'jpg', 'png', 'gif'];
 	if ($.inArray(input.val().split('.').pop().toLowerCase(), fileExtension) == -1) {
         mensagem("erro", "Apenas arquivos com extensões <b>.jpg .jpeg .png .gif</b> serão aceitos.   ", "mensagem");
         div_mensagem.show();
         input.val("");
-        img.attr("src", "http://takeit/assets/img/add-img.png");
+        img.attr("src", old_img_src);
     }else{
-    	readURL(loadImg, img);
-    	img.css('border', 'none');	
+    	if(!readURL(loadImg, img)){
+    		mensagem("erro", "Apenas arquivos <b>menores de 2MB</b> serão aceitos.", "mensagem");
+        	div_mensagem.show();
+        	input.val("");
+        	img.attr("src",old_img_src);
+    	}
     }
 }
 
@@ -69,6 +79,7 @@ function limpaCampos(){
 	input_qtde.val("1");
 	area_detalhes.val("");
 	$('.add-img').attr("src", "http://takeit/assets/img/add-img.png");
+	$('input[type=file]').val("");
 	group_descricao.removeClass('has-error');
 	group_descricao.removeClass('has-success');
 	group_categoria.removeClass('has-error');
@@ -264,7 +275,7 @@ $(document).ready(function(){
 					var tipo;
 					$.each(success, function(index, campo) {
 						//if (!jQuery.isEmptyObject(campo["msg"])) //teste se string está vazia
-						tipo = success[index]['tipo'];
+						tipo = campo['tipo'];
 						console.log(tipo);
 
 						if (tipo == 'erro') {

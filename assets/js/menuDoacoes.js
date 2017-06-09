@@ -3,6 +3,7 @@ var sel_municipios 	= $('.municipios');
 var sel_categorias 	= $('.categorias');
 var btn_menu		= $('#filtro-pesquisa');
 var btn_close		= $('.closebtn');
+var itens			= $('.bloco-doacoes');
 
 /**
  * Função que retorna todos os estados e os coloca dentro do select de estados 
@@ -45,6 +46,49 @@ function municipiosPorEstado(estado){
 		for (var i = 0; i <= data.length-1; i++) {
 			sel_municipios.append("<option id='"+data[i]['id']+"' >"+data[i]['nome']+"</option>");
 		}
+	})
+	.fail(function() {
+		console.log("error");
+	});
+	
+}
+
+function filtraDoacoes(){
+	$.ajax({
+		url: '/doacoes/filtraDoacoes/5/5/5/5/5',
+		type: 'POST',
+		dataType: 'json'
+	})
+	.done(function(data) {
+		itens.empty();
+		for (var i = 0; i < Object.keys(data).length-1; i++) {
+			var str = "<div class='col-item'>\
+		   	    <div class='photo'>\
+		   	        <a href='doacoes/item/"+data[i]['item_id']+"' alt='Veja todas as fotos da doação.'>\
+	   		            <img src='http://takeit/"+data[i]['imagem_caminho'].substring(2)+"/"+data[i]['imagem_nome']+
+						"' class='img-thumbnail img-responsive' alt='Foto do produto'  />\
+	   		            <div class='overlay'>\
+	   						<div class='text'><span class='fa fa-plus'></span> Ver Produto</div>\
+	   		  			</div>\
+	   		  		</a>\
+		   	    </div>\
+		   	    <div class='info'>\
+		            <div class='titulo text-center'>\
+		                <h5>"+data[i]['item_descricao'] +"</h5>\
+		            </div>\
+					<div class='button text-center'>\
+						<a href='#'>\
+							<button type='button' class='btn btn-danger btn-sm'>\
+						    	<i class='fa fa-heart'></i> Manifestar interesse\
+							</button>\
+						</a>\
+					</div>\
+		   	        <div class='clearfix'>\
+		   	        </div>\
+		   	    </div>\
+			</div>";
+		}
+		itens.append(str);
 	})
 	.fail(function() {
 		console.log("error");
@@ -101,11 +145,10 @@ $(document).ready(function(){
 	 * @param {[int]} [idEstado] [id da tag option de cada Estado]
 	 * Preenche o select de municipios com base no id do estado
 	 */
-	$( ".estados" ).on(
-    "change",
-    	function() {
+	$( ".estados" ).on("change", function() {
         	var idEstado = $(".estados option:selected").attr("id");
         	municipiosPorEstado(idEstado);
+        	filtraDoacoes();
     	}
 	);
 
@@ -114,10 +157,8 @@ $(document).ready(function(){
 	 * da categoria com base no id da cidade.
 	 * 
 	 */
-	$(".categorias").on("click", ".categ", 
-		function(event) {
+	$(".categorias").on("click", ".categ", function(event) {
 			/* chamar controle que carrega as doacoes filtradas */
-			alert("Franciel faz a função de filtrar.. ta loco");
 			console.log($( this ).text());
 		}
 	);

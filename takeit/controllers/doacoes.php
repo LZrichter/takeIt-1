@@ -19,10 +19,25 @@ class Doacoes extends CI_Controller{
 	}
 
 	public function index(){
+
+		if(isset($_POST["busca"])){
+			$busca = $_POST["busca"];
+		} else {
+			$busca = "";
+		}
+
 		$dados["titulo"] = "Doações";
 		$dados["css"]    = "menuDoacoes.css";
 		$dados["css2"]   = "doacoes.css";
 		$dados["js"]     = "menuDoacoes.js";
+
+		$dados["indice"] = 1;
+		$dados["cidade_id"] = 4214;
+		$dados["categoria_id"] = 0;
+		$dados["busca"] = $busca;
+		$dados["usuario_id"] = $this->session->userdata('user_id');
+
+		$dados["itens"] = $this->IM->buscaItensCidade($dados);
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
@@ -324,10 +339,13 @@ class Doacoes extends CI_Controller{
 		echo( json_encode($dados) );
 	}
 
-	public function filtraDoacoes($idCategoria, $idCidade){
-		/*
-		* TODO
-		* filtra doaçoes pela categoria e cidade pelo menu lateral 
-		*/
+	public function filtraDoacoes($indice, $cidade_id, $categoria_id, $busca, $usuario_id){
+		$dados["indice"] = 1;
+		$dados["cidade_id"] = 4214;
+		$dados["categoria_id"] = 0;
+		$dados["busca"] = "";
+		$dados["usuario_id"] = $this->session->userdata('user_id');
+		$result = $this->IM->buscaItensCidade($dados);
+		echo( json_encode($result) );
 	}
 }

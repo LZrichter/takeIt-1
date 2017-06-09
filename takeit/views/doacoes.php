@@ -3,311 +3,61 @@
   <li><a href="#">Doações</a></li>
 </ul>
 
+<?php echo "<div><pre>"; print_r($itens); echo "</pre></div>"  ?>
+
 <div class="container-fluid procurando-algo">
     <div class="row text-center">
-        <div class="col-xs-12 col-sm-7 col-md-7 col-md-offset-1">
+        <form action="doacoes" method="post"><div class="col-xs-12 col-sm-7 col-md-7 col-md-offset-1">
 		    <div class="input-group">
 		        <input type="hidden" name="search_param" value="all" id="search_param">
-		        <input type="text" class="form-control input-lg" name="x" placeholder="Procurando por algo?">
+		        <input type="text" class="form-control input-lg" name="busca" placeholder="Procurando por algo?">
 		        <span class="input-group-btn">
-		            <button class="btn btn-primary btn-lg" type="button"><span class="fa fa-search"></span> Pesquisar</button>
+		            <button class="btn btn-primary btn-lg" type="submit"><span class="fa fa-search"></span> Pesquisar</button>
 		        </span>
 		    </div>
-		</div>
+		</div></form>
 		<div class="col-xs-12 col-sm-5 col-md-3">
-		   	<div id="filtro-pesquisa" class="btn btn-info btn-lg" ><span class="fa fa-filter"> Quer filtrar sua pesquisa?</span></div>
+		   	<div id="filtro-pesquisa" class="btn btn-info btn-lg" ><span class="fa fa-filter"></span> Quer filtrar sua pesquisa?</div>
 		</div>
 	</div>
 </div>
 <div class="container-fluid footer-align">
 	<div class="bloco-doacoes text-center center-block">
-	 	<div class="col-item"><!-- Cada Doação -->
-	   	    <div class="photo"> 
-	   	        <a href="doacoes/item/1" alt="Veja todas as fotos da doação.">
-	   		            <img src="http://placehold.it/350x260" class="img-thumbnail img-responsive" alt="a" width="150px" height="150px" />
-	   		            <div class="overlay">
-	   						<div class="text"><span class="fa fa-plus"></span> Ver Produto</div>
-	   		  			</div>
-	   		  	</a>
-	   	    </div>
-	   	    <div class="info">
-		            <div class="titulo text-center">
-		                <h5>Título do Produto</h5>
-		            </div>
-					<div class="button text-center">
-						<a href="#">
-							<button type="button" class="btn btn-danger btn-sm">
-						    	<i class="fa fa-heart"></i> Manifestar interesse
-							</button>
-						</a>
-					</div>
-	   	        <div class="clearfix">
-	   	        </div>
-	   	    </div>
-		</div>
-		<div class="col-item"><!-- Cada Doação -->
-	   	    <div class="photo"> 
-	   	        <a href="" alt="Veja todas as fotos da doação.">
-	   		            <img src="http://placehold.it/350x260" class="img-thumbnail img-responsive" alt="a" width="150px" height="150px" />
-	   		            <div class="overlay">
-	   						<div class="text"><span class="fa fa-plus"></span> Ver Produto</div>
-	   		  			</div>
-	   		  		</a>
-	   	    </div>
-	   	    <div class="info">
-		            <div class="titulo text-center">
-		                <h5>Título do Produto</h5>
-		            </div>
-					<div class="button text-center">
-						<a href="#">
-							<button type="button" class="btn btn-danger btn-sm">
-						    	<i class="fa fa-heart"></i> Manifestar interesse
-							</button>
-						</a>
-					</div>
-	   	        <div class="clearfix">
-	   	        </div>
-	   	    </div>
-		</div>
-		<div class="col-item"><!-- Cada Doação -->
-	   	    <div class="photo"> 
-	   	        <a href="" alt="Veja todas as fotos da doação.">
-	   		            <img src="http://placehold.it/350x260" class="img-thumbnail img-responsive" alt="a" width="150px" height="150px" />
-	   		            <div class="overlay">
-	   						<div class="text"><span class="fa fa-plus"></span> Ver Produto</div>
-	   		  			</div>
-	   		  		</a>
-	   	    </div>
-	   	    <div class="info">
-		            <div class="titulo text-center">
-		                <h5>Título do Produto</h5>
-		            </div>
-					<div class="button text-center">
-						<a href="#">
-							<button type="button" class="btn btn-danger btn-sm">
-						    	<i class="fa fa-heart"></i> Manifestar interesse
-							</button>
-						</a>
-					</div>
-	   	        <div class="clearfix">
-	   	        </div>
-	   	    </div>
-		</div>
-		<div class="col-item"><!-- Cada Doação -->
-	   	    <div class="photo"> 
-	   	        <a href="" alt="Veja todas as fotos da doação.">
-	   		            <img src="http://placehold.it/350x260" class="img-thumbnail img-responsive" alt="a" width="150px" height="150px" />
-	   		            <div class="overlay">
-	   						<div class="text"><span class="fa fa-plus"></span> Ver Produto</div>
-	   		  			</div>
-	   		  		</a>
-	   	    </div>
-	   	    <div class="info">
-		            <div class="titulo text-center">
-		                <h5>Título do Produto</h5>
-		            </div>
-					<div class="button text-center">
-						<a href="#">
-							<button type="button" class="btn btn-danger btn-sm">
-						    	<i class="fa fa-heart"></i> Manifestar interesse
-							</button>
-						</a>
-					</div>
-	   	        <div class="clearfix">
-	   	        </div>
-	   	    </div>
-		</div>
-		<div class="col-item"><!-- Cada Doação -->
-	   	    <div class="photo"> 
-	   	        <a href="" alt="Veja todas as fotos da doação.">
-	   		            <img src="http://placehold.it/350x260" class="img-thumbnail img-responsive" alt="a" width="150px" height="150px" />
-	   		            <div class="overlay">
-	   						<div class="text"><span class="fa fa-plus"></span> Ver Produto</div>
-	   		  			</div>
-	   		  		</a>
-	   	    </div>
-	   	    <div class="info">
-		            <div class="titulo text-center">
-		                <h5>Título do Produto</h5>
-		            </div>
-					<div class="button text-center">
-						<a href="#">
-							<button type="button" class="btn btn-danger btn-sm">
-						    	<i class="fa fa-heart"></i> Manifestar interesse
-							</button>
-						</a>
-					</div>
-	   	        <div class="clearfix">
-	   	        </div>
-	   	    </div>
-		</div>
-		<div class="col-item"><!-- Cada Doação -->
-	   	    <div class="photo"> 
-	   	        <a href="" alt="Veja todas as fotos da doação.">
-	   		            <img src="http://placehold.it/350x260" class="img-thumbnail img-responsive" alt="a" width="150px" height="150px" />
-	   		            <div class="overlay">
-	   						<div class="text"><span class="fa fa-plus"></span> Ver Produto</div>
-	   		  			</div>
-	   		  		</a>
-	   	    </div>
-	   	    <div class="info">
-		            <div class="titulo text-center">
-		                <h5>Título do Produto</h5>
-		            </div>
-					<div class="button text-center">
-						<a href="#">
-							<button type="button" class="btn btn-danger btn-sm">
-						    	<i class="fa fa-heart"></i> Manifestar interesse
-							</button>
-						</a>
-					</div>
-	   	        <div class="clearfix">
-	   	        </div>
-	   	    </div>
-		</div>
-		<div class="col-item"><!-- Cada Doação -->
-	   	    <div class="photo"> 
-	   	        <a href="" alt="Veja todas as fotos da doação.">
-	   		            <img src="http://placehold.it/350x260" class="img-thumbnail img-responsive" alt="a" width="150px" height="150px" />
-	   		            <div class="overlay">
-	   						<div class="text"><span class="fa fa-plus"></span> Ver Produto</div>
-	   		  			</div>
-	   		  		</a>
-	   	    </div>
-	   	    <div class="info">
-		            <div class="titulo text-center">
-		                <h5>Título do Produto</h5>
-		            </div>
-					<div class="button text-center">
-						<a href="#">
-							<button type="button" class="btn btn-danger btn-sm">
-						    	<i class="fa fa-heart"></i> Manifestar interesse
-							</button>
-						</a>
-					</div>
-	   	        <div class="clearfix">
-	   	        </div>
-	   	    </div>
-		</div>
-		<div class="col-item"><!-- Cada Doação -->
-	   	    <div class="photo"> 
-	   	        <a href="" alt="Veja todas as fotos da doação.">
-	   		            <img src="http://placehold.it/350x260" class="img-thumbnail img-responsive" alt="a" width="150px" height="150px" />
-	   		            <div class="overlay">
-	   						<div class="text"><span class="fa fa-plus"></span> Ver Produto</div>
-	   		  			</div>
-	   		  		</a>
-	   	    </div>
-	   	    <div class="info">
-		            <div class="titulo text-center">
-		                <h5>Título do Produto</h5>
-		            </div>
-					<div class="button text-center">
-						<a href="#">
-							<button type="button" class="btn btn-danger btn-sm">
-						    	<i class="fa fa-heart"></i> Manifestar interesse
-							</button>
-						</a>
-					</div>
-	   	        <div class="clearfix">
-	   	        </div>
-	   	    </div>
-		</div>
-		<div class="col-item"><!-- Cada Doação -->
-	   	    <div class="photo"> 
-	   	        <a href="" alt="Veja todas as fotos da doação.">
-	   		            <img src="http://placehold.it/350x260" class="img-thumbnail img-responsive" alt="a" width="150px" height="150px" />
-	   		            <div class="overlay">
-	   						<div class="text"><span class="fa fa-plus"></span> Ver Produto</div>
-	   		  			</div>
-	   		  		</a>
-	   	    </div>
-	   	    <div class="info">
-		            <div class="titulo text-center">
-		                <h5>Título do Produto</h5>
-		            </div>
-					<div class="button text-center">
-						<a href="#">
-							<button type="button" class="btn btn-danger btn-sm">
-						    	<i class="fa fa-heart"></i> Manifestar interesse
-							</button>
-						</a>
-					</div>
-	   	        <div class="clearfix">
-	   	        </div>
-	   	    </div>
-		</div>
-		<div class="col-item"><!-- Cada Doação -->
-	   	    <div class="photo"> 
-	   	        <a href="" alt="Veja todas as fotos da doação.">
-	   		            <img src="http://placehold.it/350x260" class="img-thumbnail img-responsive" alt="a" width="150px" height="150px" />
-	   		            <div class="overlay">
-	   						<div class="text"><span class="fa fa-plus"></span> Ver Produto</div>
-	   		  			</div>
-	   		  		</a>
-	   	    </div>
-	   	    <div class="info">
-		            <div class="titulo text-center">
-		                <h5>Título do Produto</h5>
-		            </div>
-					<div class="button text-center">
-						<a href="#">
-							<button type="button" class="btn btn-danger btn-sm">
-						    	<i class="fa fa-heart"></i> Manifestar interesse
-							</button>
-						</a>
-					</div>
-	   	        <div class="clearfix">
-	   	        </div>
-	   	    </div>
-		</div>
-		<div class="col-item"><!-- Cada Doação -->
-	   	    <div class="photo"> 
-	   	        <a href="" alt="Veja todas as fotos da doação.">
-	   		            <img src="http://placehold.it/350x260" class="img-thumbnail img-responsive" alt="a" width="150px" height="150px" />
-	   		            <div class="overlay">
-	   						<div class="text"><span class="fa fa-plus"></span> Ver Produto</div>
-	   		  			</div>
-	   		  		</a>
-	   	    </div>
-	   	    <div class="info">
-		            <div class="titulo text-center">
-		                <h5>Título do Produto</h5>
-		            </div>
-					<div class="button text-center">
-						<a href="#">
-							<button type="button" class="btn btn-danger btn-sm">
-						    	<i class="fa fa-heart"></i> Manifestar interesse
-							</button>
-						</a>
-					</div>
-	   	        <div class="clearfix">
-	   	        </div>
-	   	    </div>
-		</div>
-		<div class="col-item"><!-- Cada Doação -->
-	   	    <div class="photo"> 
-	   	        <a href="" alt="Veja todas as fotos da doação.">
-	   		            <img src="http://placehold.it/350x260" class="img-thumbnail img-responsive" alt="a" width="150px" height="150px" />
-	   		            <div class="overlay">
-	   						<div class="text"><span class="fa fa-plus"></span> Ver Produto</div>
-	   		  			</div>
-	   		  		</a>
-	   	    </div>
-	   	    <div class="info">
-		            <div class="titulo text-center">
-		                <h5>Título do Produto</h5>
-		            </div>
-					<div class="button text-center">
-						<a href="#">
-							<button type="button" class="btn btn-danger btn-sm">
-						    	<i class="fa fa-heart"></i> Manifestar interesse
-							</button>
-						</a>
-					</div>
-	   	        <div class="clearfix">
-	   	        </div>
-	   	    </div>
-		</div>
+
+		<? foreach ($itens as $key => $value): ?>
+			<? if($key === "paginas_qtde") continue; ?>
+				<div class="col-item"><!-- Cada Doação -->
+			   	    <div class="photo"> 
+			   	        <a href="doacoes/item/<?= $itens[$key]['item_id'] ?>" alt="Veja todas as fotos da doação.">
+			   		            <img src="<?= base_url().substr($itens[$key]['imagem_caminho'],2).'/'.$itens[$key]['imagem_nome'] ?>" class="img-thumbnail img-responsive" alt="Foto do produto"  />
+			   		            <div class="overlay">
+			   						<div class="text"><span class="fa fa-plus"></span> Ver Produto</div>
+			   		  			</div>
+			   		  	</a>
+			   	    </div>
+			   	    <div class="info">
+			            <div class="titulo text-center">
+			                <h5><?=$itens[$key]['item_descricao'] ?></h5>
+			            </div>
+						<div class="button text-center">
+							<a href="#">
+								<button type="button" class="btn btn-danger btn-sm">
+							    	<i class="fa fa-heart"></i> Manifestar interesse
+								</button>
+							</a>
+						</div>
+			   	        <div class="clearfix">
+			   	        </div>
+			   	    </div>
+				</div>
+			
+		<? endforeach; ?>
+
+	 	<ul style="display: inline; list-style-type: none;">
+	 		<? for($count = 1; $count <= $itens["paginas_qtde"]; $count++){ ?>
+	 			<li><a href="doacoes/index/<?= $count ?>"><?=$count?></a></li>
+	 		<? } ?>
+	 		
+	 	</ul>
 	</div>
 </div><!-- bloco das doações -->

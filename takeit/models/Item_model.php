@@ -98,7 +98,7 @@ class Item_model extends CI_Model {
 		}
 
 		/**
-		* Busca no Banco de Dados a os dados de um item COM APENAS UMA FOTO DO MESMO com base no id do usuario e os retorna.
+		* Busca no Banco de Dados os dados de um item COM APENAS UMA FOTO DO MESMO com base no id do usuario e os retorna.
 		* @param  $idUsuario -> ID do usuario a ser buscada
 		* @param  $status -> Status do item ou Array com vários estados, se não setado busca em todos status
 		* @return Array com os dados buscados do item ou mensagem de erro
@@ -148,7 +148,7 @@ class Item_model extends CI_Model {
 					}
 				}else{
 					$sql .= " AND item_status=".$this->db->escape($status);
-				}
+				}	
 
 				$sql .= " ORDER BY item_data DESC";
 			}
@@ -178,47 +178,90 @@ class Item_model extends CI_Model {
 		}
 
 		/**
-		* Busca no Banco de Dados os itens e os retorna
-		* @return 				Array com os dados buscados dos itens ou mensagem de erro
+		* Busca no Banco de Dados N itens disponíveis ou em negociação a partir de um índice e os retorna
+		* @param 	Array com os dados necessários para realizar a busca
 		*	Array format:
 		*		array(
+		*			"indice" => "",
+		*			"cidade_id" => "",
+		*			"categoria_id" => "",		//enviar 0 caso o usuário não tenha filtrado uma categoria
+		*			"busca" => "",				//enviar string vazia caso o usuário não tenha feito uma busca
+		*			"usuario_id" => ""
+		*		)
+		* @return 	Array com os dados buscados dos itens ou mensagem de erro
+		*	Array format:
+		*		array(
+		*			"paginas_qtde" => "",
 		*			array(
-		*				"NOME DO ITEM (MUDAR DEPOIS)" => ""
+		*				"item_descricao" => "",
+		*				"item_qtde" => "",
+		*				"imagem_caminho" => "",
+		*				"imagem_nome" => "",
+		*				"interessado" => "",
 		*			),
 		*			...
 		*		)
 		*	Ou:
 		*		array(
-		*			"Error" => ""
+		*			"tipo" => "erro", "msg" => ""
 		*		)
 		*/
-        public function buscaItemCidade($idCidade){
-        	
-			try{
+        public function buscaItensCidade($dados){
 
-				$sql = "SELECT DISTINCT item_id, item_descricao, item_qtde, item_data, item_status, usuario_id, categoria_id
-				FROM cidade NATURAL JOIN usuario NATURAL JOIN item WHERE cidade_id = ".$idCidade;
-
-				if(!$query = $this->db->query($sql)){
-					if($this->db->error()){
-						return array("Error" => "$error[message]");
-					}
-				} else if (empty($query->result())) {
-					return array("Error" => "No data found");
-				} else {
-					$count = 0;
-					foreach($query->result() as $row){
-						foreach ($row as $campo => $valor) {
-							$result[$count][$campo] = $valor;
-						}
-						$count++;
-					}
-					return $result;
+        	if(!isset($dados["indice"]) || !isset($dados["cidade_id"]) || !isset($dados["categoria_id"]) || 
+        		!isset($dados["busca"]) || !isset($dados["usuario_id"])){
+				return array( "tipo" => "erro", "msg" => "Informação insuficiente para executar a consulta.");
+			} else {
+				$sql = "SELECT item_id, item_descricao, item_qtde, (SELECT imagem_caminho FROM imagem WHERE imagem.item_id = i.item_id LIMIT 1) AS imagem_caminho, (SELECT imagem_nome FROM imagem WHERE imagem.item_id = i.item_id LIMIT 1) AS imagem_nome, (SELECT count(*) FROM interesse WHERE interesse.item_id = i.item_id and interesse.usuario_id = ".$dados['usuario_id'].") as interessado FROM usuario u NATURAL JOIN item i WHERE cidade_id = ".$dados['cidade_id']." AND (item_status = 'Disponível' OR item_status = 'Solicitado') AND item_descricao LIKE '%".$dados['busca']."%' AND u.usuario_id <> ".$dados['usuario_id'];
+				if ($dados['categoria_id'] != 0) {
+					$sql .= " AND categoria_id = ".$dados['categoria_id'];
 				}
-				
-			} catch(Exception $E) {
-				return array("Error" => "Server was unable to execute query");
+				$sql .= " LIMIT ".(($dados['indice']-1)*30).", 30";
+
+				$sql2 = "SELECT count(*) as qtde FROM usuario u NATURAL JOIN item i WHERE cidade_id = ".$dados['cidade_id']." AND (item_status = 'Disponível' OR item_status = 'Solicitado') AND item_descricao LIKE '%".$dados['busca']."%' AND u.usuario_id <> ".$dados['usuario_id'];
+				if ($dados['categoria_id'] != 0) {
+					$sql2 .= " AND categoria_id = ".$dados['categoria_id'];
+				}
+
+				try{
+
+					$result = array();
+
+					if(!$query = $this->db->query($sql)){
+						if($this->db->error()){
+							return array("tipo" => "erro", "msg" => $this->db->_error_message());
+						}
+					} else {
+						$count = 0;
+						foreach($query->result() as $row){
+							foreach ($row as $campo => $valor) {
+								$result[$count][$campo] = $valor;
+							}
+							$count++;
+						}
+						
+					}
+
+				}catch(Exception $E){
+					return array("tipo" => "erro", "msg" => "Erro inexperado ao realizar a consulta, por favor tenta mais tarde!!!");
+				}
+
+				try{
+
+					if(!$query = $this->db->query($sql2)){
+						if($this->db->error()){
+							return array("tipo" => "erro", "msg" => $this->db->_error_message());
+						}
+					} else {
+						$result["paginas_qtde"] = floor($query->result()[0]->qtde / 30 + 1);
+						return $result;
+					}
+
+				}catch(Exception $E){
+					return array("tipo" => "erro", "msg" => "Erro inexperado ao realizar a consulta, por favor tenta mais tarde!!!");
+				}
 			}
+
         }
 
 

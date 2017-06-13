@@ -20,4 +20,8 @@ class Chat extends CI_Controller{
 		$this->load->view('chat', $dados);
 		$this->load->view('templates/footer');
 	}
+
+	public function chatMeio(){
+		$this->load->view("chat_principal");
+	}
 }

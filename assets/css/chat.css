@@ -94,6 +94,16 @@
 .user-card {
 	display: flex;
 	align-items: baseline;
+	cursor: pointer;
+	border: 1px solid white;
+	padding: 10px 0 0 0;
+}
+
+.user-card:hover {
+	transition: 0.3s;
+	-webkit-box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.75);
 }
 
 .user-img > img{
@@ -111,4 +121,15 @@
 		height: auto;
 		max-height: 200px;
 	}
+}
+
+.painel-blank{
+	height: 340px;
+	background: #f5f5f5;
+	text-align: center;
+	padding: 140px 0 0 0;
+}
+
+.painel-blank span{
+	font-size: 25px;
 }

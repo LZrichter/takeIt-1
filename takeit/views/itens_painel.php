@@ -61,7 +61,7 @@
 										<? endif; ?>
 										<p class="btn-group-vertical">
 											<a class="btn btn-success" href="/doacoes/item/<?= $busca_item[$i]['item_id'] ?>"><i class="fa fa-eye"></i> Ver</a>
-											<a href="#" class="btn btn-primary"><i class="fa fa-comments-o"></i> Abrir Chat</a>
+											<a href="/chat/" class="btn btn-primary"><i class="fa fa-comments-o"></i> Abrir Chat</a>
 										</p>
 									</div>
 								</div>

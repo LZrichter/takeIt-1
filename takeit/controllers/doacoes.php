@@ -339,10 +339,10 @@ class Doacoes extends CI_Controller{
 		echo( json_encode($dados) );
 	}
 
-	public function filtraDoacoes($indice, $cidade_id, $categoria_id, $busca, $usuario_id){
-		$dados["indice"] = 1;
-		$dados["cidade_id"] = 4214;
-		$dados["categoria_id"] = 0;
+	public function filtraDoacoes($indice, $cidade_id, $categoria_id, $busca){
+		$dados["indice"] = $indice;
+		$dados["cidade_id"] = $cidade_id;
+		$dados["categoria_id"] = $categoria_id;
 		$dados["busca"] = "";
 		$dados["usuario_id"] = $this->session->userdata('user_id');
 		$result = $this->IM->buscaItensCidade($dados);

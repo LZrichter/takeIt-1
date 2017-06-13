@@ -5,6 +5,7 @@ var btn_menu		= $('#filtro-pesquisa');
 var btn_close		= $('.closebtn');
 var itens			= $('.bloco-doacoes');
 
+
 /**
  * Função que retorna todos os estados e os coloca dentro do select de estados 
  * @return {vetor[posicao][dado]} [vetor retornado por AJAX]
@@ -55,14 +56,15 @@ function municipiosPorEstado(estado){
 
 function filtraDoacoes(){
 	$.ajax({
-		url: '/doacoes/filtraDoacoes/5/5/5/5/5',
+		url: '/doacoes/filtraDoacoes/1/4214/3/""',
 		type: 'POST',
 		dataType: 'json'
 	})
-	.done(function(data) {
+	.done(function(data) {console.log(teste);
 		itens.empty();
+		var str = "";
 		for (var i = 0; i < Object.keys(data).length-1; i++) {
-			var str = "<div class='col-item'>\
+			str += "<div class='col-item'>\
 		   	    <div class='photo'>\
 		   	        <a href='doacoes/item/"+data[i]['item_id']+"' alt='Veja todas as fotos da doação.'>\
 	   		            <img src='http://takeit/"+data[i]['imagem_caminho'].substring(2)+"/"+data[i]['imagem_nome']+

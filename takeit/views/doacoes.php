@@ -2,8 +2,10 @@
   <li><a href="/welcome">Home</a></li>
   <li><a href="#">Doações</a></li>
 </ul>
-
-<?php echo "<div><pre>"; print_r($itens); echo "</pre></div>"  ?>
+<?php //echo "<div><pre>"; print_r($itens); echo "</pre></div>"  ?>
+<script type="text/javascript">
+	var teste = "\"".$busca."\"";
+</script>
 
 <div class="container-fluid procurando-algo">
     <div class="row text-center">
@@ -20,6 +22,13 @@
 		   	<div id="filtro-pesquisa" class="btn btn-info btn-lg" ><span class="fa fa-filter"></span> Quer filtrar sua pesquisa?</div>
 		</div>
 	</div>
+	<? if($busca != ""){
+	echo "<div class='row text-center'>
+		<div class='col-xs-12 col-sm-7 col-md-7 col-md-offset-1'>
+			<div class='input-group'><p>Exibindo resultados para ".$busca."</p></div>
+		</div>
+	</div>";
+	} ?>
 </div>
 <div class="container-fluid footer-align">
 	<div class="bloco-doacoes text-center center-block">

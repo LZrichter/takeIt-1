@@ -61,8 +61,8 @@
 				</div>
 			
 		<? endforeach; ?>
-
-	 	<ul style="display: inline; list-style-type: none;">
+		
+	 	<ul class="paginador">
 	 		<? for($count = 1; $count <= $itens["paginas_qtde"]; $count++){ ?>
 	 			<li><a href="doacoes/index/<?= $count ?>"><?=$count?></a></li>
 	 		<? } ?>

@@ -87,6 +87,25 @@ body > div.container-fluid.footer-align > div > div > div.photo > a > img {
     width: auto;
 }
 
+.paginador {
+  display: inline;
+  list-style-type: none;
+}
+
+.paginador > li > a {
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  color: #337ab7;
+  background-color: #fff;
+  padding: 6px 12px;
+  /*line-height: 1.42857143;*/
+}
+
+.paginador > li > a:hover {
+    text-decoration: none;
+    background-color: #ddd;
+}
+
 .overlay {
   position: absolute;
   top: 0;

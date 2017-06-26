@@ -18,16 +18,6 @@ class Painel extends CI_Controller{
 		$this->load->view('templates/footer');
 	}
 
-	public function perfil(){
-		$dados["titulo"] = "Perfil do Usuário.php";
-		$dados["css"]    = "painel.css";
-
-		$this->load->view('templates/head', $dados);
-		$this->load->view('templates/menu', $dados);
-		$this->load->view('perfil');
-		$this->load->view('templates/footer');
-	}
-
 	public function ofertas(){
 		$this->load->model('Item_model', 'IM');
 		$dados["titulo"] = "Itens para Doar";

@@ -155,7 +155,7 @@ class Instituicao_model extends Usuario_model{
 	public function todasInstituicoes(){
 		try{
 			$sql = "SELECT DISTINCT usuario_id, usuario_nome, cidade_nome, estado_uf
- 				FROM estado NATURAL JOIN cidade NATURAL JOIN usuario";
+ 				FROM estado NATURAL JOIN cidade NATURAL JOIN usuario WHERE usuario_nivel='Instituição'";
 
  			if(!$query = $this->db->query($sql)){
 				if($this->db->error()){

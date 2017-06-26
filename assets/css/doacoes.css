@@ -39,7 +39,8 @@ ul.breadcrumb li a:hover {
     border-radius: 5px;
     background: #FFF;
     margin: 5px;
-    width: 200px;
+    max-width: 200px;
+    width: auto;
     display: inline-block;
 }
 
@@ -70,6 +71,20 @@ ul.breadcrumb li a:hover {
 
 .photo {
     position: relative;
+    height: 150px;
+    display: flex;
+    align-items: center;
+}
+
+.photo > * {
+    flex: 1;
+}
+
+body > div.container-fluid.footer-align > div > div > div.photo > a > img {
+    max-width: 200px;
+    max-height: 150px;
+    height: auto;
+    width: auto;
 }
 
 .overlay {

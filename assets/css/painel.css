@@ -75,8 +75,8 @@ h1 {
 }
 
 #perfil_img {
-    border-radius: 10px;
-    border: 1px solid #AEAEAE;
+    /*border-radius: 10px;
+    border: 1px solid #AEAEAE;*/
 }
 
 .left-recebidos {
@@ -101,6 +101,17 @@ h1 {
 .right-recebidos button {
     /*width: 80px;*/
     /*margin-right: 2px;*/
+}
+
+.photo {
+  width: 180px;
+}
+
+.photo img {
+  max-width: 150px;
+  max-height: 150px;
+  width: auto;
+  height: auto;
 }
 
 #body-recebidos {
@@ -134,5 +145,4 @@ h1 {
         align-items: top;
     }
 
-}
 }

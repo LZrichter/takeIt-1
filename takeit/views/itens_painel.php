@@ -9,7 +9,7 @@
 	<div class="container recebidos">
 		<div class="panel panel-default">
 			<div class="panel-heading text-center">
-				<h1><span class="fa fa-heart"></span><?= $titulo ?></h1>
+				<h1><span class="fa fa-heart"></span> <?= $titulo ?></h1>
 			</div>
 				<div class="panel-body">
 					<? if ( isset($busca_item) && !empty($busca_item) ): ?>

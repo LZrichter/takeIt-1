@@ -5,9 +5,13 @@
 	<script src="<?= base_url();?>assets/js/jquery.min.js"></script>
 	<script src="<?= base_url();?>assets/js/bootstrap.js"></script>
 	<script src="<?= base_url();?>assets/js/main.js"></script>
-	<script src="<?= base_url();?>assets/js/<?= (isset($js) ? $js : "")?>"></script>
-	<script src="<?= base_url();?>assets/js/<?= (isset($js2) ? $js2 : "")?>"></script>
-<!-- DataTable -->
+	<? if(isset($js)): ?>
+	<script src="<?= base_url();?>assets/js/<?=$js;?>"></script>
+	<? endif;
+	if(isset($js2)): ?>
+	<script src="<?= base_url();?>assets/js/<?=$js2;?>"></script>
+	<? endif; ?>
+	<!-- DataTable -->
 	<?php if(isset($dataTable)): ?>
 		<script src="<?= base_url();?>assets/js/jquery.dataTables.min.js"></script>
 		<script src="<?= base_url();?>assets/js/dataTables.bootstrap.min.js"></script>

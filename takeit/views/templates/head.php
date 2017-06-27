@@ -6,8 +6,12 @@
 		<!-- CSS -->
 		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/menu.css">
 		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/footer.css">
-		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/<?= (isset($css) ? $css : "")?>">
-		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/<?= (isset($css2) ? $css2 : "")?>">
+		<? if(isset($css)): ?>
+			<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/<?=$css?>">
+		<? endif;
+		if(isset($css2)): ?>
+			<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/<?= $css2?>">
+		<? endif; ?>
 		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="<?= base_url();?>assets/css/bootstrap.css.map">

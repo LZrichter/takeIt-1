@@ -6,6 +6,10 @@ h1 {
     margin-top: 5px !important;
 }
 
+#div_mensagem {
+  display: none;
+}
+
 .flex-container {
   padding: 0;
   margin: 0;
@@ -75,8 +79,11 @@ h1 {
 }
 
 #perfil_img {
-    /*border-radius: 10px;
-    border: 1px solid #AEAEAE;*/
+    max-width: 150px;
+    max-height: 150px;
+    width: auto;
+    height: auto;
+    border-radius: 10px;
 }
 
 .left-recebidos {

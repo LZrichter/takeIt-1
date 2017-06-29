@@ -6,6 +6,10 @@ h1 {
     margin-top: 5px !important;
 }
 
+#div_mensagem {
+  display: none;
+}
+
 .flex-container {
   padding: 0;
   margin: 0;
@@ -76,8 +80,11 @@ h1 {
 }
 
 #perfil_img {
+    max-width: 150px;
+    max-height: 150px;
+    width: auto;
+    height: auto;
     border-radius: 10px;
-    border: 1px solid #AEAEAE;
 }
 
 .left-recebidos {
@@ -104,6 +111,7 @@ h1 {
     /*margin-right: 2px;*/
 }
 
+<<<<<<< HEAD
 /*div.painel-admin-div {
   display: relative;
 }*/
@@ -113,6 +121,17 @@ label.badge {
   float: right; 
   font-size: 18px;
   bottom: 0px;
+=======
+.photo {
+  width: 180px;
+}
+
+.photo img {
+  max-width: 150px;
+  max-height: 150px;
+  width: auto;
+  height: auto;
+>>>>>>> fb6eb089dd96699a381920c7ae358865ffea9ba1
 }
 
 #body-recebidos {
@@ -146,5 +165,4 @@ label.badge {
         align-items: top;
     }
 
-}
 }

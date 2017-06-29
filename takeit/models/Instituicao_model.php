@@ -14,7 +14,6 @@ class Instituicao_model extends Usuario_model{
 	 * @return array         Array com a resposta caso tenha dado erro ou não
 	 */
 	public function insereInstituicao($dados){
-		$this->db->trans_begin();
 		$this->load->helper("validacao");
 
 		if(!isset($dados['cnpj']))
@@ -24,6 +23,7 @@ class Instituicao_model extends Usuario_model{
 		else if($this->buscaInstituicao($dados['cnpj']))
 			return ["tipo" => "erro", "msg" => "CNPJ já registrado no sistema.", "campo" => "cnpj"];
 
+		$this->db->trans_begin();
 		$resposta = $this->insereUsuario($dados);
 
 		if($resposta["tipo"] == "sucesso"){
@@ -69,25 +69,34 @@ class Instituicao_model extends Usuario_model{
 	 *		)
 	 */
 	public function alteraInstituicao($idInst, $novoCnpj, $novoSite){
-		if(!isset($idInst) || !isset($novoCnpj) || !isset($novoSite)){
-			return array("Error" => "Insuficient information to execute the query");
-		}
+		$this->load->helper("validacao");
+		$usuario = $this->selecionaUsuario($idInst, TRUE);
+
+		if(!isset($idInst) || !isset($novoCnpj) || !isset($novoSite))
+			return ["tipo" => "erro", "msg" => "Parâmetros insuficientes para atualizar a Instituição."];
+		else if(!isset($dados['cnpj']))
+			return ["tipo" => "erro", "msg" => "Campos obrigatórios ainda não foram preenchidos.", "campo" => "cnpj"];
+		else if(!validaCNPJ($dados['cnpj']))
+			return ["tipo" => "erro", "msg" => "CNPJ informado não é válido.", "campo" => "cnpj"];
+		else if($this->buscaInstituicao($dados['cnpj']) && $usuario['instituicao_cnpj']!=$novoCnpj)
+			return ["tipo" => "erro", "msg" => "CNPJ já registrado no sistema.", "campo" => "cnpj"];
 
 		try{
-
-			$sql = "UPDATE instituicao SET instituicao_cnpj = ".$novoCnpj.", instituicao_site = ".$novoSite." 
-			WHERE instituicao_id = ".$idInst;
+			$this->db->trans_begin();
+			$sql = "UPDATE instituicao SET instituicao_cnpj = ".$this->db->escape($novoCnpj).", instituicao_site = ".$this->db->escape($novoSite)." WHERE instituicao_id = ".$idInst;
 
 			if(!$query = $this->db->query($sql)){
 				if($this->db->error()){
-					return array("Error" => "$error[message]");
+					$this->db->trans_rollback();
+					return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de atualizar a Instituição. Por favor, mude os dados inseridos ou tente mais tarde. Código: ".$error["code"]];
 				}
 			} else {
-				return true;
+    			$this->db->trans_commit();
+				return ["tipo" => "sucesso", "msg" => "Atualização efetuada com sucesso."];
 			}
 			
 		} catch(Exception $E) {
-			return array("Error" => "Server was unable to execute query");
+			return ["tipo" => "erro", "msg" => "Problema interno do sistema. Por favor, tente mais tarde!"];
 		}
 	}
 
@@ -155,7 +164,7 @@ class Instituicao_model extends Usuario_model{
 	public function todasInstituicoes(){
 		try{
 			$sql = "SELECT DISTINCT usuario_id, usuario_nome, cidade_nome, estado_uf
- 				FROM estado NATURAL JOIN cidade NATURAL JOIN usuario";
+ 				FROM estado NATURAL JOIN cidade NATURAL JOIN usuario WHERE usuario_nivel='Instituição'";
 
  			if(!$query = $this->db->query($sql)){
 				if($this->db->error()){

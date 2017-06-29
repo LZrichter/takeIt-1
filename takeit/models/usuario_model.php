@@ -7,11 +7,8 @@ class Usuario_model extends CI_Model{
 	
 	private $id = "";
 	private $nivel = "";
-	private $obrigatorio = [
-		"nome", "email", "senha", 
-		"confirmacao", "estado", "cidade", 
-		"termos"
-	];
+	private $obrigatorio = [ "nome", "email", "senha", "confirmacao", "estado", "cidade", "termos" ];
+	private $obrigatorio_perfil = [ "nome", "email", "estado", "cidade" ];
 
 	public $nome = "";
 	public $email = "";
@@ -26,6 +23,8 @@ class Usuario_model extends CI_Model{
 	public $estado_id = "";
 	public $estado_uf = "";
 	public $nivelUsuario = "";
+	public $resumo = "";
+	public $imagem_id = "";
 
 	function __construct(){
 		parent::__construct();
@@ -102,6 +101,70 @@ class Usuario_model extends CI_Model{
 	}
 
 	/**
+	 * 
+	 * @param 	$idUser		
+	 * @param  	$dados 		array com 
+	 * @return 				Boolean indicando o sucesso da alteração ou array com mensagem de erro
+	 *  
+	 */
+	/**
+	 * Altera os dados de um usuário no Banco de Dados
+	 * @param  int    $idUser ID do usuário a ser alterado
+	 * @param  array  $dados  todos os dados do usuario (preenchidos via formulário)
+	 * @return                Boolean indicando o sucesso da alteração ou array com mensagem de erro array("Error" => "msg")
+	 */
+	public function alteraUsuario(int $idUser, array $dados){
+		if(!isset($idUser) || !isset($dados))
+			return ["tipo" => "erro", "msg" => "Parâmetros insuficientes para atualizar o Usuário."];
+
+		foreach($this->obrigatorio_perfil as $campo){
+			if(!in_array($campo, array_keys($dados)) || (isset($dados[$campo]) && empty(trim($dados[$campo]))))
+				return ["tipo" => "erro", "msg" => "Campos obrigatórios ainda não foram preenchidos.", "campo" => $campo];
+		}
+
+		if($dados["senha"] != $dados["confirmacao"]) 
+			return ["tipo" => "erro", "msg" => "Confirmação da senha esta incorreta!", "campo" => "confirmacao"];
+
+		foreach ($dados as $key => $value)
+			$$key = $value;
+
+		try{
+			$this->db->trans_begin();
+			$sql = "UPDATE usuario SET 
+						usuario_nome 		= ".$this->db->escape($nome).", 
+						usuario_email 		= ".$this->db->escape($email).", 
+						usuario_endereco 	= ".$this->db->escape($endereco).", 
+						usuario_bairro 		= ".$this->db->escape($bairro).", 
+						usuario_numero 		= ".$this->db->escape($numero).", 
+						usuario_complemento = ".$this->db->escape($complemento).", 
+						usuario_telefone 	= ".$this->db->escape($telefone).", 
+						usuario_resumo 		= ".$this->db->escape($resumo).", 
+						cidade_id 			= ".$this->db->escape($cidade);
+			
+			if(str_replace("*", '', $senha) != ''){
+				$this->load->helper("passBCrypt");
+				$this->pass = new Bcrypt;
+				
+				$sql .= ", usuario_senha = ".str_replace($this->senhaAddOn, "", $this->db->escape($this->pass->hash($dados["senha"])));
+			}
+
+			$sql .= " WHERE usuario_id = ".$idUser;
+
+			if(!$query = $this->db->query($sql)){
+				if($this->db->error()){
+					$this->db->trans_rollback();
+					return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de atualizar o Usuário. Por favor, mude os dados inseridos ou tente mais tarde. Código: ".$error["code"]];
+				}
+			} else {
+				$this->db->trans_commit();
+				return ["tipo" => "sucesso", "msg" => "Atualização efetuado com sucesso."];
+			}
+		} catch(Exception $E) {
+			return ["tipo" => "erro", "msg" => "Problema interno do sistema. Por favor, tente mais tarde!"];
+		}
+	}
+
+	/**
 	 * Exclui um usuário com seu id
 	 * @param  int    	$id ID do usuário a ser removido
 	 * @return boolean 		true se exclusão concluida, false se ocorreu erro
@@ -141,8 +204,14 @@ class Usuario_model extends CI_Model{
 
 		try{
 			$sql = "
-				SELECT * 
-				FROM usuario u NATURAL LEFT JOIN cidade c NATURAL LEFT JOIN estado e
+				SELECT u.*, c.*, e.*, img.imagem_nome, img.imagem_caminho,
+					p.pessoa_cpf, i.instituicao_cnpj, i.instituicao_site
+				FROM usuario u 
+					NATURAL LEFT JOIN cidade c 
+					NATURAL LEFT JOIN estado e 
+					NATURAL LEFT JOIN imagem img
+					LEFT JOIN pessoa p ON u.usuario_id = p.pessoa_id
+					LEFT JOIN instituicao i ON u.usuario_id = i.instituicao_id
 				WHERE usuario_id = $id
 			";
 

@@ -21,10 +21,10 @@
                     </button>
                 </li>
                 <li id="painel">
-                    <a href="/painel">Meu Painel</a>
+                    <a href="/Painel">Meu Painel</a>
                 </li>
                 <li id="instituicoes">
-                    <a href="/instituicoes">Instituições</a>
+                    <a href="/Instituicoes">Instituições</a>
                 </li>
                 <li id="fazer_doacoes">
                     <a href="/doacoes/cadastrarItem"><span class="fa fa-heart"></span> Fazer Doação</a>

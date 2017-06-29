@@ -39,7 +39,8 @@ ul.breadcrumb li a:hover {
     border-radius: 5px;
     background: #FFF;
     margin: 5px;
-    width: 200px;
+    max-width: 200px;
+    width: auto;
     display: inline-block;
 }
 
@@ -70,6 +71,39 @@ ul.breadcrumb li a:hover {
 
 .photo {
     position: relative;
+    height: 150px;
+    display: flex;
+    align-items: center;
+}
+
+.photo > * {
+    flex: 1;
+}
+
+body > div.container-fluid.footer-align > div > div > div.photo > a > img {
+    max-width: 200px;
+    max-height: 150px;
+    height: auto;
+    width: auto;
+}
+
+.paginador {
+  display: inline;
+  list-style-type: none;
+}
+
+.paginador > li > a {
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  color: #337ab7;
+  background-color: #fff;
+  padding: 6px 12px;
+  /*line-height: 1.42857143;*/
+}
+
+.paginador > li > a:hover {
+    text-decoration: none;
+    background-color: #ddd;
 }
 
 .overlay {

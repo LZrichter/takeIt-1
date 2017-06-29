@@ -9,7 +9,7 @@
 	<ul class="flex-container">
 		<!-- BOTÃO 1 -->
 	  	<li class="flex-item">
-		  	<a href="/painel/ofertas">
+		  	<a href="/Painel/ofertas">
 		  		<div>
 		  			<img src="<?=base_url()?>/assets/img/painel_doar.png">
 		  			<h2>Itens para Doar</h2>
@@ -18,7 +18,7 @@
 	  	</li>
 	  	<!-- BOTÃO 2 -->
 	  	<li class="flex-item">
-		  	<a href="/painel/doados">
+		  	<a href="/Painel/doados">
 		  		<div>
 		  			<img src="<?=base_url()?>/assets/img/painel_doados.png">
 		  			<h2>Minhas Doações</h2>
@@ -36,7 +36,7 @@
 	  	</li>
 	  	<!-- BOTÃO 4 -->
 	  	<li class="flex-item">
-		  	<a href="/painel/interesses">
+		  	<a href="/Painel/interesses">
 		  		<div>
 		  			<img src="<?=base_url()?>/assets/img/painel_receber.png">
 		  			<h2>Itens para Receber</h2>
@@ -45,7 +45,7 @@
 	  	</li>
 	  	<!-- BOTÃO 5 -->
 	  	<li class="flex-item">
-		  	<a href="/painel/recebidos">
+		  	<a href="/Painel/recebidos">
 		  		<div>
 		  			<img src="<?=base_url()?>/assets/img/painel_recebidos.png">
 		  			<h2>Itens Recebidos</h2>
@@ -54,7 +54,7 @@
 	  	</li>
 	  	<!-- BOTÃO 6 -->
 	  	<li class="flex-item">
-		  	<a href="/painel/perfil">
+		  	<a href="/Usuario/perfil">
 		  		<div>
 		  			<img src="<?=base_url()?>/assets/img/painel_perfil.png">
 		  			<h2>Dados da Conta</h2>

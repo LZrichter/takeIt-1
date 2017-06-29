@@ -23,7 +23,6 @@ class Pessoa_model extends Usuario_model{
 	 *		)
 	 */
 	public function inserePessoa(array $dados){
-		$this->db->trans_begin();
 		$this->load->helper("validacao");
 
 		if(!isset($dados['cpf']))
@@ -33,6 +32,7 @@ class Pessoa_model extends Usuario_model{
 		else if($this->buscaPessoa($dados['cpf']))
 			return ["tipo" => "erro", "msg" => "CPF já registrado no sistema.", "campo" => "cpf"];
 
+		$this->db->trans_begin();
 		$resposta = $this->insereUsuario($dados);
 
 		if($resposta["tipo"] == "sucesso"){
@@ -75,25 +75,35 @@ class Pessoa_model extends Usuario_model{
 	 *		)
 	 */
 	public function alteraPessoa($idPessoa, $novoCpf){
-		if(!isset($idInst) || !isset($novoCpf)){
-			return array("Error" => "Insuficient information to execute the query");
-		}
+		$this->load->helper("validacao");
+		$usuario = $this->selecionaUsuario($idPessoa, TRUE);
+		
+		if(!isset($idPessoa) || !isset($novoCpf))
+			return ["tipo" => "erro", "msg" => "Parâmetros insuficientes para atualizar a Pessoa."];
+		else if($novoCpf=="")
+			return ["tipo" => "erro", "msg" => "Campos obrigatórios ainda não foram preenchidos.", "campo" => "cpf"];
+		else if(!validaCPF($novoCpf))
+			return ["tipo" => "erro", "msg" => "CPF informado não é válido.", "campo" => "cpf"];
+		else if($this->buscaPessoa($novoCpf) && $usuario['pessoa_cpf']!=$novoCpf)
+			return ["tipo" => "erro", "msg" => "CPF já registrado no sistema.", "campo" => "cpf"];
 
 		try{
-
+			$this->db->trans_begin();
 			$sql = "UPDATE pessoa SET pessoa_cpf = ".$this->db->escape($novoCpf)." 
 			WHERE pessoa_id = ".$this->db->escape($idPessoa);
 
 			if(!$query = $this->db->query($sql)){
 				if($this->db->error()){
-					return array("Error" => "$error[message]");
+					$this->db->trans_rollback();
+					return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de atualizar a Pessoa. Por favor, mude os dados inseridos ou tente mais tarde. Código: ".$error["code"]];
 				}
 			} else {
-				return true;
+    			$this->db->trans_commit();
+				return ["tipo" => "sucesso", "msg" => "Atualização efetuada com sucesso."];
 			}
 			
 		} catch(Exception $E) {
-			return array("Error" => "Server was unable to execute query");
+			return ["tipo" => "erro", "msg" => "Problema interno do sistema. Por favor, tente mais tarde!"];
 		}
 	}
 	

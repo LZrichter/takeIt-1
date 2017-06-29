@@ -37,6 +37,7 @@ h1 {
 
   border-radius: 15px;
   border: 4px dashed #B1B1B1;
+  display: relative;
 }
 
 .flex-item img {
@@ -101,6 +102,17 @@ h1 {
 .right-recebidos button {
     /*width: 80px;*/
     /*margin-right: 2px;*/
+}
+
+/*div.painel-admin-div {
+  display: relative;
+}*/
+
+label.badge {
+  display: absolute;
+  float: right; 
+  font-size: 18px;
+  bottom: 0px;
 }
 
 #body-recebidos {

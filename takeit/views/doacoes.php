@@ -2,10 +2,7 @@
   <li><a href="/welcome">Home</a></li>
   <li><a href="#">Doações</a></li>
 </ul>
-<?php //echo "<div><pre>"; print_r($itens); echo "</pre></div>"  ?>
-<script type="text/javascript">
-	var teste = "\"".$busca."\"";
-</script>
+<?php echo "<div><pre>"; print_r($itens); echo "</pre></div>"  ?>
 
 <div class="container-fluid procurando-algo">
     <div class="row text-center">

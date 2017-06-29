@@ -98,6 +98,71 @@ class Item_model extends CI_Model {
 		}
 
 		/**
+		* Busca A quantidade total de item filtrada por status ou não
+		* @param  $status -> Status do item ou Array com vários estados, se não setado busca em todos status
+		* @return Array com os dados dos itens ou mensagem de erro
+		*	Array format:
+		*		array(
+		*			"item_descricao" => "",
+		*			"item_qtde" => "",
+		*			"item_data" => "",
+		*			"item_status" => "",
+		*			"usuario_id" => "",
+		*			"categoria_id" => "",
+		*			"imagem_caminho" => "",
+		*			"imagem_nome" => "",
+		*		)
+		*	Ou:
+		*		array(
+		*			"tipo" => "erro", "msg" => ""
+		*		)
+		*/
+		public function buscaQtdeItens($status = NULL){		
+
+			if ( $status == NULL ) { //retorna item com qualquer status
+				$sql ="SELECT * from item";
+			}else{ //retorna item com status especifico
+
+				$sql ="SELECT * from item WHERE";
+
+				if ( is_array($status)){
+					$sql .= ' item_status=';
+					foreach ($status as $key => $value){
+						if( $key == count($status)-1 )
+							$sql .= $this->db->escape($value);	
+						else
+							$sql .= $this->db->escape($value)." OR item_status=";
+					}
+				}else{
+					$sql .= " item_status=".$this->db->escape($status);
+				}	
+			}
+
+			$result = array();
+
+			try{
+
+				if(!$query = $this->db->query($sql)){
+					if($this->db->error()){
+						return array("tipo" => "erro", "msg" => $this->db->_error_message());
+					}
+				}else {
+					$count = 0;
+					foreach($query->result() as $row){
+						foreach ($row as $campo => $valor) {
+							$result[$count][$campo] = $valor;
+						}
+						$count++;
+					}
+					return $result;
+				}
+
+			}catch(Exception $E){
+				return array("tipo" => "erro", "msg" => "Erro inexperado ao realizar a consulta, por favor tenta mais tarde!!!");
+			}
+		}
+
+		/**
 		* Busca no Banco de Dados os dados de um item COM APENAS UMA FOTO DO MESMO com base no id do usuario e os retorna.
 		* @param  $idUsuario -> ID do usuario a ser buscada
 		* @param  $status -> Status do item ou Array com vários estados, se não setado busca em todos status

@@ -55,7 +55,7 @@
 										<? if( isset($qualTela) && $qualTela == 1 ): ?>
 											<p class="btn-group-vertical">
 												<a href="/doacoes/alterarItem/<?= $busca_item[$i]['item_id'] ?>" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Alterar</a>
-												<button id="<?= $busca_item[$i]['item_id']?>" class="btn btn-danger btn-modal" data-toggle="modal" data-target="#delete-modal"><i class="fa fa-trash"></i> Cancelar</button>
+												<button id="cancelarDoacaoBtn" data-id="<?= $busca_item[$i]['item_id']?>" class="btn btn-danger btn-modal" data-toggle="modal" data-target="#delete-modal"><i class="fa fa-trash"></i> Cancelar</button>
 
 											</p>
 										<? endif; ?>

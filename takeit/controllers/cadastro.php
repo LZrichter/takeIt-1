@@ -44,7 +44,8 @@ class Cadastro extends CI_Controller{
 			$this->load->model("Instituicao_model", "instituicao");
 			$resposta = $this->instituicao->insereInstituicao($this->input->post());
 			
-			echo json_encode($resposta); 
+			echo json_encode($resposta);
+			return;
 		}else echo json_encode(["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"]);
 	}
 

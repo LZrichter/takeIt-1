@@ -31,9 +31,9 @@ class Doacoes extends CI_Controller{
 		$dados["css2"]   = "doacoes.css";
 		$dados["js"]     = "menuDoacoes.js";
 
-		$dados["indice"] = 1;
-		$dados["cidade_id"] = 4214;
-		$dados["categoria_id"] = 0;
+		$dados["indice"] = $this->session->userdata('indice');
+		$dados["cidade_id"] = $this->session->userdata('user_cidade');
+		$dados["categoria_id"] = $this->session->userdata('categoria');
 		$dados["busca"] = $busca;
 		$dados["usuario_id"] = $this->session->userdata('user_id');
 
@@ -362,6 +362,17 @@ class Doacoes extends CI_Controller{
 	public function carregaCategoriasMenu(){
 		$dados = $this->CM->buscaCategorias();
 		echo( json_encode($dados) );
+	}
+
+	public function setSessaoCategoria($idCategoria){
+		$this->session->set_userdata("categoria", $idCategoria);
+		$this->session->set_userdata("indice", 1);
+		echo( json_encode($idCategoria) );
+	}
+
+	public function setIndice($indice){
+		$this->session->set_userdata("indice", $indice);
+		echo( json_encode($indice) );
 	}
 
 	public function filtraDoacoes($indice, $cidade_id, $categoria_id, $busca){

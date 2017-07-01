@@ -17,10 +17,6 @@ class Welcome extends CI_Controller{
 		$dados["css"]    = "welcome.css";
 		$dados["js"]	 = "welcome.js";
 
-		$this->load->model("welcome_model","ini");
-
-		$dados["teste"] = $this->ini->teste();
-
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menuWelcome');
 		$this->load->view('welcome', $dados);

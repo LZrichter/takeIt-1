@@ -5,6 +5,7 @@
 	  	<li><a href="/painel">Painel</a></li>
 	  	<li><a href="#"><?= $titulo ?></a></li>
 	</ul>
+
 	<div class="container recebidos">
 		<div class="panel panel-default">
 			<div class="panel-heading text-center">
@@ -24,10 +25,10 @@
 			   	    					<p><strong>Denúncia: </strong>
 			   	    					<?= $denuncia[$i]["denuncia_text"] ?>
 			   	    					</p>
-			   	    					<p><strong>Denunciante: </strong>
+			   	    					<p><strong>Usuário x9: </strong>
 			   	    						<a href="#" ><?= $usuarios_xnove[$i]["nome"] ?>&nbsp<i class="fa fa-external-link"></i></a>
 			   	    					</p>
-			   	    					<p><strong>Denunciado: </strong>
+			   	    					<p><strong>Usuário Vacilão: </strong>
 			   	    						<a href="#" ><?= $usuarios_vacilao[$i]["nome"] ?>&nbsp<i class="fa fa-external-link"></i></a>
 			   	    					</p>
 			   	    					<p><strong>Data: </strong>
@@ -65,11 +66,12 @@
 											<a class="btn btn-warning btn-usuario" 
 												data-toggle="modal" 
 												data-target="#action-modal" 
-												data-id="<??>"
-												data-title="Você deseja Bloaquear este Usuário?"
-												data-panel="panel-<?= $denuncia[$i]['usuario_vacilao']?>"
+												data-id="<?= $denuncia[$i]['usuario_vacilao']?>"
+												data-denuncia ="<?= $denuncia[$i]['denuncia_id']?>"
+												data-title="Você deseja Bloquear este Usuário? Isso irá desativa-lo do sistema"
+												data-panel="panel-<?= $denuncia[$i]['denuncia_id']?>"
 											>
-												<i class="fa fa-ban"></i> Bloquear Usuário
+												<i class="fa fa-ban"></i> Bloquear Vacilão
 											</a>
 											<a class="btn btn-danger btn-item" 
 												data-toggle="modal" 

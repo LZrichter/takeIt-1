@@ -326,4 +326,72 @@ class Usuario_model extends CI_Model{
 		return $this->pass->check($senha, $this->senhaAddOn.$this->senha);
 	}
 
+	/**
+	 * 
+	 * Busca usuários bloqueados ou ativos se o parâmetro for especificado, senão busca todos usuários
+	 * @param int $status -> 1 , para usuarios ativos | 0 , para usuarios bloqueados
+	 * @return  array com os dados do usuario
+	 * 
+	 */
+	public function buscaUsuariosAtivosBloqueados($status = NULL){
+		
+		if ( isset($status) ) {
+			$sql = 	"SELECT usuario_id, usuario_nome, usuario_email, usuario_endereco, usuario_telefone, usuario_nivel, usuario_ativo, cidade_id FROM usuario WHERE usuario_ativo =".$this->db->escape($status);
+		}else{
+			$sql = 	"SELECT usuario_id, usuario_nome, usuario_email, usuario_endereco, usuario_telefone, usuario_nivel, usuario_ativo, cidade_id FROM usuario";
+		}
+		try{
+			$result = array();
+
+			if(!$query = $this->db->query($sql)){
+				if($this->db->error()){
+					return array("tipo" => "erro", "msg" => $this->db->_error_message());
+				}
+			}else {
+				$count = 0;
+				foreach($query->result() as $row){
+					foreach ($row as $campo => $valor) {
+						$result[$count][$campo] = $valor;
+					}
+					$count++;
+				}
+				return $result;
+			}
+
+		}catch(Exception $E){
+			return array("tipo" => "erro", "msg" => "Erro inexperado ao realizar a consulta, por favor tenta mais tarde!!!");
+		}
+		
+	}
+
+
+	/**
+	 * 
+	 * Bloqueia um usuário com base o id passado como parâmetro.
+	 * @param int $id do usuario a ser bloqueado
+	 * @return  array(
+	 *          "tipo" => "sucesso | erro",
+	 *          "msg"  => "mensagem de sucesso ou erro"
+	 * );
+	 * 
+	 */
+	public function bloqueiaUsuario($id){
+		if(!isset($id)) 
+			return ["tipo" => "erro", "msg" => "Dados não informado"];
+		try{
+			$sql = "UPDATE usuario SET usuario_ativo = 0 WHERE usuario_id = '$id'";
+
+			if(!$query = $this->db->query($sql)){
+				if($error = $this->db->error()) 
+					return ["tipo" => "erro", "msg" => "Não foi possivel bloquear o usuário."];
+			}else return true;
+		}catch(PDOException $PDOE){
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+		}catch(Exception $NE){
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
+		}
+
+		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
+	}
+
 } ?>

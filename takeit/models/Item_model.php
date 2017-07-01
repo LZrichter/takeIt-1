@@ -409,4 +409,41 @@ class Item_model extends CI_Model {
 
         }
 
+
+        /**
+         * Descrição: Altera o status dos itens de um usuário passado por parametro
+         * 
+         * @param  $idUser -> Id do usuario a ter o status dos seus itens alterados
+         * @param $status -> novo status dos itens
+         * @return  Boolean de confirmação
+         */
+        public function alteraStatusItemPorUsuario($idUser, $status){
+
+        	if(!isset($idUser) || !isset($status)){
+        		return array( "tipo" => "erro", "msg" => "Informação insuficiente para executar a consulta.");
+        	}
+        	$aceitos = ["Disponível", 1, "Solicitado", 2, "Doado", 3, "Cancelado", 4];
+
+        	if( in_array($status, $aceitos) ){
+        		$sql = " UPDATE item SET item_status =".$this->db->escape($status)." WHERE usuario_id =".$this->db->escape($idUser);
+
+	        	try{
+
+					if(!$query = $this->db->query($sql)){
+						if($this->db->error()){
+							return array("tipo" => "erro", "msg" => $this->db->_error_message());
+						}
+					}else {
+						return true;
+					}
+
+				}catch(Exception $E){
+					return array("tipo" => "erro", "msg" => "Erro inexperado ao realizar a consulta, por favor tenta mais tarde!!!");
+				}
+        	}else{
+        		return false;
+        	}
+
+        }
+
 }

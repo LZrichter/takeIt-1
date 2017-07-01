@@ -111,7 +111,7 @@ h1 {
     /*margin-right: 2px;*/
 }
 
-<<<<<<< HEAD
+
 /*div.painel-admin-div {
   display: relative;
 }*/
@@ -121,7 +121,8 @@ label.badge {
   float: right; 
   font-size: 18px;
   bottom: 0px;
-=======
+}
+
 .photo {
   width: 180px;
 }
@@ -131,7 +132,6 @@ label.badge {
   max-height: 150px;
   width: auto;
   height: auto;
->>>>>>> fb6eb089dd96699a381920c7ae358865ffea9ba1
 }
 
 #body-recebidos {

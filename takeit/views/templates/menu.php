@@ -14,21 +14,25 @@
         </div>
         <div class="collapse navbar-collapse navbar-menubuilder">
             <ul class="nav navbar-nav navbar-right">
-                <li id="notificacao">
-                    <button class="btn btn-lg btn-link">
-                        <span class="fa fa-bell notify-bell"></span>
-                        <span class="badge badge-notify">3</span>
-                    </button>
-                </li>
+                <? if(!$this->session->userdata('user_tipo') == 'Admin'): ?>
+                    <li id="notificacao">
+                        <button class="btn btn-lg btn-link">
+                            <span class="fa fa-bell notify-bell"></span>
+                            <span class="badge badge-notify">3</span>
+                        </button>
+                    </li>
+                <? endif; ?>
                 <li id="painel">
                     <a href="/Painel">Meu Painel</a>
                 </li>
                 <li id="instituicoes">
                     <a href="/Instituicoes">Instituições</a>
                 </li>
-                <li id="fazer_doacoes">
-                    <a href="/doacoes/cadastrarItem"><span class="fa fa-heart"></span> Fazer Doação</a>
-                </li>
+                <? if(!$this->session->userdata('user_tipo') == 'Admin'): ?>
+                    <li id="fazer_doacoes">
+                        <a href="/doacoes/cadastrarItem"><span class="fa fa-heart"></span> Fazer Doação</a>
+                    </li>
+                <? endif; ?>
                 <li id="sair">
                     <a href="/login/sair"><span class="fa fa-sign-out"></span>Sair</a>
                 </li>

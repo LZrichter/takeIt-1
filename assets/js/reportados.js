@@ -42,7 +42,8 @@ $(document).on('click', '.btn-ignorar', function(event) {
 
 $(document).on('click', '.btn-usuario', function(event) {
 	event.preventDefault();
-	var id = $(this).data("id");
+	var idUser = $(this).data("id");
+	var idDenuncia = $(this).data("denuncia");
 	var title = $(this).data("title");
 	var painel = $(this).data("panel");
 
@@ -51,31 +52,32 @@ $(document).on('click', '.btn-usuario', function(event) {
 	$('#modal-sim-btn').on('click', function(event) {
 		event.preventDefault();
 		$.ajax({
-			url: '/usuario/cancelarUsuario/'+id,
+			url: '/painel/cancelarUsuario/',
 			type: 'POST',
 			dataType: 'json',
+			data: { idDenuncia : idDenuncia, idUser : idUser}
 		})
 		.done(function(data) {
+			console.log('done', data);
 			if (data['tipo'] == 'sucesso') {
 				$('#action-modal').modal("hide");
 				$('#modalLabel').html(data['msg']);
-				// bloquear usuario e cancelar todos seus itens	
 				$('#modalMsg').html("Todos os itens referentes a este usuario foram excluidos");
 				$('#mensagem-modal').modal("show");
 				$('#'+painel).css('display', 'none');
+				window.location.reload(true);
 			}else{
 				$('#action-modal').modal("hide");
-				$('#modalLabel').html("Erro ao ignorar a denúncia!!");
+				$('#modalLabel').html("Erro ao bloaquear este usuário!!");
 				$('#modalMsg').html(data['msg']);
 				$('#mensagem-modal').modal("show");
 			}
-			
-
 		})
 		.fail(function(data) {
+			console.log('fail', data);
 			$('#action-modal').modal("hide");
-			$('#modalLabel').html("Erro ao ignorar a denúncia!!");
-			$('#modalMsg').html("Por favor tente novamente mais tarde.");
+			$('#modalLabel').html("Erro ao bloaquear este usuário!!");
+			$('#modalMsg').html(data["msg"]);
 			$('#mensagem-modal').modal("show");
 		});
 	});

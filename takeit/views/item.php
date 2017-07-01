@@ -83,7 +83,15 @@
 		  		<div class="panel-footer text-center">
 		  			<button class="btn btn-primary btn-lg" type="button"><span class="fa fa-heart"></span> Manisfestar Interesse</button>
 
-		  			<button class="btn btn-danger btn-lg" type="button"><span class="fa fa-flag"></span> Reportar Doação</button>
+		  			<button class="btn btn-danger btn-lg" type="button"><span class="fa fa-flag" data-toggle="popover" title="Descreva o motivo" 
+		  			data-content="
+		  			<textarea  rows='4' cols='50' placeholder='Informe aqui sua reclamação.. '></textarea>
+		  			<button class='btn btn-success'>Denunciar</button>
+		  			"
+		  			data-item="<?= $item[0]["item_id"] ?>"
+		  			data-xnove="<?= $this->session->userdata('user_id') ?>"
+		  			data-vacilao="<?= $item[0]["usuario_id"] ?>"
+		  			></span> Reportar Doação</button>
 		  		</div>
 			<? endif; ?>
 	  	</div>

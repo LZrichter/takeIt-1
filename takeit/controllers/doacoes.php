@@ -51,6 +51,7 @@ class Doacoes extends CI_Controller{
 		$dados["itemId"] = $id;
 		$dados["titulo"] = "Doações";
 		$dados["css"]    = "item.css";
+		$dados["js"]    = "item.js";
 
 
 		$dados["item"] = $this->IM->buscaItemPorId($id);

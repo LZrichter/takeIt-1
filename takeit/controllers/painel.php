@@ -23,7 +23,7 @@ class Painel extends CI_Controller{
 			$dados["resolvidas"] = count($this->DM->listaDenuncias('Resolvida'));
 			$dados["itens_cancelados"] = count($this->IM->buscaQtdeItens('Cancelado'));
 			$dados["itens_doados"] = count($this->IM->buscaQtdeItens('Doado'));
-			$dados["users_bloqueados"] = 0; //TODO -> fazer funcao no model de usuario ;
+			$dados["users_bloqueados"] = count($this->UM->buscaUsuariosAtivosBloqueados(0));
 
 			
 			$this->load->view('templates/head', $dados);
@@ -132,7 +132,7 @@ class Painel extends CI_Controller{
 
 			$dados["denuncia"] = $this->DM->listaDenuncias('Aberta');
 
-			if (!empty($dados["denuncia"]) && !isset($dados["denuncia"])) {
+			if (!empty($dados["denuncia"]) && isset($dados["denuncia"])) {
 				//buscar dados do item
 				//buscar dados dos usuario envolvidos com as denuncias
 				$dados["usuarios_vacilao"] = array();
@@ -238,16 +238,14 @@ class Painel extends CI_Controller{
 			
 			$this->load->model('usuario_model', 'UM');
 
-			$dados["titulo"] = "Denúncias Resolvidas";	
+			$dados["titulo"] = "Usuários Bloqueados";	
 			$dados["css"] = "painel.css";
 			$dados["dataTable"] = true;	
 			$dados["css2"]   = "dataTables.bootstrap.min.css";
-			$dados["js"]   = "admin.js";
+			$dados["js"]   = "admin.js";			
 			
-			
-			$dados["dados"];
+			$dados["dados"] = $this->UM->buscaUsuariosAtivosBloqueados(0);
 
-			
 			$this->load->view('templates/head', $dados);
 			$this->load->view('templates/menu', $dados);
 			$this->load->view('admin_template', $dados);
@@ -315,5 +313,39 @@ class Painel extends CI_Controller{
 		}
 	}
 
-	
+	public function cancelarUsuario(){
+		if (isset($_POST["idDenuncia"]) && isset($_POST["idUser"])) {
+			$idUser = $_POST["idUser"];
+			$idDenuncia = $_POST["idDenuncia"];
+
+			if ($this->session->userdata('user_tipo') == 'Admin') {
+				$this->load->model('Denuncia_model', "DM");
+				$this->load->model('usuario_model', "UM");
+				$this->load->model('Item_model', "IM");
+				
+				$this->db->trans_begin();
+				$userCancelado = $this->UM->bloqueiaUsuario($idUser);
+				$itensUsuario = $this->IM->alteraStatusItemPorUsuario($idUser,'Cancelado');
+
+				if($userCancelado && $itensUsuario){
+					$result = $this->DM->resolverDenuncia(null, $idUser);
+
+					if ($result){
+						$this->db->trans_commit();
+						echo json_encode(array("tipo" => "sucesso", "msg" => "O usuário foi bloqueado e todas sua doações foram canceladas com sucesso!"));
+					}else{
+						$this->db->trans_rollback();
+						echo json_encode($result);
+					}
+				}else{
+					echo json_encode($userCancelado);	
+				}
+			}else{
+				$this->redirect('/login','refresh');
+			}
+		}else{
+			echo json_encode(["tipo" => "erro" , "msg" => "Parametros não informados!"]);
+		}
+		
+	}
 }

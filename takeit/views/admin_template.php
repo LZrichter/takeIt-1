@@ -34,6 +34,13 @@
 			        </tbody>
 				</table>
 			</div>
+		<? }else{ ?>
+			<div class="alert alert-warning text-center">
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3"><h3>Opps! Você ainda não tem nada por aqui. <span class="fa fa-frown-o"></span></h3>
+					</div>
+				</div>
+			</div>
 		<? } ?>
 	</div>
 </div>

@@ -1,8 +1,11 @@
 <header>
+<?
+    $tipo_usuario = $this->session->userdata('user_tipo');
+?>
 <div id="main-menu" class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/doacoes">
+            <a class="navbar-brand" href="<? echo $tipo_usuario == 'Pessoa' ? "/doacoes" : "#" ?>">
                 <img id="logo" src="<?= base_url();?>assets/img/logo.png">
             </a>
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-menubuilder">
@@ -14,7 +17,7 @@
         </div>
         <div class="collapse navbar-collapse navbar-menubuilder">
             <ul class="nav navbar-nav navbar-right">
-                <? if(!$this->session->userdata('user_tipo') == 'Admin'): ?>
+                <? if($tipo_usuario == 'Pessoa'): ?>
                     <li id="notificacao">
                         <button class="btn btn-lg btn-link">
                             <span class="fa fa-bell notify-bell"></span>
@@ -28,7 +31,7 @@
                 <li id="instituicoes">
                     <a href="/Instituicoes">Instituições</a>
                 </li>
-                <? if(!$this->session->userdata('user_tipo') == 'Admin'): ?>
+                <? if($tipo_usuario == 'Pessoa'): ?>
                     <li id="fazer_doacoes">
                         <a href="/doacoes/cadastrarItem"><span class="fa fa-heart"></span> Fazer Doação</a>
                     </li>

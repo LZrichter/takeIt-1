@@ -7,6 +7,7 @@
 	</ul>
 	
 	<div class="container recebidos">
+	<? var_dump($busca_item)?>
 		<div class="panel panel-default">
 			<div class="panel-heading text-center">
 				<h1><span class="fa fa-heart"></span> <?= $titulo ?></h1>

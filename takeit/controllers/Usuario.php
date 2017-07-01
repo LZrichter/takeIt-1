@@ -14,7 +14,7 @@ class Usuario extends CI_Controller{
 		$dados["titulo"] = "Usuário";
 		$dados["js"]	 = "jquery.mask.js";
 
-		$this->load->model('usuario_model', 'user');
+		$this->load->model('Usuario_model', 'user');
 		$res = $this->user->selecionaUsuario(1, true);
 
 		$dados["dado"] = $this->user->erro;
@@ -35,7 +35,7 @@ class Usuario extends CI_Controller{
 		$dados["js"]	 = "jquery.mask.js";
 		$dados["js2"] 	 = "perfil.js";
 
-		$this->load->model('usuario_model', 'user');
+		$this->load->model('Usuario_model', 'user');
 		$dados["usuario"] = $this->user->selecionaUsuario($this->session->userdata('user_id'), TRUE);
 		$dados["cpf"] = $this->session;
 

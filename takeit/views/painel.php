@@ -8,23 +8,25 @@
 	</div>
 	<ul class="flex-container">
 		<!-- BOTÃO 1 -->
-	  	<li class="flex-item">
-		  	<a href="/Painel/ofertas">
-		  		<div>
-		  			<img src="<?=base_url()?>/assets/img/painel_doar.png">
-		  			<h2>Itens para Doar</h2>
-		  		</div>
-		  	</a>
-	  	</li>
-	  	<!-- BOTÃO 2 -->
-	  	<li class="flex-item">
-		  	<a href="/Painel/doados">
-		  		<div>
-		  			<img src="<?=base_url()?>/assets/img/painel_doados.png">
-		  			<h2>Minhas Doações</h2>
-		  		</div>
-		  	</a>
-	  	</li>
+	  	<? if( $this->session->userdata('user_tipo') == 'Pessoa' ):?>
+		  	<li class="flex-item">
+			  	<a href="/Painel/ofertas">
+			  		<div>
+			  			<img src="<?=base_url()?>/assets/img/painel_doar.png">
+			  			<h2>Itens para Doar</h2>
+			  		</div>
+			  	</a>
+		  	</li>
+		  	<!-- BOTÃO 2 -->
+		  	<li class="flex-item">
+			  	<a href="/Painel/doados">
+			  		<div>
+			  			<img src="<?=base_url()?>/assets/img/painel_doados.png">
+			  			<h2>Minhas Doações</h2>
+			  		</div>
+			  	</a>
+		  	</li>
+	  	<? endif; ?>
 	  	<!-- BOTÃO 3 -->
 	  	<li class="flex-item">
 		  	<a href="/doacoes">

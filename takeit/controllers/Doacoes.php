@@ -117,7 +117,7 @@ class Doacoes extends CI_Controller{
 
 		$path = "./assets/img/uploads/".date("Y")."/".date("m")."/".date("d")."/".$desc.date("H.i.s");
 
-		$dirname = iconv("UTF-8","Windows-1252",$path);
+		$dirname = iconv("UTF-8","UTF-8",$path);
 
 		if (!is_dir($dirname)) { //cria o diretorio para uploads se ele ja não existir
 			mkdir($dirname, 0777, true);
@@ -232,7 +232,7 @@ class Doacoes extends CI_Controller{
 			}
 		}
 
-		$dirname = iconv("UTF-8","Windows-1252",$dados['oldPath']);
+		$dirname = iconv("UTF-8","UTF-8",$dados['oldPath']);
 		
 		if ($alterouImagem == 1) { //quer dizer que ao menos uma imagem foi alterada ou adicionada
 			
@@ -322,6 +322,30 @@ class Doacoes extends CI_Controller{
 				echo json_encode(["tipo" => "sucesso", "msg" => "Seu item foi removido com sucesso"]);
 			else
 				echo json_encode($result);
+		}
+	}
+
+	public function denunciaItemAjax(){
+		if (isset($_POST["item_vacilao"]) && isset($_POST['usuario_vacilao']) && isset($_POST['usuario_x9']) && isset($_POST['denuncia_text'])) {
+			
+			foreach($_POST as $k => $v)
+		 		$$k = $v;
+
+		 	$this->load->model("Denuncia_model", "DM");
+		 	$result = $this->DM->insereDenuncia(
+		 		array(
+		 			'denuncia_text' => $denuncia_text,
+		 			'usuario_xnove' => $usuario_x9,
+		 			'usuario_vacilao' => $usuario_vacilao,
+		 			'item_vacilao' => $item_vacilao
+		 		)
+		 	);
+
+		 	if ($result) {
+		 		echo json_encode(["tipo" => "sucesso", "msg" => "Sua Denúncia foi reportada ao Administrador para uma avaliação. Obrigado por nos ajudar <3"]); 
+		 	}else{
+		 		echo json_encode($result);
+		 	}
 		}
 	}
 

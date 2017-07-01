@@ -83,18 +83,49 @@
 		  		<div class="panel-footer text-center">
 		  			<button class="btn btn-primary btn-lg" type="button"><span class="fa fa-heart"></span> Manisfestar Interesse</button>
 
-		  			<button class="btn btn-danger btn-lg" type="button"><span class="fa fa-flag" data-toggle="popover" title="Descreva o motivo" 
-		  			data-content="
-		  			<textarea  rows='4' cols='50' placeholder='Informe aqui sua reclamação.. '></textarea>
-		  			<button class='btn btn-success'>Denunciar</button>
-		  			"
-		  			data-item="<?= $item[0]["item_id"] ?>"
-		  			data-xnove="<?= $this->session->userdata('user_id') ?>"
-		  			data-vacilao="<?= $item[0]["usuario_id"] ?>"
-		  			></span> Reportar Doação</button>
+		  			<button id="btn-reportar" class="btn btn-danger btn-lg" 
+		  			data-toggle="popover"
+		  			><span class="fa fa-flag"></span> Reportar Doação</button>
 		  		</div>
+		  		<div id="popover-content" style="display: none; width: 100%" >
+				    <div class="container" style=" width: 100% ">
+					    <div class="row" style="padding-top: 10px;">
+					        <label id="sample" class="text-center">
+					            <form id="mainForm" class="form-group" name="mainForm" method="post">
+								    <p>
+								        <textarea class="form-control" id="denuncia_text" rows="8" cols="20" name="denuncia_text" placeholder="Digite aqui o motivo de sua reclamação..." required ></textarea>
+								    </p>
+								    <p>
+								        <input type="hidden" name="item_vacilao" value="<?= $item[0]["item_id"] ?>"/>
+								        <input type="hidden" name="usuario_vacilao" value="<?= $item[0]["usuario_id"] ?>"/>
+								        <input type="hidden" name="usuario_x9" value="<?= $this->session->userdata('user_id') ?>"/>
+								        <input class="btn btn-danger btn-denunciar" type="submit" name="Submit" value="Denunciar" />
+								    </p>
+								</form>
+					        </label>
+					    </div>
+				    </div> 
+				</div>
 			<? endif; ?>
 	  	</div>
   	</div>
   </div>
 </main>
+
+<!-- Modal de mensagem -->
+<div class="modal fade" id="mensagem-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalLabel"></h4>
+      </div>
+      <div class="modal-body" id="modalMsg">
+        
+      </div>
+      <div class="modal-footer">
+ 		<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div> <!-- /.modal -->

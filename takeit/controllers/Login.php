@@ -7,8 +7,11 @@ class Login extends CI_Controller{
 		$this->load->helper('url');
 		$this->load->helper('login');
 
-		if(testaLogin(true) && $this->uri->segment(2) != "sair") 
-			redirect(base_url() . "doacoes", "refresh");
+		if(testaLogin(true) && $this->uri->segment(2) != "sair"){
+			$page = ($this->session->userdata("user_tipo") == 'Admin' ? "painel" : "doacoes");
+			redirect(base_url() . $page, "refresh");
+		} 
+			
 	}
 
 	public function index(){

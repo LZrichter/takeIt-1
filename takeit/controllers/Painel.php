@@ -51,6 +51,13 @@ class Painel extends CI_Controller{
 
 		$dados["user_id"] = $this->session->userdata('user_id');
 		$dados["busca_item"] = $this->IM->buscaItemUsuario($dados["user_id"], $status=['Disponível', 'Solicitado']);
+		foreach ($dados["busca_item"] as $key) {
+			foreach ($key as $campo => $valor) {
+				//fazer modelo de instituições -> passa id categoria retorna instituições interessadas
+				//exibir um count() destas instituições
+				//colocar esses id em sessao
+			}
+		}
 		$dados["session"] = $this->session->userdata();
 
 		$this->load->view('templates/head', $dados);

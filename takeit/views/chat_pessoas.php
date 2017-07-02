@@ -7,16 +7,28 @@
 		</div>
 	</div>
 	<div class="panel-body">
-		<div class="row user-card" name="userButton" data-user="3">
-			<div class="col-xs-1 col-md-1 user-img">
-				<img src="<?= base_url(); ?>assets/img/painel_perfil.png" alt="{Nome do Usuário}" class="img-circle">
-			</div>
-			<div class="col-xs-9 col-md-9 user-name">
-				<p>Usuário 1</p>	
-			</div>
-			<div class="col-xs-1 col-md-1 user-count">
-				<p>3</p>
-			</div>
-		</div>
+		<? if(isset($interessados)){
+			if(isset($interessados["tipo"]) && $interessados["tipo"] == "erro")
+				echo $interessados["msg"];
+			else{
+				for($i = 0; $i < count($interessados); $i++){
+					$user = $interessados[$i]; 
+					$user["imagem_caminho"] = is_null($user["imagem_caminho"]) ? base_url() ."assets/img/painel_perfil.png" : base_url() . substr($user["imagem_caminho"], 2); 
+					$imagem_link = base_url()."assets/img/painel_perfil.png"; ?>
+
+					<div class="row user-card" name="userButton" data-usuario-nome="<?= $user["usuario_nome"]; ?>" data-usuario-id="<?= $user["usuario_id"]; ?>" data-imagem-link="<?= $imagem_link; ?>" data-interesse-id="<?= $user["interesse_id"]; ?>">
+						<div class="col-xs-1 col-md-1 user-img">
+							<img src="<?= $imagem_link; ?>" alt="<?= $user["usuario_nome"]; ?>" class="img-circle">
+						</div>
+						<div class="col-xs-9 col-md-9 user-name">
+							<p><?= $user["usuario_nome"]; ?></p>	
+						</div>
+						<div class="col-xs-1 col-md-1 user-count">
+							<p><?= rand(0, 99); ?></p>
+						</div>
+					</div>
+				<? }
+			}
+		} ?>
 	</div>
 </div>

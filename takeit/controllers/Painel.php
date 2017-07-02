@@ -45,6 +45,8 @@ class Painel extends CI_Controller{
 	public function ofertas(){
 		$this->load->model('Item_model', 'IM');
 		$this->load->model('Instituicao_model', 'INM');
+		$this->load->helper("funcoes_padroes");
+		
 		$dados["titulo"] = "Itens para Doar";
 		$dados["css"]    = "painel.css";
 		$dados["js"]     = "ofertas.js";

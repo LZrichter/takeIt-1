@@ -56,10 +56,10 @@ $("#select_estado").on("change", function(a){
 /**
  * Quando é dado submit no formulário, aqui ele é tratado e enviado por ajax
  */
-$("#perfilForm").on("submit", function(event){
+$("#form_perfil").on("submit", function(event){
     event.preventDefault();
 
-    var flag = false;
+    var erro = false;
     $("#btnSend").button('loading');
 
     obrigatorio.forEach(function(item, index){
@@ -73,16 +73,45 @@ $("#perfilForm").on("submit", function(event){
 
     		if(!sair){
     			changeClass(obj, "add");
-	    		flag = true;
+	    		erro = true;
     		}
     	}
     });
 
-    if(!flag){
+    // Caso tenha sido selecionada uma imagem para foto
+    if(!erro && $("#file_foto").val().split('\\').pop().trim()){
+    	$('input[type=file]').upload("/Usuario/alterarPerfil",{
+    		nome: 		 $("input[name='nome']").val(),
+    		website: 	 $("input[name='website']").val(),
+    		resumo: 	 $("input[name='resumo']").val(),
+    		cpf: 		 $("input[name='cpf']").val(),
+    		cnpj: 		 $("input[name='cnpj']").val(),
+    		email: 		 $("input[name='email']").val(),
+    		senha: 		 $("input[name='senha']").val(),
+    		confirmacao: $("input[name='confirmacao']").val(),
+    		endereco: 	 $("input[name='endereco']").val(),
+    		bairro: 	 $("input[name='bairro']").val(),
+    		numero: 	 $("input[name='numero']").val(),
+    		complemento: $("input[name='complemento']").val(),
+    		estado: 	 $("#select_estado option:selected").val(),
+    		cidade: 	 $("#select_cidade option:selected").val(),
+    		telefone: 	 $("input[name='telefone']").val(),
+    		flag_foto: 	 1,
+    		ajax: 		 1
+    	}, function(data){
+    		$("#btnSend").button('reset');
+			mensagem(data["tipo"], data["msg"], "mensagem");
+			$("#div_mensagem").show();
+
+			if(data["tipo"] == "erro")
+				changeClass($("[name='" + data["campo"] + "']"), "add");
+		});
+	// Caso não tenha imagem
+    } else if(!erro){
     	$.ajax({
 			url: 'alterarPerfil',
 			type: 'POST',
-			data: $("#perfilForm").serialize(),
+			data: $("#form_perfil").serialize(),
 			dataType: "json",
 			success: function(data){
 				$("#btnSend").button('reset');

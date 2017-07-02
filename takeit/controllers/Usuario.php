@@ -31,13 +31,13 @@ class Usuario extends CI_Controller{
 	 * @return void
 	 */
 	public function perfil(){
-		$dados["css"]    = "painel.css";
-		$dados["js"]	 = "jquery.mask.js";
-		$dados["js2"] 	 = "perfil.js";
+		$dados["css"]  = "painel.css";
+		$dados["js"]   = "jquery.mask.js";
+		$dados["js2"]  = "ajaxUploadFile.js";
+		$dados["js3"]  = "perfil.js";
 
 		$this->load->model('Usuario_model', 'user');
 		$dados["usuario"] = $this->user->selecionaUsuario($this->session->userdata('user_id'), TRUE);
-		$dados["cpf"] = $this->session;
 
 		$this->load->model("CidadeEstado_model", "CEM");
 		$dados["estados"] = $this->CEM->todosEstados();
@@ -54,27 +54,88 @@ class Usuario extends CI_Controller{
 	 * @return void Da echo em um json de resultado
 	 */
 	public function alterarPerfil(){
-		foreach($this->input->post() as $key => $value)
+		$dados = $this->input->post();
+		foreach($dados as $key => $value)
 			$$key = $value;
 
-		$this->load->model("Usuario_model", "user");
-		$resposta = $this->user->alteraUsuario($user_id, $this->input->post());
+		$resposta = array(); // AJAX Response
+		$dadosImg = array(); //Dados das imagens
 
-		if($resposta["tipo"] == "sucesso"){
-			if($user_nivel == "Pessoa"){
+		$user_tipo = $this->session->userdata('user_tipo');
+		$user_id = $this->session->userdata('user_id');
+		
+		if(isset($flag_foto)){
+			$desc = preg_replace('/\s+/', '', $nome.$user_id);
+			$path = "./assets/img/users/".$desc;
+			$dirname = iconv("UTF-8","UTF-8",$path);
+
+			//cria o diretorio para uploads se ele ja não existir
+			if (!is_dir($dirname))
+				mkdir($dirname, 0777, true);
+
+			if (!empty($_FILES["foto"]['name'])) {
+				$config['upload_path']      = $dirname;
+				$config['allowed_types']    = 'gif|jpg|png|jpeg';
+				$config['encrypt_name']		= TRUE;
+				$config['overwrite']		= TRUE;
+				$config['max_size']         = 2048; //KB
+
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+
+				if(!$this->upload->do_upload("foto")) // Erro no upload
+					$apagarPasta = 1;
+				else{ // Upload OK
+					$success = $this->upload->data();
+					$dadosImg["imagem_nome"] = $success['file_name'];
+					$dadosImg["imagem_caminho"] = $path;
+					$dadosImg["imagem_tamanho"] = $success['file_size'];
+				}
+			}
+		}
+
+		if (isset($apagarPasta)){
+			foreach(scandir($dirname) as $file) {
+				if ('.' === $file || '..' === $file) continue;
+				if (is_dir("$dirname/$file")) rmdir_recursive("$dirname/$file");
+				else unlink("$dirname/$file");
+			}
+			rmdir($dirname);
+			$resposta = ["msg" => $this->upload->display_errors(), "tipo" => "erro", "campo" => "fotos"];
+			echo json_encode($resposta);
+			return;
+
+		}else{
+			if(isset($flag_foto)){
+				$dadosImg["item_id"] = "NULL";
+				$this->db->trans_begin();
+				$this->load->model('Imagem_model', 'IMG');
+				$insertImage = $this->IMG->insereImagem($dadosImg);
+
+				if(!$insertImage && $this->db->trans_status() === FALSE){ //deu errado a imagem
+					$resposta = ["msg" => "Erro ao inserir imagem no banco", "tipo" => "erro", "campo" => "foto"];
+					$this->db->trans_rollback();
+					rmdir($dirname);
+					echo json_encode($resposta);
+					return;
+				}
+				$imagem_id = $this->db->insert_id();
+				$this->db->trans_commit();
+			}else{
+				$imagem_id = "NULL";
+			}
+			$dados["imagem"] = $imagem_id;
+
+			if($user_tipo == "Pessoa"){
 				$this->load->model("Pessoa_model", "pessoa");
-				$resposta = $this->pessoa->alteraPessoa($user_id, $cpf);
-
-				echo json_encode($resposta); 
-				return;
-			}else if($user_nivel == "Instituição"){
+				$resposta = $this->pessoa->alteraPessoa($user_id, $dados);
+			}else{
 				$this->load->model("Instituicao_model", "instituicao");
-				$resposta = $this->instituicao->alteraInstituicao($user_id, $cnpj, $website);
-				
-				echo json_encode($resposta);
-				return;
-			}else echo json_encode(["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"]);
-		}else echo json_encode(["tipo" => "erro", "msg" => "Erro ao atualizar dados da conta. Tente novamente mais tarde!"]);
+				$resposta = $this->instituicao->alteraInstituicao($user_id, $dados);
+			}
+			echo json_encode($resposta);
+			return;
+		}
 	}
 
 	/**

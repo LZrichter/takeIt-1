@@ -92,10 +92,7 @@ function limpaCampos(){
 	group_fotos.removeClass('has-success');
 }
 
-
-
 $(document).ready(function(){
-
 	/*Alteração da preview da imagem escolhida*/
 	input_img_1.on('change', function(event) { loadImagem(input_img_1, this, thumb_img_1) });
 	input_img_2.on('change', function(event) { loadImagem(input_img_2, this, thumb_img_2) });
@@ -133,28 +130,26 @@ $(document).ready(function(){
 		inputIsEmpty(input_qtde.val(), group_qtde);
 		inputIsEmpty(area_detalhes.val(), group_detalhes);
 
-
-		if ($('input[name=alterar]').val() == 1 && $('input[name=alterar]') != undefined) { //Alterar o item
+		// Alterar o item
+		if ($('input[name=alterar]').val() == 1 && $('input[name=alterar]') != undefined) { 
 			
 			var old_path = $('input[name=old_path]');
 			var item_id = $('input[name=item_id]');
 
-
-			if (obrigatorio == 0 && count != 5 ){// ao menos uma imagem foi alterada
-				
+			// Ao menos uma imagem foi alterada
+			if (obrigatorio == 0 && count != 5 ){
 				$('input[type=file]').upload("/doacoes/alteraItemAjax",{
-				alterouImagem: 1,
-				descricao: input_descricao.val(),
-				categoria: option_categoria.text(),
-				idCategoria: option_categoria.attr("id"),
-				quantidade: input_qtde.val(),
-				detalhes: area_detalhes.val(),
-				idUsuario:  user_id.val(),
-				idItem: item_id.val(),
-				oldPath: old_path.val(),
-				oldFotos: $("input[name='imgOld\\[\\]']").map(function(){return $(this).val();}).get()
-				},function(success){	
-					console.log("AJAX response => ", success);
+					alterouImagem: 1,
+					descricao: input_descricao.val(),
+					categoria: option_categoria.text(),
+					idCategoria: option_categoria.attr("id"),
+					quantidade: input_qtde.val(),
+					detalhes: area_detalhes.val(),
+					idUsuario: user_id.val(),
+					idItem: item_id.val(),
+					oldPath: old_path.val(),
+					oldFotos: $("input[name='imgOld\\[\\]']").map(function(){return $(this).val();}).get()
+				},function(success){
 					var msg = " ";
 					var tipo;
 					$.each(success, function(index, campo) {
@@ -178,7 +173,8 @@ $(document).ready(function(){
 				});
 			}
 
-			if(obrigatorio == 0 && count == 5){//nenhuma imagem slecionada não precisa alterar as imagens do banco
+			// Nenhuma imagem slecionada não precisa alterar as imagens do banco
+			if(obrigatorio == 0 && count == 5){
 				var alterouImagem = 0;
 				var descricao = input_descricao.val();
 				var categoria = option_categoria.text();
@@ -250,9 +246,8 @@ $(document).ready(function(){
 					});
 				});
 			}
-		}else{//cadastrar
-
-
+		// Cadastrar
+		} else {
 			if (count == 5) {
 				mensagem("erro", "Você precisa selecionar ao menos <b>uma imagem</b> para a doação!", "mensagem");
 				div_mensagem.show();
@@ -261,23 +256,18 @@ $(document).ready(function(){
 			}
 
 			if (obrigatorio == 0 ){
-
 				$('input[type=file]').upload("cadastraItemAjax",{
-				descricao: input_descricao.val(),
-				categoria: option_categoria.text(),
-				idCategoria: option_categoria.attr("id"),
-				quantidade: input_qtde.val(),
-				detalhes: area_detalhes.val(),
-				idUsuario:  user_id.val()
+					descricao: input_descricao.val(),
+					categoria: option_categoria.text(),
+					idCategoria: option_categoria.attr("id"),
+					quantidade: input_qtde.val(),
+					detalhes: area_detalhes.val(),
+					idUsuario:  user_id.val()
 				},function(success){	
-					console.log("AJAX response => ", success);
 					var msg = " ";
 					var tipo;
 					$.each(success, function(index, campo) {
-						//if (!jQuery.isEmptyObject(campo["msg"])) //teste se string está vazia
 						tipo = campo['tipo'];
-						console.log(tipo);
-
 						if (tipo == 'erro') {
 							msg += "<br>"+campo["msg"];
 							$('.'+campo["campo"]+'-group').addClass('has-error');

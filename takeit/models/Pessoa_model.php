@@ -74,32 +74,38 @@ class Pessoa_model extends Usuario_model{
 	 *			"Error" => ""
 	 *		)
 	 */
-	public function alteraPessoa($idPessoa, $novoCpf){
+	public function alteraPessoa($idPessoa, $dados){
 		$this->load->helper("validacao");
 		$usuario = $this->selecionaUsuario($idPessoa, TRUE);
 		
-		if(!isset($idPessoa) || !isset($novoCpf))
+		if(!isset($idPessoa) || !isset($dados['cpf']))
 			return ["tipo" => "erro", "msg" => "Parâmetros insuficientes para atualizar a Pessoa."];
-		else if($novoCpf=="")
+		else if($dados['cpf']=="")
 			return ["tipo" => "erro", "msg" => "Campos obrigatórios ainda não foram preenchidos.", "campo" => "cpf"];
-		else if(!validaCPF($novoCpf))
+		else if(!validaCPF($dados['cpf']))
 			return ["tipo" => "erro", "msg" => "CPF informado não é válido.", "campo" => "cpf"];
-		else if($this->buscaPessoa($novoCpf) && $usuario['pessoa_cpf']!=$novoCpf)
+		else if($this->buscaPessoa($dados['cpf']) && $usuario['pessoa_cpf']!=$dados['cpf'])
 			return ["tipo" => "erro", "msg" => "CPF já registrado no sistema.", "campo" => "cpf"];
 
 		try{
 			$this->db->trans_begin();
-			$sql = "UPDATE pessoa SET pessoa_cpf = ".$this->db->escape($novoCpf)." 
-			WHERE pessoa_id = ".$this->db->escape($idPessoa);
+			$resposta = $this->alteraUsuario($idPessoa, $dados);
 
-			if(!$query = $this->db->query($sql)){
-				if($this->db->error()){
-					$this->db->trans_rollback();
-					return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de atualizar a Pessoa. Por favor, mude os dados inseridos ou tente mais tarde. Código: ".$error["code"]];
+			if($resposta["tipo"] == "sucesso"){
+				$sql = "UPDATE pessoa SET pessoa_cpf = ".$this->db->escape($dados['cpf'])." WHERE pessoa_id = ".$this->db->escape($idPessoa);
+
+				if(!$query = $this->db->query($sql)){
+					if($this->db->error()){
+						$this->db->trans_rollback();
+						return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de atualizar a Pessoa. Por favor, mude os dados inseridos ou tente mais tarde. Código: ".$error["code"]];
+					}
+				} else {
+	    			$this->db->trans_commit();
+					return ["tipo" => "sucesso", "msg" => "Atualização efetuada com sucesso."];
 				}
-			} else {
-    			$this->db->trans_commit();
-				return ["tipo" => "sucesso", "msg" => "Atualização efetuada com sucesso."];
+			}else{
+				$this->db->trans_rollback();
+				return $resposta;
 			}
 			
 		} catch(Exception $E) {

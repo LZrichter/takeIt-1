@@ -126,9 +126,10 @@ class Usuario_model extends CI_Model{
 			return ["tipo" => "erro", "msg" => "Confirmação da senha esta incorreta!", "campo" => "confirmacao"];
 
 		foreach ($dados as $key => $value)
-			$$key = $value;
+			$$key = $value;		
 
 		try{
+			$imagem = ($imagem=="NULL") ? "NULL" : $this->db->escape($imagem);
 			$this->db->trans_begin();
 			$sql = "UPDATE usuario SET 
 						usuario_nome 		= ".$this->db->escape($nome).", 
@@ -139,7 +140,8 @@ class Usuario_model extends CI_Model{
 						usuario_complemento = ".$this->db->escape($complemento).", 
 						usuario_telefone 	= ".$this->db->escape($telefone).", 
 						usuario_resumo 		= ".$this->db->escape($resumo).", 
-						cidade_id 			= ".$this->db->escape($cidade);
+						cidade_id 			= ".$this->db->escape($cidade).",
+						imagem_id			= ".$imagem;
 			
 			if(str_replace("*", '', $senha) != ''){
 				$this->load->helper("passBCrypt");

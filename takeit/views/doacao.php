@@ -23,13 +23,13 @@
 	  		<div class="panel-body">
 	  			<div class="col-md-8 col-md-offset-2">
 	  				<form class="form-group form-horizontal" enctype="multipart/form-data" id="doacaoForm" method="post">
-	  		<!-- Mensagem com os erros  -->
+	  					<!-- Mensagem com os erros  -->
 	  					<div class="form-group" id="div_mensagem" style="display: none;">
 					  	  	<div class="col-sm-10 col-sm-offset-2 text-center">
 					  	  	  	<div id="mensagem"></div>
 					  	  	</div>
 			  			</div>
-			<!-- /Mensagem com os erros -->
+						<!-- /Mensagem com os erros -->
 					  	<div class="form-group descricao-group">
 					  	  	<label for="input_descricao" class="col-sm-2 control-label ">Descrição</label>
 					  	  	<div class="col-sm-10 input">

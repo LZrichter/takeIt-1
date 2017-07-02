@@ -18,7 +18,7 @@ class Doacoes extends CI_Controller{
 
 	}
 
-	public function index(){
+	public function index($indice = 1){
 
 		if(isset($_POST["busca"])){
 			$busca = $_POST["busca"];
@@ -26,13 +26,15 @@ class Doacoes extends CI_Controller{
 			$busca = "";
 		}
 
+		$this->session->set_userdata("indice", $indice);
+
 		$dados["titulo"] = "Doações";
 		$dados["css"]    = "menuDoacoes.css";
 		$dados["css2"]   = "doacoes.css";
 		$dados["js"]     = "menuDoacoes.js";
 
 		$dados["indice"] = $this->session->userdata('indice');
-		$dados["cidade_id"] = $this->session->userdata('user_cidade');
+		$dados["cidade_id"] = $this->session->userdata('cidade_filtro');
 		$dados["categoria_id"] = $this->session->userdata('categoria');
 		$dados["busca"] = $busca;
 		$dados["usuario_id"] = $this->session->userdata('user_id');
@@ -364,9 +366,18 @@ class Doacoes extends CI_Controller{
 		echo( json_encode($dados) );
 	}
 
+	public function setEstado($idEstado){
+		$this->session->set_userdata("estado_filtro", $idEstado);
+		echo( json_encode($idEstado) );
+	}
+
+	public function setSessaoCidade($idCidade){
+		$this->session->set_userdata("cidade_filtro", $idCidade);
+		echo( json_encode($idCidade) );
+	}
+
 	public function setSessaoCategoria($idCategoria){
 		$this->session->set_userdata("categoria", $idCategoria);
-		$this->session->set_userdata("indice", 1);
 		echo( json_encode($idCategoria) );
 	}
 
@@ -375,13 +386,4 @@ class Doacoes extends CI_Controller{
 		echo( json_encode($indice) );
 	}
 
-	public function filtraDoacoes($indice, $cidade_id, $categoria_id, $busca){
-		$dados["indice"] = $indice;
-		$dados["cidade_id"] = $cidade_id;
-		$dados["categoria_id"] = $categoria_id;
-		$dados["busca"] = "";
-		$dados["usuario_id"] = $this->session->userdata('user_id');
-		$result = $this->IM->buscaItensCidade($dados);
-		echo( json_encode($result) );
-	}
 }

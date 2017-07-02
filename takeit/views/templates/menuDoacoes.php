@@ -1,3 +1,7 @@
+<input type="hidden" id="idEstado" value="<?php echo $this->session->userdata['estado_filtro']; ?>">
+<input type="hidden" id="idCidade" value="<?php echo $this->session->userdata['cidade_filtro']; ?>">
+<input type="hidden" id="idCategoria" value="<?php echo $this->session->userdata['categoria']; ?>">
+
 <div id="mySidenav" class="sidenav"> 
     <a href="javascript:void(0)" class="closebtn"><span class="fa fa-times-circle-o 2x"></span></a>   
     <p class="sidenav-itens">

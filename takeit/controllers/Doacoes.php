@@ -83,18 +83,13 @@ class Doacoes extends CI_Controller{
 	}
 
 	public function cadastraItemAjax(){
-
-		foreach($_REQUEST as $k => $v)//transforma os requests em variaveis
+		//transforma os requests em variaveis
+		foreach($_REQUEST as $k => $v)
 		 	$$k = $v;
 		
 		$dados = $_REQUEST;
-		//echo json_encode($_FILES);
-		//return;
 		
-		$obrigatorio = [
-			"descricao", "categoria", "quantidade", 
-			"detalhes"
-		];
+		$obrigatorio = [ "descricao", "categoria", "quantidade", "detalhes" ];
 
 		$return = array(); // AJAX Response
 		$dadosImg = array(); //Dados das imagens
@@ -114,14 +109,12 @@ class Doacoes extends CI_Controller{
 		date_default_timezone_set('America/Sao_Paulo');
 
 		$desc = preg_replace('/\s+/', '', $descricao);
-
 		$path = "./assets/img/uploads/".date("Y")."/".date("m")."/".date("d")."/".$desc.date("H.i.s");
-
 		$dirname = iconv("UTF-8","UTF-8",$path);
 
-		if (!is_dir($dirname)) { //cria o diretorio para uploads se ele ja não existir
+		//cria o diretorio para uploads se ele ja não existir
+		if (!is_dir($dirname))
 			mkdir($dirname, 0777, true);
-		}
 
 		for ($i = 1; $i <= 5; $i++){
 			if (!empty($_FILES["imagem$i"]['name'])) {
@@ -133,11 +126,10 @@ class Doacoes extends CI_Controller{
         		$config['max_size']         = 2048; //Kb
         		// $config['max_width']            = 1024;
         		// $config['max_height']           = 768;
-        		
         
         		$this->load->library('upload', $config);
         		$this->upload->initialize($config);
-            	if(!$this->upload->do_upload("imagem$i")){ //deu errado o upload
+            	if(!$this->upload->do_upload("imagem$i")){ //deu erro no upload
                 	array_push($return, ["msg" => $this->upload->display_errors(), "tipo" => "erro", "campo" => "fotos"]);
                 	$apagarPasta = 1;
             	}else{ // deu certo o upload
@@ -176,16 +168,14 @@ class Doacoes extends CI_Controller{
 					}
 				}	
 				
-				$this->db->trans_commit();	
+				$this->db->trans_commit();
 			}
 		}
-
 		echo json_encode($return);
 		return;	
 	}
 
 	public function alterarItem($idItem = NULL){
-
 		$dados["titulo"] = "Alterar Doação";
 		$dados["css"]    = "item.css";
 		$dados["js"]     = "ajaxUploadFile.js";

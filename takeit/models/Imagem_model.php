@@ -32,12 +32,13 @@ class Imagem_model extends CI_Model {
 		}
 
 		try{
+			$item_id = ($dados['item_id']=="NULL") ? "NULL" : $this->db->escape($dados['item_id']);
 			$sql = "INSERT INTO imagem (imagem_nome, imagem_caminho, imagem_tamanho, item_id) 
 			values ("
 				.$this->db->escape($dados['imagem_nome']).", "
 				.$this->db->escape($dados['imagem_caminho']).", "
 				.$this->db->escape($dados['imagem_tamanho']).", "
-				.$this->db->escape($dados['item_id']).
+				.$item_id.
 			")";
 
 			if(!$query = $this->db->query($sql)){

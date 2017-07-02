@@ -6,10 +6,13 @@
 	<script src="<?= base_url();?>assets/js/bootstrap.js"></script>
 	<script src="<?= base_url();?>assets/js/main.js"></script>
 	<? if(isset($js)): ?>
-	<script src="<?= base_url();?>assets/js/<?=$js;?>"></script>
+		<script src="<?= base_url();?>assets/js/<?=$js;?>"></script>
 	<? endif;
 	if(isset($js2)): ?>
-	<script src="<?= base_url();?>assets/js/<?=$js2;?>"></script>
+		<script src="<?= base_url();?>assets/js/<?=$js2;?>"></script>
+	<? endif;
+	if(isset($js3)): ?>
+		<script src="<?= base_url();?>assets/js/<?=$js3;?>"></script>
 	<? endif; ?>
 	<!-- DataTable -->
 	<?php if(isset($dataTable)): ?>

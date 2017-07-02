@@ -60,7 +60,7 @@
 				</div>
 			
 		<? endforeach; ?>
-		
+
 	 	<ul class="paginador">
 	 		<? for($count = 1; $count <= $itens["paginas_qtde"]; $count++){ ?>
 	 			<li><a href="doacoes/setIndice/<?= $count ?>"><?=$count?></a></li>

@@ -3,7 +3,7 @@
   <li><a href="#">Doações</a></li>
 </ul>
 
-<div class="container-fluid procurando-algo">
+<div class="container container-fluid procurando-algo">
     <div class="row text-center">
         <form action="doacoes" method="post"><div class="col-xs-12 col-sm-7 col-md-7 col-md-offset-1">
 		    <div class="input-group">

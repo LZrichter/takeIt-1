@@ -6,6 +6,10 @@ h1 {
     margin-top: 5px !important;
 }
 
+textarea {
+  max-width: 602px;
+}
+
 #div_mensagem {
   display: none;
 }

@@ -2,10 +2,6 @@
   <li><a href="/welcome">Home</a></li>
   <li><a href="#">Doações</a></li>
 </ul>
-<<<<<<< HEAD
-<?php echo "<div><pre>"; print_r($itens); echo "</pre></div>"  ?>
-=======
->>>>>>> fb6eb089dd96699a381920c7ae358865ffea9ba1
 
 <div class="container-fluid procurando-algo">
     <div class="row text-center">
@@ -61,12 +57,15 @@
 				</div>
 			
 		<? endforeach; ?>
-		
-	 	<ul class="paginador">
+		<br />
+	 	<ul class="pagination">
 	 		<? for($count = 1; $count <= $itens["paginas_qtde"]; $count++){ ?>
-	 			<li><a href="doacoes/index/<?= $count ?>"><?=$count?></a></li>
+	 			<?php if ($this->session->userdata['indice'] == $count) { ?>
+	 				<li class="active"><?=$count?></li>
+	 			<?php } else { ?>
+	 				<li><a href="doacoes/index/<?= $count ?>"><?=$count?></a></li>
+	 			<?php } ?>
 	 		<? } ?>
-	 		
 	 	</ul>
 	</div>
 </div><!-- bloco das doações -->

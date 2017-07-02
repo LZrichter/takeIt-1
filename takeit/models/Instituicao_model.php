@@ -53,7 +53,7 @@ class Instituicao_model extends Usuario_model{
 			}
 		}else{
 			$this->db->trans_rollback();
-			return $resposta;	
+			return $resposta;
 		}
 	}
 
@@ -68,33 +68,39 @@ class Instituicao_model extends Usuario_model{
 	 *			"Error" => ""
 	 *		)
 	 */
-	public function alteraInstituicao($idInst, $novoCnpj, $novoSite){
+	public function alteraInstituicao($idInst, $dados){
 		$this->load->helper("validacao");
 		$usuario = $this->selecionaUsuario($idInst, TRUE);
 
-		if(!isset($idInst) || !isset($novoCnpj) || !isset($novoSite))
+		if(!isset($idInst) || !isset($dados['cnpj']) || !isset($dados['novoSite']))
 			return ["tipo" => "erro", "msg" => "Parâmetros insuficientes para atualizar a Instituição."];
 		else if(!isset($dados['cnpj']))
 			return ["tipo" => "erro", "msg" => "Campos obrigatórios ainda não foram preenchidos.", "campo" => "cnpj"];
 		else if(!validaCNPJ($dados['cnpj']))
 			return ["tipo" => "erro", "msg" => "CNPJ informado não é válido.", "campo" => "cnpj"];
-		else if($this->buscaInstituicao($dados['cnpj']) && $usuario['instituicao_cnpj']!=$novoCnpj)
+		else if($this->buscaInstituicao($dados['cnpj']) && $usuario['instituicao_cnpj']!=$dados['cnpj'])
 			return ["tipo" => "erro", "msg" => "CNPJ já registrado no sistema.", "campo" => "cnpj"];
 
 		try{
 			$this->db->trans_begin();
-			$sql = "UPDATE instituicao SET instituicao_cnpj = ".$this->db->escape($novoCnpj).", instituicao_site = ".$this->db->escape($novoSite)." WHERE instituicao_id = ".$idInst;
-
-			if(!$query = $this->db->query($sql)){
-				if($this->db->error()){
-					$this->db->trans_rollback();
-					return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de atualizar a Instituição. Por favor, mude os dados inseridos ou tente mais tarde. Código: ".$error["code"]];
-				}
-			} else {
-    			$this->db->trans_commit();
-				return ["tipo" => "sucesso", "msg" => "Atualização efetuada com sucesso."];
-			}
+			$resposta = $this->alteraUsuario($idInst, $dados);
 			
+			if($resposta["tipo"] == "sucesso"){
+				$sql = "UPDATE instituicao SET instituicao_cnpj = ".$this->db->escape($dados['cnpj']).", instituicao_site = ".$this->db->escape($dados['novoSite'])." WHERE instituicao_id = ".$idInst;
+
+				if(!$query = $this->db->query($sql)){
+					if($this->db->error()){
+						$this->db->trans_rollback();
+						return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de atualizar a Instituição. Por favor, mude os dados inseridos ou tente mais tarde. Código: ".$error["code"]];
+					}
+				} else {
+	    			$this->db->trans_commit();
+					return ["tipo" => "sucesso", "msg" => "Atualização efetuada com sucesso."];
+				}
+			}else{
+				$this->db->trans_rollback();
+				return $resposta;
+			}			
 		} catch(Exception $E) {
 			return ["tipo" => "erro", "msg" => "Problema interno do sistema. Por favor, tente mais tarde!"];
 		}

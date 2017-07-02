@@ -48,6 +48,19 @@
 		      		</div>
 				</div>
 			</div>
-		</div>	
+		</div>
+		<div class="container">
+	      	<div class="row">
+		        <div class="col-md-12 text-center">
+	        		<h2>Entre em contato</h2>
+					<div >
+		        		<p class="lead">Para quais quer dúvidas entre em contato conosco através do nosso e-mail<br/>
+		        		<a href="mailto:lucaslima3@gmail.com?Subject=Suporte:%20takeIt">suporte@takeit.com.br</a></p>
+		      		</div>
+				</div>
+			</div>
+			<hr class="featurette-divider">
+	      	</div><!-- /.row -->
+      	</div>
 	</div>
 </main>

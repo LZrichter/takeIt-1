@@ -88,17 +88,21 @@ body > div.container-fluid.footer-align > div > div > div.photo > a > img {
 }
 
 .paginador {
-  display: inline;
-  list-style-type: none;
+    display: inline;
+    list-style-type: none;
+}
+
+.paginador > li {
+    margin-top: 20px;
 }
 
 .paginador > li > a {
-  border-radius: 4px;
-  border: 1px solid #ddd;
-  color: #337ab7;
-  background-color: #fff;
-  padding: 6px 12px;
-  /*line-height: 1.42857143;*/
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    color: #337ab7;
+    background-color: #fff;
+    padding: 6px 12px;
+    /*line-height: 1.42857143;*/
 }
 
 .paginador > li > a:hover {
@@ -107,31 +111,31 @@ body > div.container-fluid.footer-align > div > div > div.photo > a > img {
 }
 
 .overlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 0;
-  transition: .5s ease;
-  background-color: rgba(36, 41, 46, 0.5);
-  border: 5px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: rgba(36, 41, 46, 0.5);
+    border: 5px;
 }
 
 .photo:hover .overlay {
-  opacity: 1;
+    opacity: 1;
 }
 
 .text {
-  color: white;
-  font-size: 20px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
 }
 
 /*@media (min-width: 321px) and (max-width: 767px){

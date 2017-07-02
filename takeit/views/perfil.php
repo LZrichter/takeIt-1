@@ -12,7 +12,7 @@
 	  		<div class="panel-body">
 	  		<?//var_dump($usuario)?>
 	  			<div class="col-md-8 col-md-offset-2">
-	  				<form class="form-group form-horizontal" enctype="multipart/form-data" id="perfilForm" method="POST">
+	  				<form class="form-group form-horizontal" enctype="multipart/form-data" id="form_perfil" method="POST">
 	  					<div class="form-group foto-perfil">
 					  		<label class="col-sm-2 control-label">Foto de Perfil</label>
 					  	  	<div class="col-sm-10">
@@ -20,7 +20,7 @@
 					  	  	  		<img id="perfil_img" src="<?=($usuario['imagem_id'])?base_url().$usuario['imagem_caminho'].'/'.$usuario['imagem_nome']:base_url().'/assets/img/painel_perfil.png'?>" alt="Imagem do item">
 					  	  	  	</div>
 					  	  	  	<div class="col-sm-6">
-					  	  	  		<input type="file" name="foto">
+					  	  	  		<input type="file" name="foto" id="file_foto" accept=".gif,.jpg,.png,.jpeg">
 					  	  	  	</div>
 					  	  	</div>
 					  	</div>
@@ -59,7 +59,7 @@
 						  	<div class="form-group" id="div_cnpj">
 						  	  	<label for="input_cnpj" class="col-sm-2 control-label">CNPJ</label>
 						  	  	<div class="col-sm-10">
-						  	  	  	<input type="text" class="form-control" name="cnpj" id="input_cnpj" placeholder="00.000.000/0000-00" value="<?=$usuario['instituicao_cnpj'];?>>
+						  	  	  	<input type="text" class="form-control" name="cnpj" id="input_cnpj" placeholder="00.000.000/0000-00" value="<?=$usuario['instituicao_cnpj'];?>">
 						  	  	</div>
 						  	</div>
 						<? endif; ?>
@@ -160,8 +160,6 @@
 						  	  	</div>
 						  	</div>
 						<? endif; ?>
-						<input type="hidden" name="ajax" value="1">
-  						<input type="hidden" name="user_id" id="user_id" value="<?= $usuario['id'] ?>">
   						<input type="hidden" name="user_nivel" id="user_nivel"" value="<?= $usuario['nivel'];?>">
 
 						<!-- Mensagem com os erros  -->

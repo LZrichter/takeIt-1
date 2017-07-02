@@ -44,6 +44,7 @@ class Painel extends CI_Controller{
 
 	public function ofertas(){
 		$this->load->model('Item_model', 'IM');
+		$this->load->model('Instituicao_model', 'INM');
 		$dados["titulo"] = "Itens para Doar";
 		$dados["css"]    = "painel.css";
 		$dados["js"]     = "ofertas.js";
@@ -51,14 +52,16 @@ class Painel extends CI_Controller{
 
 		$dados["user_id"] = $this->session->userdata('user_id');
 		$dados["busca_item"] = $this->IM->buscaItemUsuario($dados["user_id"], $status=['Disponível', 'Solicitado']);
-		foreach ($dados["busca_item"] as $key) {
-			foreach ($key as $campo => $valor) {
-				//fazer modelo de instituições -> passa id categoria retorna instituições interessadas
-				//exibir um count() destas instituições
-				//colocar esses id em sessao
-			}
-		}
+		$dados["instituicoes_interessadas"] = array();
 		$dados["session"] = $this->session->userdata();
+		
+		foreach ($dados["busca_item"] as $key)
+			foreach ($key as $campo => $valor)
+				if ($campo == "categoria_id")
+					array_push($dados["instituicoes_interessadas"], $this->INM->instituicoesInteressadas($valor));
+		
+
+		$this->session->set_userdata('intituicoes_interessadas', $dados["instituicoes_interessadas"]);
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);

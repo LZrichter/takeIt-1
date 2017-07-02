@@ -17,6 +17,7 @@
 				</div>
 			</div>
 		<? } ?>
+
 		
 		<? if(isset($instituicoes) && count($instituicoes) > 0){ ?>
 			<div class="table-responsive container" id="dic_table_div" style="width:100%">
@@ -32,7 +33,7 @@
 					<tbody>
 						<? foreach ($instituicoes as $num => $campos){ ?>
 				            <tr>
-				                <td><?= $campos["usuario_nome"]; ?></td>
+				                <td><?= isset($campos["usuario_nome"]) ? $campos["usuario_nome"] : $campos["nome"]; ?></td>
 				                <td><?= $campos["cidade_nome"]; ?></td>
 				                <td><?= $campos["estado_uf"]; ?></td>
 				                <td><button class="btn btn-success">Ver Perfil</button></td>

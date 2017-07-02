@@ -256,4 +256,41 @@ class Instituicao_model extends Usuario_model{
 		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
     }
 
+    /**
+     * Descrição: Função que retorna as instituições interessadas em uma categoria específica passada por parâmetro
+     * @param [int] id da instuição
+     * @return [array] array os dados da instituição
+     */
+    
+    public function instituicoesInteressadas($idCategoria){
+    	if (!isset($idCategoria))
+    		return ["tipo" => "erro", "msg" => "Nenhuma categoria informada!"];
+
+    	$result = array();
+    	try{
+			$sql = "SELECT instituicao_id FROM instituicao_categoria WHERE categoria_id =".$this->db->escape($idCategoria);
+
+			if(!$query = $this->db->query($sql)){
+				if($this->db->error())
+					return ["tipo" => "erro", "msg" => "Ocorreu um problema ao buscar as categorias. Por favor, mude os dados inseridos ou tente mais tarde."];
+			}else{
+				$count = 0;
+				foreach($query->result() as $row){
+					foreach ($row as $campo => $valor) {
+						$result[$count][$campo] = $valor;
+					}
+					$count++;
+				}
+				return $result;
+			} 
+				
+		}catch(PDOException $PDOE){
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+		}catch(Exception $NE){
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
+		}
+
+		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
+    }
+
 }

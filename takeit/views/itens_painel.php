@@ -7,7 +7,6 @@
 	</ul>
 	
 	<div class="container recebidos">
-	<? var_dump($busca_item)?>
 		<div class="panel panel-default">
 			<div class="panel-heading text-center">
 				<h1><span class="fa fa-heart"></span> <?= $titulo ?></h1>
@@ -66,7 +65,10 @@
 										</p>
 									</div>
 								</div>
-							</div>
+								<? if(count($instituicoes_interessadas[$i]) > 0): ?>
+									<div class="text-center"><a href="/instituicoes/intituicoesInteressadas/<?= $i ?>"> Existem <p class="badge" style="font-size: 10px; margin-bottom: 0px"><?= count($instituicoes_interessadas[$i]) ?></p> Instituições interessadas nessa categoria de item.</a></div>
+									</div>
+								<? endif; ?>
 						</div>
 						</div>
 						<? endfor; ?>

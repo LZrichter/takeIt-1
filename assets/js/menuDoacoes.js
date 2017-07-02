@@ -10,7 +10,9 @@ var itens			= $('.bloco-doacoes');
  * Função que retorna todos os estados e os coloca dentro do select de estados 
  * @return {vetor[posicao][dado]} [vetor retornado por AJAX]
  */
-function todosEstados(){
+function todosEstados(idEstado, idCidade){
+	var idE = idEstado;
+	var idC = idCidade;
 	$.ajax({
 		url: '/doacoes/carregaEstadosMenu',
 		type: 'POST',
@@ -18,10 +20,15 @@ function todosEstados(){
 	})
 	.done(function(msg) {
 		for (var i = 0; i <= msg.length-1; i++) {
-			sel_estado.append("<option id='"+msg[i]['id']+"' >"+msg[i]['uf']+"</option>");
+			if (msg[i]['id'] == idE) {
+				sel_estado.append("<option id='"+msg[i]['id']+"' selected >"+msg[i]['uf']+"</option>");
+			} else {
+				sel_estado.append("<option id='"+msg[i]['id']+"' >"+msg[i]['uf']+"</option>");
+			}
+			
 		}
-		var idEstado = $(".estados option:selected").attr("id");
-        municipiosPorEstado(idEstado);
+		var estado = $(".estados option:selected").attr("id");
+        municipiosPorEstado(estado, idC);
 	})
 	.fail(function() {
 		console.log("error ao preencher o menu de estados");
@@ -29,68 +36,37 @@ function todosEstados(){
 		
 }
 
-
 /**
  * Função que retorna todos os municipios e os coloca dentro do select de municipios
  * com base no id do estado passado como parametro
  * @param {[int]} [estado]
  * @return {vetor[posicao][dado]} [vetor retornado por AJAX]
  */
-function municipiosPorEstado(estado){
+function municipiosPorEstado(estado, cidade=0){
+	var idE = estado;
+	var idC = cidade;
+	var flag = 0;
 	$.ajax({
-		url: '/doacoes/carregaMunicipiosMenu/'+estado,
+		url: '/doacoes/carregaMunicipiosMenu/'+idE,
 		type: 'POST',
 		dataType: 'json'
 	})
 	.done(function(data) {
 		sel_municipios.empty();
 		for (var i = 0; i <= data.length-1; i++) {
-			sel_municipios.append("<option id='"+data[i]['id']+"' >"+data[i]['nome']+"</option>");
+			if (data[i]['id'] == idC) {
+				sel_municipios.append("<option id='"+data[i]['id']+"' selected >"+data[i]['nome']+"</option>");
+				flag = 1;
+			} else {
+				if (i == data.length-1 && flag == 0) {
+					sel_municipios.append("<option id='"+data[i]['id']+"' selected >"+data[i]['nome']+"	</option>");
+					mudaCidade($(".municipios option:selected").attr("id"));
+				} else {
+					sel_municipios.append("<option id='"+data[i]['id']+"' >"+data[i]['nome']+"</option>");
+				}
+				
+			}
 		}
-	})
-	.fail(function() {
-		console.log("error");
-	});
-	
-}
-
-function filtraDoacoes(){
-	$.ajax({
-		url: '/doacoes/filtraDoacoes/1/4214/3/""',
-		type: 'POST',
-		dataType: 'json'
-	})
-	.done(function(data) {console.log(teste);
-		itens.empty();
-		var str = "";
-		for (var i = 0; i < Object.keys(data).length-1; i++) {
-			str += "<div class='col-item'>\
-		   	    <div class='photo'>\
-		   	        <a href='doacoes/item/"+data[i]['item_id']+"' alt='Veja todas as fotos da doação.'>\
-	   		            <img src='http://takeit/"+data[i]['imagem_caminho'].substring(2)+"/"+data[i]['imagem_nome']+
-						"' class='img-thumbnail img-responsive' alt='Foto do produto'  />\
-	   		            <div class='overlay'>\
-	   						<div class='text'><span class='fa fa-plus'></span> Ver Produto</div>\
-	   		  			</div>\
-	   		  		</a>\
-		   	    </div>\
-		   	    <div class='info'>\
-		            <div class='titulo text-center'>\
-		                <h5>"+data[i]['item_descricao'] +"</h5>\
-		            </div>\
-					<div class='button text-center'>\
-						<a href='#'>\
-							<button type='button' class='btn btn-danger btn-sm'>\
-						    	<i class='fa fa-heart'></i> Manifestar interesse\
-							</button>\
-						</a>\
-					</div>\
-		   	        <div class='clearfix'>\
-		   	        </div>\
-		   	    </div>\
-			</div>";
-		}
-		itens.append(str);
 	})
 	.fail(function() {
 		console.log("error");
@@ -102,7 +78,8 @@ function filtraDoacoes(){
  * Função que retorna todas categorias do banco de dados e as insere no select de categorias
  * @return {vetor[posicao][dado]} [vetor de categorias]
  */
-function todasCategorias(){
+function todasCategorias(categoria){
+	idC = categoria;
 	$.ajax({
 		url: '/doacoes/carregaCategoriasMenu',
 		type: 'POST',
@@ -110,7 +87,11 @@ function todasCategorias(){
 	})
 	.done(function(data){
 		for (var i = 0; i <= data.length-1; i++) {
-			sel_categorias.append("<li id='"+data[i]['categoria_id']+"' class='list-group-item categ' >"+data[i]['categoria_nome']+"</li>");
+			if (data[i]['categoria_id'] == idC) {
+				sel_categorias.append("<li id='"+data[i]['categoria_id']+"' class='list-group-item categ' style='background-color: #31b0d5' >"+data[i]['categoria_nome']+"</li>");
+			} else {
+				sel_categorias.append("<li id='"+data[i]['categoria_id']+"' class='list-group-item categ' >"+data[i]['categoria_nome']+"</li>");
+			}
 		}
 	})
 	.fail(function(){
@@ -126,20 +107,78 @@ function closeMenuFilter() {
     $("#mySidenav").css("width","0px");
 }
 
+function mudaEstado(estado) {
+	$.ajax({
+		url: '/doacoes/setEstado/'+estado,
+		type: 'POST',
+		dataType: 'json'
+	})
+	.done(function(data) {
+		
+	})
+	.fail(function() {
+		console.log("error");
+	});
+}
+
+function mudaIndice(indice) {
+	$.ajax({
+		url: '/doacoes/setIndice/'+indice,
+		type: 'POST',
+		dataType: 'json'
+	})
+	.done(function(data) {
+		
+	})
+	.fail(function() {
+		console.log("error");
+	});
+}
+
+function mudaCidade(cidade){
+	$.ajax({
+		url: '/doacoes/setSessaoCidade/'+cidade,
+		type: 'POST',
+		dataType: 'json'
+	})
+	.done(function(data) {
+		window.location.reload();
+	})
+	.fail(function() {
+		console.log("error");
+	});
+}
+
+function mudaCategoria(categoria){
+	$.ajax({
+		url: '/doacoes/setSessaoCategoria/'+categoria,
+		type: 'POST',
+		dataType: 'json'
+	})
+	.done(function(data) {
+		location.reload();
+	})
+	.fail(function() {
+		console.log("error");
+	});
+}
 
 $(document).ready(function(){
 
-	
-	todosEstados();
-	todasCategorias();
+	var estado_filtro = $('#idEstado').attr("value");
+	var cidade_filtro = $('#idCidade').attr("value");
+	todosEstados(estado_filtro, cidade_filtro);
+
+	var categoria_filtro = $('#idCategoria').attr("value");
+	todasCategorias(categoria_filtro);
 
 
 	/* TODO	
-	*
-	* - Pegar o estado do usuário logado em um input hidden
-	* - e selecionar as cidades no select
-	* 
-	*/
+	 *
+	 * - Pegar o estado do usuário logado em um input hidden
+	 * - e selecionar as cidades no select
+	 * 
+	 */
 
 
 	/**
@@ -150,7 +189,19 @@ $(document).ready(function(){
 	$( ".estados" ).on("change", function() {
         	var idEstado = $(".estados option:selected").attr("id");
         	municipiosPorEstado(idEstado);
-        	filtraDoacoes();
+        	mudaIndice(1);
+        	mudaEstado(idEstado);
+    	}
+	);
+
+	/**
+	 * Verifica alteracoes no select de cidades
+	 * @param {[int]} [idCidade] [id da tag option de cada Cidade]
+	 */
+	$( ".municipios" ).on("change", function() {
+        	var idCidade = $(".municipios option:selected").attr("id");
+        	mudaIndice(1);
+        	mudaCidade(idCidade);console.log(idCidade);
     	}
 	);
 
@@ -161,7 +212,9 @@ $(document).ready(function(){
 	 */
 	$(".categorias").on("click", ".categ", function(event) {
 			/* chamar controle que carrega as doacoes filtradas */
-			console.log($( this ).text());
+			$( this ).css("background-color: #31b0d5");
+			mudaIndice(1);
+			mudaCategoria($( this ).attr("id"));
 		}
 	);
 

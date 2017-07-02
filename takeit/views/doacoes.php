@@ -3,9 +3,6 @@
   <li><a href="#">Doações</a></li>
 </ul>
 
-<!-- <?php echo "<div><pre>"; print_r($itens); echo "</pre></div>"  ?>
-<?php echo "<div><pre>"; print_r($this->session); echo "</pre></div>"  ?> -->
-
 <div class="container-fluid procurando-algo">
     <div class="row text-center">
         <form action="doacoes" method="post"><div class="col-xs-12 col-sm-7 col-md-7 col-md-offset-1">
@@ -60,12 +57,15 @@
 				</div>
 			
 		<? endforeach; ?>
-
-	 	<ul class="paginador">
+		<br />
+	 	<ul class="pagination">
 	 		<? for($count = 1; $count <= $itens["paginas_qtde"]; $count++){ ?>
-	 			<li><a href="doacoes/setIndice/<?= $count ?>"><?=$count?></a></li>
+	 			<?php if ($this->session->userdata['indice'] == $count) { ?>
+	 				<li class="active"><?=$count?></li>
+	 			<?php } else { ?>
+	 				<li><a href="doacoes/index/<?= $count ?>"><?=$count?></a></li>
+	 			<?php } ?>
 	 		<? } ?>
-	 		
 	 	</ul>
 	</div>
 </div><!-- bloco das doações -->

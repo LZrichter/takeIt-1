@@ -21,6 +21,7 @@
 					  	  	  	</div>
 					  	  	  	<div class="col-sm-6">
 					  	  	  		<input type="file" name="foto" id="file_foto" accept=".gif,.jpg,.png,.jpeg">
+					  	  	  		<input type="hidden" name="old_foto" id="input_old_foto" value="<?=($usuario['imagem_id'])?$usuario['imagem_nome']:''?>">
 					  	  	  	</div>
 					  	  	</div>
 					  	</div>

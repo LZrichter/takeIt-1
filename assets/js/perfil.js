@@ -83,7 +83,7 @@ $("#form_perfil").on("submit", function(event){
     	$('input[type=file]').upload("/Usuario/alterarPerfil",{
     		nome: 		 $("input[name='nome']").val(),
     		website: 	 $("input[name='website']").val(),
-    		resumo: 	 $("input[name='resumo']").val(),
+    		resumo: 	 $("textarea[name='resumo']").val(),
     		cpf: 		 $("input[name='cpf']").val(),
     		cnpj: 		 $("input[name='cnpj']").val(),
     		email: 		 $("input[name='email']").val(),
@@ -96,6 +96,7 @@ $("#form_perfil").on("submit", function(event){
     		estado: 	 $("#select_estado option:selected").val(),
     		cidade: 	 $("#select_cidade option:selected").val(),
     		telefone: 	 $("input[name='telefone']").val(),
+    		old_foto: 	 $("input[name='old_foto'").val(),
     		flag_foto: 	 1,
     		ajax: 		 1
     	}, function(data){

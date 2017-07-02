@@ -161,7 +161,7 @@ class Doacoes extends CI_Controller{
 					
 					$insertImage = $this->IMG->insereImagem($dadosImg[$row]);
 					if(!$insertImage && $this->db->trans_status() === FALSE){ //deu errado a imagem
-						array_push($return, $insereImage);
+						array_push($return, $insertImage);
 						$this->db->trans_rollback(); //rollback no banco
 						rmdir($dirname);
 						break;
@@ -195,16 +195,13 @@ class Doacoes extends CI_Controller{
 	}
 
 	public function alteraItemAjax(){
-
-		foreach($_REQUEST as $k => $v)//transforma os requests em variaveis
+		//transforma os requests em variaveis
+		foreach($_REQUEST as $k => $v)
 		 	$$k = $v;
 		
 		$dados = $_REQUEST;
 		
-		$obrigatorio = [
-			"descricao", "categoria", "quantidade", 
-			"detalhes"
-		];
+		$obrigatorio = ["descricao", "categoria", "quantidade", "detalhes"];
 
 		$return = array(); // AJAX Response
 		$dadosImg = array(); //Dados das imagens
@@ -224,8 +221,8 @@ class Doacoes extends CI_Controller{
 
 		$dirname = iconv("UTF-8","UTF-8",$dados['oldPath']);
 		
-		if ($alterouImagem == 1) { //quer dizer que ao menos uma imagem foi alterada ou adicionada
-			
+		// Quer dizer que ao menos uma imagem foi alterada ou adicionada
+		if ($alterouImagem == 1) {
 			$oldFotos = explode(",", $dados['oldFotos']);
 			for ($i = 1; $i <= 5; $i++){
 				if (!empty($_FILES["imagem$i"]['name'])) {

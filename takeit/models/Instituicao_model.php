@@ -23,7 +23,6 @@ class Instituicao_model extends Usuario_model{
 		else if($this->buscaInstituicao($dados['cnpj']))
 			return ["tipo" => "erro", "msg" => "CNPJ já registrado no sistema.", "campo" => "cnpj"];
 
-		$this->db->trans_begin();
 		$resposta = $this->insereUsuario($dados);
 
 		if($resposta["tipo"] == "sucesso"){
@@ -31,6 +30,7 @@ class Instituicao_model extends Usuario_model{
 				$sql = "INSERT INTO instituicao (instituicao_id, instituicao_cnpj, instituicao_site) 
 				values (".$this->db->escape($this->getId()).", ".$this->db->escape($dados['cnpj']).", ".$this->db->escape($dados['website']).")";
 
+				$this->db->trans_begin();
 				if(!$query = $this->db->query($sql)){
 					if($this->usuario->excluiUsuario($this->getId()) !== true)
 						return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de cadastrar a Instituição. Por favor, mude os dados inseridos ou tente mais tarde."];
@@ -51,9 +51,6 @@ class Instituicao_model extends Usuario_model{
 				$this->db->trans_rollback();
 				return ["tipo" => "erro", "msg" => "Problema interno do sistema. Por favor, tente mais tarde!"];
 			}
-		}else{
-			$this->db->trans_rollback();
-			return $resposta;
 		}
 	}
 

@@ -40,7 +40,7 @@ class Interesse_model extends CI_Model{
 	 * Busca um array com todos os usuários que demonstraram interesse em um item
 	 * @param  int    $idItem ID do item a ser buscado
 	 * @return array          Array com os dados ou com uma mensagem de erro
-	 */
+	*/
 	public function todosInteressados(int $idItem){
 		if(!isset($idItem) || empty(trim($idItem)))
 			return array("tipo" => "erro", "msg" => "Informação insuficiente para executar a consulta.");
@@ -51,8 +51,8 @@ class Interesse_model extends CI_Model{
 					usuario_id, usuario_nome, usuario_nivel, 
 					interesse_id, chat_lst_msg_doador, 
 					concat(imagem_caminho, '/', imagem_nome) as imagem_caminho
-				FROM interesse NATURAL LEFT JOIN usuario NATURAL LEFT JOIN imagem
-				WHERE item_id = $idItem;
+				FROM interesse i NATURAL LEFT JOIN usuario u LEFT JOIN imagem im ON im.imagem_id = u.imagem_id
+				WHERE i.item_id = $idItem
 			";
 
 			if(!$query = $this->db->query($sql))
@@ -78,6 +78,46 @@ class Interesse_model extends CI_Model{
 		}
 
 		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
+	}
+
+	/**
+	 * Busca um array com todos os id dos itens que o usuario tiver interesse
+	 * @param  int    $idUsuario ID do usuario
+	 * @return array          Array com os dados ou com uma mensagem de erro
+	*/
+	public function interessesPorUsuario(int $idUser){
+		if(!isset($idUser) || empty(trim($idUser)))
+			return array("tipo" => "erro", "msg" => "Informação insuficiente para executar a consulta.");
+
+		try{
+			$sql = "
+				SELECT 
+					item_id
+				FROM interesse
+				WHERE usuario_id = $idUser;
+			";
+
+			if(!$query = $this->db->query($sql))
+				return ["tipo" => "erro", "msg" => "Não foi possivel buscar a lista de interessados."];
+			else{
+				if(!count($query->result())) 
+					return ["tipo" => "erro", "msg" => "Nenhuma pessoa demonstrou interesse no seu item ainda."];
+				$dados = array();
+				$i = 0;
+				while($i<count($query->result())){
+					foreach($query->result()[$i] as $campo => $valor)
+						$dados[$i][$campo] = $valor;
+
+					$i++;
+				}
+
+				return $dados;
+			}
+		}catch(PDOException $PDOE){
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+		}catch(Exception $NE){
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
+		}
 	}
 
 	/**
@@ -143,5 +183,7 @@ class Interesse_model extends CI_Model{
 		}catch(Exception $NE){
 			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
 		}
+
+		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
 	}
 }

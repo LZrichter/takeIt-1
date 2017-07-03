@@ -4,7 +4,7 @@ class Painel extends CI_Controller{
 
 	function __construct(){
 		parent::__construct();
-		$this->load->helper(array('url', 'login'));
+		$this->load->helper(array('url', 'login', 'funcoes_padroes'));
 		testaLogin();
 	}
 
@@ -89,12 +89,17 @@ class Painel extends CI_Controller{
 
 	public function interesses(){
 		$this->load->model('Item_model', 'IM');
-		$dados["titulo"] = "Itens Para Receber";
+		$this->load->model('Interesse_model', 'IN');
+
+		$dados["titulo"] = "Meus Interesses";
 		$dados["css"]    = "painel.css";
 		$dados["qualTela"] = 3;
 
 		$dados["user_id"] = $this->session->userdata('user_id');
-		//$dados["busca_item"] = $this->IM->buscaItemUsuario($dados["user_id"]);
+		$dados["interesses"] = $this->IN->interessesPorUsuario($dados["user_id"]);
+		foreach ($dados["interesses"] as $row)
+			foreach ($row as $key => $value)
+				$dados["busca_item"][] = $this->IM->buscaItemPorId($value)[0];
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
@@ -106,12 +111,13 @@ class Painel extends CI_Controller{
 
 	public function recebidos(){
 		$this->load->model('Item_model', 'IM');
+		$this->load->model('Doacao_model', 'DM');
 		$dados["titulo"] = "Itens Recebidos";
 		$dados["css"]   = "painel.css";
 		$dados["qualTela"] = 4;
 
 		$dados["user_id"] = $this->session->userdata('user_id');
-		//$dados["busca_item"] = $this->IM->buscaItemUsuario($dados["user_id"]);
+		$dados["busca_item"] = $this->DM->buscaDoados($dados["user_id"]);
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);

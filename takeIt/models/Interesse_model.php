@@ -51,8 +51,8 @@ class Interesse_model extends CI_Model{
 					usuario_id, usuario_nome, usuario_nivel, 
 					interesse_id, chat_lst_msg_doador, 
 					concat(imagem_caminho, '/', imagem_nome) as imagem_caminho
-				FROM interesse NATURAL LEFT JOIN usuario NATURAL LEFT JOIN imagem
-				WHERE item_id = $idItem;
+				FROM interesse i NATURAL LEFT JOIN usuario u LEFT JOIN imagem im ON im.imagem_id = u.imagem_id
+				WHERE i.item_id = $idItem
 			";
 
 			if(!$query = $this->db->query($sql))

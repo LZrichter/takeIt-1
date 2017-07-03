@@ -99,6 +99,7 @@ $("#form_perfil").on("submit", function(event){
 			cidade: 	 $("#select_cidade option:selected").val(),
 			telefone: 	 $("[name='telefone']").val(),
 			old_foto: 	 $("[name='old_foto'").val(),
+			old_path: 	 $("[name='old_path'").val(),
 			flag_foto: 	 1,
 			ajax: 		 1
 		}, function(data){

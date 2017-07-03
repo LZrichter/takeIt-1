@@ -66,7 +66,7 @@ class Denuncia_model extends CI_Model{
 	function insereDenuncia($dados){
 		if(!isset($dados['denuncia_text']) || !isset($dados['usuario_xnove']) || !isset($dados['usuario_vacilao'])){
 			return array("tipo" => "erro", "msg" => "Informação insuficiente para executar a consulta.");
-		}else if (isset($dados['item_vacilao'])) {
+		}else if (isset($dados['item_vacilao']) && $dados['item_vacilao']!='') {
 			$sql = "INSERT INTO denuncia (denuncia_text, denuncia_data, denuncia_status, usuario_xnove, usuario_vacilao, item_vacilao) 
 				values ("
 					.$this->db->escape($dados['denuncia_text']).","

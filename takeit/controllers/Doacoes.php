@@ -354,7 +354,7 @@ class Doacoes extends CI_Controller{
 		 	);
 
 		 	if ($result) {
-		 		echo json_encode(["tipo" => "sucesso", "msg" => "Sua Denúncia foi reportada ao Administrador para uma avaliação. Obrigado por nos ajudar <3"]); 
+		 		echo json_encode(["tipo" => "sucesso", "msg" => "Sua Denúncia foi reportada ao Administrador para uma avaliação. Obrigado por ajudar <span class='fa fa-heart'></span> "]); 
 		 	}else{
 		 		echo json_encode($result);
 		 	}

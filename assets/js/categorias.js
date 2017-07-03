@@ -27,6 +27,21 @@ function removerCategoria(OBJ){
 }
 
 /**
+ * Verifica se a categoria marcada já não foi selecionada em outro select
+ * @param  {objeto} OBJ Select que foi alterado
+ * @return {void}
+ */
+function verificaCategoria(OBJ){
+	var categoria = $('[name="categoria[]"]');
+	$.each(categoria, function(i, sel){
+		if($(sel).prop("selectedIndex") == OBJ.selectedIndex && i!=categoria.length-1){
+			alert("Essa categoria já foi selecionada. Por favor, selecione outra.");
+			OBJ.selectedIndex = 0;
+		}
+	});
+}
+
+/**
  * Quando é dado submit no formulário, aqui ele é enviado por ajax
  */
 $("#form_categorias").on("submit", function(event){

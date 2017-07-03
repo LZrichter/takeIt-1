@@ -59,7 +59,6 @@
 		var time = setTimeout(function(){
 			$("#<?= $id_ultima_msg; ?>").focus();
 			$("#inputMsg").val("").focus();
-			console.log("Time");
 		}, 100);
 	</script>
 	<div class="panel-footer">
@@ -76,7 +75,7 @@
 
 				<input type="hidden" name="tipo_pessoa" value="<?= $tipo_pessoa; ?>">
 				<input type="hidden" name="interesse_id" value="<?= $interesse_id; ?>">
-				<input type="hidden" id="id_ultima_msg" value="<?= $chat_id_ultima; ?>">
+				<input type="hidden" id="id_ultima_msg" value="<?= (isset($chat_id_ultima) ? $chat_id_ultima : ""); ?>">
 			</form>
 		</div>
 	</div>

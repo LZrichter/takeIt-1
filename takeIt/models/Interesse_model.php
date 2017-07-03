@@ -186,4 +186,88 @@ class Interesse_model extends CI_Model{
 
 		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
 	}
+
+	public function selecionaInteresse($idInteresse){
+		if(!isset($idInteresse) || empty(trim($idInteresse)))
+			return array("tipo" => "erro", "msg" => "Informação insuficiente para executar a consulta.");
+
+		try{
+			$sql = "
+				SELECT 
+					usuario_id, usuario_nome, usuario_nivel, i.item_id,
+					interesse_id, chat_lst_msg_doador, 
+					concat(imagem_caminho, '/', imagem_nome) as imagem_caminho
+				FROM interesse i NATURAL LEFT JOIN usuario u LEFT JOIN imagem im ON im.imagem_id = u.imagem_id
+				WHERE i.interesse_id = $idInteresse
+			";
+
+			if(!$query = $this->db->query($sql))
+				return ["tipo" => "erro", "msg" => "Não foi possivel buscar a lista de interessados."];
+			else{
+				if(!count($query->result())) 
+					return ["tipo" => "erro", "msg" => "Nenhuma pessoa demonstrou interesse no seu item ainda."];
+
+				$i = 0;
+				while($i<count($query->result())){
+					foreach($query->result()[$i] as $campo => $valor)
+						$dados[$i][$campo] = $valor;
+
+					$i++;
+				}
+
+				return $dados;
+			}
+		}catch(PDOException $PDOE){
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+		}catch(Exception $NE){
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
+		}
+
+		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
+	}
+
+	/**
+	 * Busca um interesse pelo ID do item e o ID do usuários
+	 * @param  int   $idItem    ID do item
+	 * @param  int   $idUsuario ID do usuário
+	 * @return array            Dados do interesse
+	 */
+	public function buscaInteresseItemUsuario($idItem, $idUsuario){
+		if(!isset($idItem) || !isset($idUsuario))
+			return array("tipo" => "erro", "msg" => "Informação insuficiente para executar a consulta.");
+
+		try{
+			$sql = "
+				SELECT 
+					usuario_id, usuario_nome, usuario_nivel, i.item_id,
+					interesse_id, chat_lst_msg_doador, 
+					concat(imagem_caminho, '/', imagem_nome) as imagem_caminho
+				FROM interesse i NATURAL LEFT JOIN usuario u LEFT JOIN imagem im ON im.imagem_id = u.imagem_id
+				WHERE i.item_id = $idItem AND i.usuario_id = $idUsuario
+			";
+
+			if(!$query = $this->db->query($sql))
+				return ["tipo" => "erro", "msg" => "Não foi possivel buscar o interesse."];
+			else{
+				if(!count($query->result())) 
+					return ["tipo" => "erro", "msg" => "Nenhuma pessoa demonstrou interesse no seu item ainda."];
+
+				$i = 0;
+				while($i<count($query->result())){
+					foreach($query->result()[$i] as $campo => $valor)
+						$dados[$i][$campo] = $valor;
+
+					$i++;
+				}
+
+				return $dados;
+			}
+		}catch(PDOException $PDOE){
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+		}catch(Exception $NE){
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
+		}
+
+		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
+	}
 }

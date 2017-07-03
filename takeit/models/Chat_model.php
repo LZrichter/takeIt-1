@@ -4,6 +4,9 @@ class Chat_model extends CI_Model{
 
 	function __construct(){
 		parent::__construct();
+
+		if(isset($this->input->post()["tipo_pessoa"]))
+			$this->tipoPessoa = $this->input->post()["tipo_pessoa"];
 	}
 
 	/**
@@ -47,6 +50,8 @@ class Chat_model extends CI_Model{
 			else{
 				if(!count($query->result())) 
 					return ["tipo" => "info", "msg" => "zero"];
+
+				$this->atualizaVisualizacaoMsg($idInteresse);
 
 				$i = 0;
 				while($i<count($query->result())){
@@ -139,10 +144,93 @@ class Chat_model extends CI_Model{
 				if(!count($query->result())) 
 					return;
 
+				$this->atualizaVisualizacaoMsg($idInteresse);
+
 				$i = 0;
 				while($i<count($query->result())){
 					foreach($query->result()[$i] as $campo => $valor)
 						$dados[$i][$campo] = $valor;
+
+					$i++;
+				}
+
+				return $dados;
+			}
+		}catch(PDOException $PDOE){
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+		}catch(Exception $NE){
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
+		}
+
+		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
+	}
+
+	/**
+	 * Atualiza as mensagens vistas pelo usuário
+	 * @param  int  $idInteresse ID do interesse
+	 * @param  int  $tipoPessoa  Tipo da pessoa visualisando
+	 * @return bool              True se OK, false se Não
+	 */
+	private function atualizaVisualizacaoMsg($idInteresse){
+		try{
+			if($this->tipoPessoa == "Doador") $sql = "
+				UPDATE interesse SET
+					chat_lst_msg_doador = (
+						SELECT max(chat_id) 
+						FROM chat 
+						WHERE interesse_id = $idInteresse AND chat_quem = 'Beneficiário'
+					)
+				WHERE interesse_id = $idInteresse";
+			else $sql = "
+				UPDATE interesse SET
+					chat_lst_msg_beneficiario = (
+						SELECT max(chat_id) 
+						FROM chat 
+						WHERE interesse_id = $idInteresse AND chat_quem = 'Doador'
+					)
+				WHERE interesse_id = $idInteresse";
+
+			if($query = $this->db->query($sql)) return true;
+			else return false;
+		}catch(PDOException $PDOE){
+			return false;
+		}catch(Exception $NE){
+			return false;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Retorna a quantidade de mensagens não lidas ainda
+	 * @param  int $idItem  ID do item
+	 * @return array        Todas as quantidades
+	 */
+	public function qtdeMsgsNaoLidasDoador($idItem){
+		try{
+			$sql = "
+				SELECT 
+					count(*) as num,
+					i.usuario_id, i.interesse_id
+				FROM interesse i NATURAL LEFT JOIN usuario u LEFT JOIN chat c ON c.interesse_id = i.interesse_id
+				WHERE i.item_id = $idItem AND IF(i.chat_lst_msg_doador is null, 0, i.chat_lst_msg_doador) < c.chat_id
+				GROUP BY u.usuario_id, i.interesse_id
+			";
+
+			if(!$query = $this->db->query($sql))
+				return ["tipo" => "erro", "msg" => "Não foi possivel realizar a contagem."];
+			else{
+				if(!count($query->result())) 
+					return;
+
+				$i = 0;
+				while($i<count($query->result())){
+					$res = $query->result()[$i];
+					
+					$dados[$res->interesse_id] = [
+						"usuario_id" => $res->usuario_id,
+						"num" 		 => $res->num
+					];
 
 					$i++;
 				}

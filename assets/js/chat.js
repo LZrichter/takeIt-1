@@ -1,5 +1,6 @@
 // Vai ficar buscando sempre por uma mensagem nova que pode ter sido mandada
-var carregandoChat = setInterval(function(){ carregaMsgsChat(); }, 1000);
+var carregandoChat = setInterval(function(){ carregaMsgsChat(); }, 200);
+var carregandocountNaoLidas = setInterval(function(){ carregacountNaoLidas(); }, 200);
 
 // Carrega o chat de um usuário
 $('[name="userButton"]').on("click", function(){ 
@@ -56,7 +57,8 @@ function carregaMsgsChat(){
 			type: 'POST',
 			data: {
 				idInteresse: $("[name='interesse_id']").val(),
-				IDUltimaMsg: $("#id_ultima_msg").val()
+				IDUltimaMsg: $("#id_ultima_msg").val(),
+				tipo_pessoa: $("#tipo_pessoa_chat").val()
 			},
 			dataType: "json",
 			success: function(data){
@@ -84,4 +86,28 @@ function carregaMsgsChat(){
 			}
 		});
 	}
+}
+
+function carregacountNaoLidas(){
+	$.ajax({
+		url: 'buscaCountNaoLidas',
+		type: 'POST',
+		data: {
+			item_id: $("#item_id").val()
+		},
+		dataType: "json",
+		success: function(data){
+			var divs = $('[class="col-xs-1 col-md-1 user-count"]');
+
+			for (var i = 0; i < divs.length; i++){
+				if(data != null && typeof data[$(divs[i]).data("interesseId")] !== "undefined")
+					$(divs[i]).html("<p>" + data[$(divs[i]).data("interesseId")].num + "</p>");
+				else
+					$(divs[i]).html("<p>0</p>");
+			}
+		},
+		error: function(data){
+			mensagem("erro", "Ocorreu um problema na hora de realizar o cadastro. Por favor, mude os dados inseridos ou tente mais tarde.", "mensagem");
+		}
+	});
 }

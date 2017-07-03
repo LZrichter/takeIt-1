@@ -57,8 +57,7 @@ class Instituicao_model extends Usuario_model{
 	/**
 	 * Altera o cnpj e o site de uma instituição no Banco de Dados
 	 * @param 	$idInst		ID da instituição a ser alterada
-	 * @param  	$novoCnpj 	Novo CNPJ (duh)
-	 * @param  	$novoSite 	Novo Site (duh)
+	 * @param  	$dados 	Array com todos os dados da conta preenchidos no formulário
 	 * @return 				Boolean indicando o sucesso da alteração ou array com mensagem de erro
 	 *	Array format:
 	 *		array(
@@ -69,7 +68,7 @@ class Instituicao_model extends Usuario_model{
 		$this->load->helper("validacao");
 		$usuario = $this->selecionaUsuario($idInst, TRUE);
 
-		if(!isset($idInst) || !isset($dados['cnpj']) || !isset($dados['novoSite']))
+		if(!isset($idInst) || !isset($dados))
 			return ["tipo" => "erro", "msg" => "Parâmetros insuficientes para atualizar a Instituição."];
 		else if(!isset($dados['cnpj']))
 			return ["tipo" => "erro", "msg" => "Campos obrigatórios ainda não foram preenchidos.", "campo" => "cnpj"];
@@ -83,7 +82,7 @@ class Instituicao_model extends Usuario_model{
 			$resposta = $this->alteraUsuario($idInst, $dados);
 			
 			if($resposta["tipo"] == "sucesso"){
-				$sql = "UPDATE instituicao SET instituicao_cnpj = ".$this->db->escape($dados['cnpj']).", instituicao_site = ".$this->db->escape($dados['novoSite'])." WHERE instituicao_id = ".$idInst;
+				$sql = "UPDATE instituicao SET instituicao_cnpj = ".$this->db->escape($dados['cnpj']).", instituicao_site = ".$this->db->escape($dados['website'])." WHERE instituicao_id = ".$idInst;
 
 				if(!$query = $this->db->query($sql)){
 					if($this->db->error()){

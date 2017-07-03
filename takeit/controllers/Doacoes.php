@@ -15,7 +15,6 @@ class Doacoes extends CI_Controller{
 		$this->load->model('Item_model', 'IM');
 		$this->load->model('Imagem_model', 'IMG');
 		$this->load->model('usuario_model', 'UM');
-
 	}
 
 	public function index($indice = 1){
@@ -32,6 +31,7 @@ class Doacoes extends CI_Controller{
 		$dados["css"]    = "menuDoacoes.css";
 		$dados["css2"]   = "doacoes.css";
 		$dados["js"]     = "menuDoacoes.js";
+		$dados["js2"]	 = "doacoes.js";
 
 		$dados["indice"] = $this->session->userdata('indice');
 		$dados["cidade_id"] = $this->session->userdata('cidade_filtro');
@@ -112,7 +112,11 @@ class Doacoes extends CI_Controller{
 
 		$desc = preg_replace('/\s+/', '', $descricao);
 		$path = "./assets/img/uploads/".date("Y")."/".date("m")."/".date("d")."/".$desc.date("H.i.s");
-		$dirname = iconv("UTF-8","UTF-8",$path);
+		
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+			$dirname = iconv("UTF-8","Windows-1252",$path);
+		else
+		    $dirname = iconv("UTF-8","UTF-8",$path);
 
 		//cria o diretorio para uploads se ele ja não existir
 		if (!is_dir($dirname))
@@ -181,7 +185,7 @@ class Doacoes extends CI_Controller{
 		$dados["titulo"] = "Alterar Doação";
 		$dados["css"]    = "item.css";
 		$dados["js"]     = "ajaxUploadFile.js";
-		$dados["js2"]     = "doacao.js";
+		$dados["js2"]    = "doacao.js";
 
 		$dados["categorias"] = $this->CM->buscaCategorias();
 		$dados["user_id"] = $this->session->userdata('user_id');
@@ -221,7 +225,10 @@ class Doacoes extends CI_Controller{
 			}
 		}
 
-		$dirname = iconv("UTF-8","UTF-8",$dados['oldPath']);
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+			$dirname = iconv("UTF-8","Windows-1252",$dados['oldPath']);
+		else
+		    $dirname = iconv("UTF-8","UTF-8",$dados['oldPath']);
 		
 		// Quer dizer que ao menos uma imagem foi alterada ou adicionada
 		if ($alterouImagem == 1) {
@@ -336,6 +343,26 @@ class Doacoes extends CI_Controller{
 		 		echo json_encode($result);
 		 	}
 		}
+	}
+
+	public function interesse(){
+		$acao    = $this->input->post()["acao"];
+		$item_id = $this->input->post()["item_id"];
+		$user_id = $this->session->userdata('user_id');
+
+		$this->load->model("Interesse_model", "inter");
+		if($acao=="adicionar"){
+			$resposta = $this->inter->manifestarInteresse($item_id, $user_id);
+		
+		}else if($acao=="remover"){
+			$resposta = $this->inter->removerInteresse($item_id, $user_id);
+
+		}else{
+			$resposta = ["tipo" => "erro", "msg" => "Ocorreu um erro inesperado no sistema. Tente contatar o suporte@takeit.com.br que iremos ajuda-lo."];
+		}
+
+		echo json_encode($resposta);
+		return;
 	}
 
 	public function carregaEstadosMenu(){

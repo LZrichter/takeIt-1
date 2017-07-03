@@ -102,7 +102,7 @@ class Interesse_model extends CI_Model{
 			else{
 				if(!count($query->result())) 
 					return ["tipo" => "erro", "msg" => "Nenhuma pessoa demonstrou interesse no seu item ainda."];
-
+				$dados = array();
 				$i = 0;
 				while($i<count($query->result())){
 					foreach($query->result()[$i] as $campo => $valor)
@@ -113,6 +113,59 @@ class Interesse_model extends CI_Model{
 
 				return $dados;
 			}
+		}catch(PDOException $PDOE){
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+		}catch(Exception $NE){
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
+		}
+	}
+
+	public function manifestarInteresse($item_id, $user_id){
+		if(!isset($item_id) || !isset($user_id)) 
+			return ["tipo" => "erro", "msg" => "Parâmetros insuficientes para executar a função."];
+
+		try{
+			$this->db->trans_begin();
+			$sql = "INSERT INTO interesse (interesse_data, item_id, usuario_id) VALUES (
+						".$this->db->escape(date("Y-m-d H:i:s")).", 
+						".$this->db->escape($item_id).", 
+						".$this->db->escape($user_id).")";
+			
+			if(!$query = $this->db->query($sql)){
+				if($error = $this->db->error()){
+					$this->db->trans_rollback();
+					return ["tipo" => "erro", "msg" => "Não foi possivel inserir seu interesse"];
+				}
+			}else{
+				$this->db->trans_commit();
+				return ["tipo" => "sucesso"];
+			}
+
+		}catch(PDOException $PDOE){
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+		}catch(Exception $NE){
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
+		}
+	}
+
+	public function removerInteresse($item_id, $user_id){
+		if(!isset($item_id) || !isset($user_id)) 
+			return ["tipo" => "erro", "msg" => "Parâmetros insuficientes para executar a função."];
+
+		try{
+			$this->db->trans_begin();
+			$sql = "DELETE FROM interesse WHERE item_id = ".$this->db->escape($item_id)." AND usuario_id = ".$this->db->escape($user_id);
+			
+			if(!$query = $this->db->query($sql)){
+				if($error = $this->db->error()){
+					$this->db->trans_rollback();
+					return ["tipo" => "erro", "msg" => "Não foi possivel remover seu interesse"];
+				}
+			}else{
+				$this->db->trans_commit();
+				return ["tipo" => "sucesso"];
+			}
+
 		}catch(PDOException $PDOE){
 			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
 		}catch(Exception $NE){

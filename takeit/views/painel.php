@@ -1,3 +1,6 @@
+<?
+	$user_tipo = $this->session->userdata('user_tipo');
+?>
 <ul class="breadcrumb">
   	<li><a href="#">Meu Painel</a></li>
 </ul>
@@ -7,8 +10,8 @@
 		<h1><span class="fa fa-dashboard"></span> Meu Painel</h1>
 	</div>
 	<ul class="flex-container">
-		<!-- BOTÃO 1 -->
-	  	<? if( $this->session->userdata('user_tipo') == 'Pessoa' ):?>
+	  	<? if($user_tipo == 'Pessoa'):?>
+			<!-- BOTÃO 1 -->
 		  	<li class="flex-item">
 			  	<a href="/Painel/ofertas">
 			  		<div>
@@ -22,7 +25,7 @@
 			  	<a href="/Painel/doados">
 			  		<div>
 			  			<img src="<?=base_url()?>/assets/img/painel_doados.png">
-			  			<h2>Minhas Doações</h2>
+			  			<h2>Itens Doados</h2>
 			  		</div>
 			  	</a>
 		  	</li>
@@ -41,7 +44,7 @@
 		  	<a href="/Painel/interesses">
 		  		<div>
 		  			<img src="<?=base_url()?>/assets/img/painel_receber.png">
-		  			<h2>Itens para Receber</h2>
+		  			<h2>Meus Interesses</h2>
 		  		</div>
 		  	</a>
 	  	</li>
@@ -59,9 +62,29 @@
 		  	<a href="/Usuario/perfil">
 		  		<div>
 		  			<img src="<?=base_url()?>/assets/img/painel_perfil.png">
-		  			<h2>Dados da Conta</h2>
+		  			<h2><?=($user_tipo=="Pessoa")?"Dados da Conta":"Configuração da Conta"?></h2>
 		  		</div>
 		  	</a>
 	  	</li>
+	  	<? if($user_tipo == 'Instituição'):?>
+		  	<!-- BOTÃO 7 -->
+		  	<li class="flex-item">
+			  	<a href="/Instituicoes/categorias">
+			  		<div>
+			  			<img src="<?=base_url()?>/assets/img/painel_categorias.png">
+			  			<h2>Categorias de Interese</h2>
+			  		</div>
+			  	</a>
+		  	</li>
+		  	<!-- BOTÃO 8 -->
+		  	<li class="flex-item">
+			  	<a href="/Instituicoes">
+			  		<div>
+			  			<img src="<?=base_url()?>/assets/img/painel_instituicao.png">
+			  			<h2>Outras Instituições Cadastradas</h2>
+			  		</div>
+			  	</a>
+		  	</li>
+		<? endif; ?>
 	</ul>
 </div>

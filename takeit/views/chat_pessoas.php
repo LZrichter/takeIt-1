@@ -8,13 +8,14 @@
 	</div>
 	<div class="panel-body">
 		<? if(isset($interessados)){
-			if(isset($interessados["tipo"]) && $interessados["tipo"] == "erro")
-				echo $interessados["msg"];
-			else{
+			if(isset($interessados["tipo"]) && $interessados["tipo"] == "erro"){ ?>
+				<div class="alert alert-info text-center">
+					<?= $interessados["msg"]; ?>
+				</div>
+			<? }else{
 				for($i = 0; $i < count($interessados); $i++){
 					$user = $interessados[$i]; 
-					$user["imagem_caminho"] = is_null($user["imagem_caminho"]) ? base_url() ."assets/img/painel_perfil.png" : base_url() . substr($user["imagem_caminho"], 2); 
-					$imagem_link = base_url()."assets/img/painel_perfil.png"; ?>
+					$imagem_link = is_null($user["imagem_caminho"]) ? base_url() ."assets/img/painel_perfil.png" : base_url() . substr($user["imagem_caminho"], 2); ?>
 
 					<div class="row user-card" name="userButton" data-usuario-nome="<?= $user["usuario_nome"]; ?>" data-usuario-id="<?= $user["usuario_id"]; ?>" data-imagem-link="<?= $imagem_link; ?>" data-interesse-id="<?= $user["interesse_id"]; ?>">
 						<div class="col-xs-1 col-md-1 user-img">

@@ -80,6 +80,7 @@ class Chat_model extends CI_Model{
 
 		try{
 			$data = date('Y-m-d H:i:s');
+			
 			$sql = "
 				INSERT INTO chat (chat_text, chat_data, interesse_id, chat_quem) 
 				VALUES (
@@ -96,10 +97,57 @@ class Chat_model extends CI_Model{
 				$chat = [
 					"id" => $this->db->insert_id(),
 					"msg" => $msg,
-					"data" => $data
+					"data" => date_format(date_create($data), " m/d H:i")
 				];
 
 				return ["tipo" => "sucesso", "msg" => $chat];
+			}
+		}catch(PDOException $PDOE){
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+		}catch(Exception $NE){
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
+		}
+
+		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
+	}
+
+	/**
+	 * Recebe o ID do interesse sendo comentado e a FLAG da ultima mensagem mostrada, 
+	 * retornando todas as restantes mensagens ainda não vistas
+	 * @param  int   $idInteresse ID do interesse
+	 * @param  int   $idFlagChat  ID da msg do chat
+	 * @return array              Array com todas as mensagens
+	 */
+	public function novasMensagens($idInteresse, $idFlagChat){
+		try{
+			$sql = "
+				SELECT * 
+				FROM (
+					SELECT 
+						*,
+						DATE_FORMAT(chat_data, '%d/%m %H:%i') as chat_data_formatada
+					FROM chat
+					WHERE interesse_id = $idInteresse AND chat_id > $idFlagChat
+					ORDER BY chat_id DESC
+				) X
+				ORDER BY x.chat_id ASC
+			";
+
+			if(!$query = $this->db->query($sql))
+				return ["tipo" => "erro", "msg" => "Não foi possivel buscar as mensagens."];
+			else{
+				if(!count($query->result())) 
+					return;
+
+				$i = 0;
+				while($i<count($query->result())){
+					foreach($query->result()[$i] as $campo => $valor)
+						$dados[$i][$campo] = $valor;
+
+					$i++;
+				}
+
+				return $dados;
 			}
 		}catch(PDOException $PDOE){
 			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];

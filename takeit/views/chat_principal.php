@@ -31,7 +31,7 @@
 	</div>
 	<div class="panel-body">
 		<div class="row">
-			<div class="col-sm-12 mensagens" id="centro_mensagens">
+			<div class="col-sm-12 painel-mensagens" id="centro_mensagens">
 				<? if(isset($chat["tipo"]) && $chat["tipo"] == "info"){
 				}else{
 					foreach($chat as $i => $msg){
@@ -41,9 +41,12 @@
 						}else{
 							$class_caixa_chat = "alert alert-success col-sm-8";
 							$class_data_chat = "data-enviado-esquerda pull-right";
-						} ?>
+						} 
 
-						<div class="<?= $class_caixa_chat; ?>" id="chat_mensagem_<?= $msg["chat_id"]; ?>">
+						$id_ultima_msg = "chat_mensagem_".$msg["chat_id"]; 
+						$chat_id_ultima = $msg["chat_id"]; ?>
+							
+						<div class="<?= $class_caixa_chat; ?>" id="<?= $id_ultima_msg; ?>" tabindex="1">
 							<p><?= $msg["chat_text"]; ?></p>
 							<div class="<?= $class_data_chat; ?>">Enviado: <?= $msg["chat_data_formatada"]; ?></div>
 						</div>
@@ -53,7 +56,11 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		$("#centro_mensagens").scrollTop($("#centro_mensagens")[0].scrollHeight);
+		var time = setTimeout(function(){
+			$("#<?= $id_ultima_msg; ?>").focus();
+			$("#inputMsg").val("").focus();
+			console.log("Time");
+		}, 100);
 	</script>
 	<div class="panel-footer">
 		<div class="row">
@@ -69,6 +76,7 @@
 
 				<input type="hidden" name="tipo_pessoa" value="<?= $tipo_pessoa; ?>">
 				<input type="hidden" name="interesse_id" value="<?= $interesse_id; ?>">
+				<input type="hidden" id="id_ultima_msg" value="<?= $chat_id_ultima; ?>">
 			</form>
 		</div>
 	</div>

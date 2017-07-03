@@ -17,7 +17,7 @@
 					  		<label class="col-sm-2 control-label">Foto de Perfil</label>
 					  	  	<div class="col-sm-10">
 					  	  		<div class="col-sm-4 img-rounded">
-					  	  	  		<img id="perfil_img" src="<?=($usuario['imagem_id'])?base_url().$usuario['imagem_caminho'].'/'.$usuario['imagem_nome']:base_url().'/assets/img/painel_perfil.png'?>" alt="Imagem do item">
+					  	  	  		<img id="perfil_img" src="<?=($usuario['imagem_id'])?base_url().$usuario['imagem_caminho'].'/'.$usuario['imagem_nome']:base_url().'/assets/img/painel_perfil.png'?>" alt="Foto do usuário">
 					  	  	  	</div>
 					  	  	  	<div class="col-sm-6">
 					  	  	  		<input type="file" name="foto" id="file_foto" accept=".gif,.jpg,.png,.jpeg">
@@ -140,27 +140,6 @@
 					  	  	  	<div id="mensagem"></div>
 					  	  	</div>
 					  	</div>
-					  	<? if($usuario['nivel']=='Instituiçãoasdf'): ?>
-						  	<div class="form-group text-center">
-						  	  	<h4>Categorias de Interesse</h4>
-				  	  	  		<hr>
-						  	</div>
-						  	<div class="form-group">
-						  	  	<label for="select_categoria" class="col-sm-2 control-label">Categoria</label>
-						  	  	<div class="col-sm-9">
-						  	  	  	<select class="form-control" id="select_categoria">
-									  <option>Selecione...</option>
-									  <option>Roupas</option>
-									  <option>Sapatos</option>
-									  <option>Móveis</option>
-									  <option>Eletrodomésticos</option>
-									</select>
-						  	  	</div>
-					  	  	  	<div class="col-sm-1">
-						  	  	  	<button type="button" class="btn btn-primary" onclick="alert('Adicionar outra categoria de interesse!');"><span class="fa fa-plus"></span></button>
-						  	  	</div>
-						  	</div>
-						<? endif; ?>
   						<input type="hidden" name="user_nivel" id="user_nivel"" value="<?= $usuario['nivel'];?>">
 						<!-- Mensagem com os erros  -->
 	  					<div class="form-group" id="div_mensagem">

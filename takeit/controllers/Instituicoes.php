@@ -69,14 +69,31 @@ class Instituicoes extends CI_Controller{
 		$dados["js"]  = "categorias.js";
 
 		$this->load->model('Usuario_model', 'user');
-		$dados["usuario"] = $this->user->selecionaUsuario($this->session->userdata('user_id'), TRUE);
+		$usuario = $this->user->selecionaUsuario($this->session->userdata('user_id'), TRUE);
+		$dados["usuario"]["nivel"] = $usuario["nivel"];
 
 		$this->load->model('Categoria_model', 'cat');
 		$dados["categorias"] = $this->cat->buscaCategorias();
+
+		$this->load->model('Instituicao_model', 'inst');
+		$dados["categorias_interesse"] = $this->inst->buscaCategoriasInteresse($this->session->userdata('user_id'));
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
 		$this->load->view('categorias', $dados);
 		$this->load->view('templates/footer');
+	}
+
+	public function atualiza_categorias(){
+		if(!empty($this->input->post()))
+			$categorias = $this->input->post()['categoria'];
+		else
+			$categorias[0] = NULL;
+
+		$this->load->model('Instituicao_model', 'inst');
+		$resposta = $this->inst->associarInstituicaoCategorias($categorias);
+
+		echo json_encode($resposta);
+		return;
 	}
 }

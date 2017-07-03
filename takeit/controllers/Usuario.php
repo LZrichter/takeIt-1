@@ -156,8 +156,35 @@ class Usuario extends CI_Controller{
 			}
 		}
 
+		$this->session->set_userdata("user_email", $email);
+		$this->session->set_userdata("user_name", $nome);
+		$this->session->set_userdata("user_cidade", $cidade_id);
+		$this->session->set_userdata("user_estado", $estado_id);
+
 		echo json_encode($resposta);
 		return;
+	}
+
+	public function visualizar($id = NULL){
+
+		$dados["css"]  = "painel.css";
+		$dados["js"]    = "item.js";
+
+		$this->load->model('Usuario_model', 'user');
+		$dados["usuario"] = $this->user->selecionaUsuario($id, TRUE);
+
+		if($dados["usuario"]["nivel"]=="Instituição"){
+			$this->load->model('Categoria_model', 'cat');
+			$dados["categorias"] = $this->cat->buscaCategorias();
+
+			$this->load->model('Instituicao_model', 'inst');
+			$dados["categorias_interesse"] = $this->inst->buscaCategoriasInteresse($id);
+		}
+
+		$this->load->view('templates/head', $dados);
+		$this->load->view('templates/menu', $dados);
+		$this->load->view('usuario', $dados);
+		$this->load->view('templates/footer');
 	}
 
 	/**
@@ -179,4 +206,3 @@ class Usuario extends CI_Controller{
 		echo json_encode(["tipo" => "erro", "msg" => "Ocorreu um erro ao sistema, tente novamente mais tarde."]);
 	}
 }
-

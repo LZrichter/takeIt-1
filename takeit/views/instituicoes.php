@@ -36,7 +36,7 @@
 				                <td><?= isset($campos["usuario_nome"]) ? $campos["usuario_nome"] : $campos["nome"]; ?></td>
 				                <td><?= $campos["cidade_nome"]; ?></td>
 				                <td><?= $campos["estado_uf"]; ?></td>
-				                <td><button class="btn btn-success">Ver Perfil</button></td>
+				                <td><a class="btn btn-success" href="/Usuario/visualizar/<?= $campos['usuario_id'] ?>">Ver Perfil</a></td>
 				            </tr>							
 						<? } ?>
 			        </tbody>

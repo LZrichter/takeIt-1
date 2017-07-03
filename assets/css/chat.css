@@ -102,8 +102,8 @@
 .user-card:hover {
 	transition: 0.3s;
 	-webkit-box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.75);
-box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.75);
+	box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.75);
 }
 
 .user-img > img{
@@ -114,6 +114,18 @@ box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.75);
 	.painel-usuarios .panel-body {
 		height: 275px;
 	}
+/*
+	.painel-mensagens .panel-default {
+		height: 263px;
+	}
+
+	.panel-body .painel-mensagens {
+		height: 230px;
+	}
+
+	.painel-mensagens .panel-default {
+		height: 263px;
+	}*/
 }
 
 @media (min-height: 800px) {
@@ -125,8 +137,16 @@ box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.75);
 		height: 430px;
 	}
 
+	.panel-body .painel-mensagens {
+		height: 430px;
+	}
+
 	.painel-mensagens .panel-default {
 		height: 563px;
+	}
+
+	.panel-default .painel-mensagens {
+		height: 500px;
 	}
 }
 
@@ -169,4 +189,8 @@ box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.75);
 .data-enviado-esquerda{
 	float: right;
 	margin: 0 -10px -20px 0;
+}
+
+#centro_mensagens > div:focus{
+	outline: none;
 }

@@ -73,8 +73,12 @@ class Usuario extends CI_Controller{
 		}
 		
 		if($resposta["tipo"]=="sucesso" && isset($flag_foto)){
-			$folder = preg_replace('/\s+/', '', $nome.$user_id);
-			$path = "./assets/img/users/".$folder;
+			if($old_path!=''){
+				$path = $old_path;
+			}else{
+				$folder = preg_replace('/\s+/', '', $user_id.$nome);
+				$path = "./assets/img/users/".$folder;
+			}
 			if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
 				$dirname = iconv("UTF-8","Windows-1252",$path);
 			else
@@ -158,20 +162,23 @@ class Usuario extends CI_Controller{
 
 		$this->session->set_userdata("user_email", $email);
 		$this->session->set_userdata("user_name", $nome);
-		$this->session->set_userdata("user_cidade", $cidade_id);
-		$this->session->set_userdata("user_estado", $estado_id);
+		$this->session->set_userdata("user_cidade", $cidade);
+		$this->session->set_userdata("user_estado", $estado);
 
 		echo json_encode($resposta);
 		return;
 	}
 
 	public function visualizar($id = NULL){
-
 		$dados["css"]  = "painel.css";
 		$dados["js"]    = "item.js";
 
 		$this->load->model('Usuario_model', 'user');
+		if($id == NULL)
+			$id = $this->session->userdata('user_id');
+
 		$dados["usuario"] = $this->user->selecionaUsuario($id, TRUE);
+		$dados["agradecimentos"] = $this->user->buscaAgradecimentos($id);
 
 		if($dados["usuario"]["nivel"]=="Instituição"){
 			$this->load->model('Categoria_model', 'cat');

@@ -349,7 +349,46 @@ class Usuario_model extends CI_Model{
 	}
 
 	/**
+	 * Busca os últimos 5 agradecimentos registrados para um usário
+	 * @param 	int 	$idUser ID do usuário que que recebeu os agradecimentos
+	 * @return  array 			com os dados do usuario
 	 * 
+	 */
+	public function buscaAgradecimentos($idUser){
+		if(!isset($idUser))
+			return ["tipo" => "erro", "msg" => "Parâmentros insuficientes."];
+
+		try{
+			$result = array();
+
+			$sql = 	"SELECT doacao_agradecimento 
+						FROM doacao d 
+						JOIN interesse i ON d.interesse_id = i.interesse_id
+						JOIN item it ON i.item_id = it.item_id
+						WHERE it.usuario_id =".$this->db->escape($idUser);
+
+			if(!$query = $this->db->query($sql)){
+				if($this->db->error())
+					return array("tipo" => "erro", "msg" => $this->db->_error_message());
+
+			}else {
+				$count = 0;
+				foreach($query->result() as $row){
+					foreach ($row as $campo => $valor) {
+						$result[$count][$campo] = $valor;
+					}
+					$count++;
+				}
+				return $result;
+			}
+
+		}catch(Exception $E){
+			return array("tipo" => "erro", "msg" => "Erro inexperado ao realizar a consulta, por favor tenta mais tarde!!!");
+		}
+		
+	}
+
+	/**
 	 * Busca usuários bloqueados ou ativos se o parâmetro for especificado, senão busca todos usuários
 	 * @param int $status -> 1 , para usuarios ativos | 0 , para usuarios bloqueados
 	 * @return  array com os dados do usuario

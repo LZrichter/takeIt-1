@@ -10,26 +10,41 @@
 	  			<h2><span class="fa fa-archive"></span> Perfil de usuário</h2>
 	  		</div>
 	  		<div class="panel-body">
-	  			<div class="col-sm-6 col-md-6 col-lg-4 text-center">
-	  				<img id="perfil_img" src="<?=($usuario['imagem_id'])?base_url().$usuario['imagem_caminho'].'/'.$usuario['imagem_nome']:base_url().'/assets/img/painel_perfil.png'?>" alt="Foto do usuário">
-	  			</div>
-				<div class="col-sm-6 col-md-6 col-lg-8">
-					<div class="center-block text-left">
-						<p><strong>Nome:</strong> <?= $usuario["nome"] ?></p>
-						<p><strong>Resumo:</strong> <?= $usuario["resumo"] ?></p>
-						<p><strong>Cidade/UF:</strong> <?= $usuario['cidade_nome'].' / '.$usuario['estado_uf'] ?></p>
-						<? if($usuario['nivel']=='Instituição'): ?>
-					  	  	<p><strong>Categorias de Interesse:</strong></p>
-						  	<div class="form-group">
-						  		<? if(isset($categorias_interesse) && count($categorias_interesse)>0){
-						  			echo "<ul>";
-							  		foreach ($categorias_interesse as $indice => $id_cat) {
-					  	  				echo " <li>".$categorias[$id_cat]['categoria_nome'].";</li>";
-									} 
-									echo "</ul>";
-							  	} ?>
-						  	</div>
-						<? endif; ?>
+	  			<div class="row">
+		  			<div class="col-sm-6 col-md-6 col-lg-4 text-center">
+		  				<img id="perfil_img" src="<?=($usuario['imagem_id'])?base_url().$usuario['imagem_caminho'].'/'.$usuario['imagem_nome']:base_url().'/assets/img/painel_perfil.png'?>" alt="Foto do usuário">
+		  			</div>
+					<div class="col-sm-6 col-md-6 col-lg-8">
+						<div class="center-block text-left">
+							<p><strong>Nome: </strong><?= $usuario["nome"] ?></p>
+							<p><strong>Resumo: </strong><?= $usuario["resumo"] ?></p>
+							<p><strong>Cidade/UF: </strong><?= $usuario['cidade_nome'].' / '.$usuario['estado_uf'] ?></p>
+							<? if($usuario['nivel']=='Instituição'): ?>
+						  	  	<p><strong>Endereço: </strong><?= $usuario["endereco"] ?></p>
+						  	  	<p>
+						  	  		<strong>Número: </strong><?= $usuario["numero"] ?> | <?= $usuario["complemento"] ?>
+						  	  		<strong>Bairro: </strong><?= $usuario["bairro"] ?>
+						  	  	</p>
+						  	  	<p><strong><a href="http://<?= $usuario["instituicao_site"] ?>" target="_blank"><?= $usuario["instituicao_site"] ?></a></strong></p>
+						  	  	<!-- Categorias da instituição -->
+						  	  	<p><strong>Categorias de Interesse:</strong></p>
+							  	<div class="form-group">
+							  		<? if(isset($categorias_interesse) && count($categorias_interesse)>0){
+							  			echo "<ul>";
+								  		foreach ($categorias_interesse as $indice => $id_cat) {
+						  	  				echo " <li>".$categorias[$id_cat]['categoria_nome'].";</li>";
+										} 
+										echo "</ul>";
+								  	} ?>
+							  	</div>
+							<? endif; ?>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1 text-center" id="agradecimentos">
+						<hr>
+						<h4>Agradecimentos para o usuario</h4>
 					</div>
 				</div>
 	  		</div>

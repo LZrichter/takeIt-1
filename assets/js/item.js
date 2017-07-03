@@ -17,7 +17,6 @@ $(document).on('submit', '#mainForm', function(e){
 	var usuario_vacilao = $('input[name=usuario_vacilao]').val();
 	var usuario_x9      = $('input[name=usuario_x9]').val();
 	var denuncia_text   = $(this).find('textarea[name=denuncia_text]').val();
-	console.log(denuncia_text);
 	$('[data-toggle="popover"]').popover("hide");
 
 	$.ajax({

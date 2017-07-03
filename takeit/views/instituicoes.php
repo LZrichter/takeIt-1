@@ -1,4 +1,4 @@
-<div id="main">
+<div id="main" class="footer-align">
 	<ul class="breadcrumb">
 	  <li><a href="/doacoes">Doações</a></li>
 	  <li><a href="#">Instituições Beneficientes</a></li>
@@ -42,6 +42,6 @@
 			        </tbody>
 				</table>
 			</div>
-		</div>
 		<? } ?>
+	</div>
 </div>

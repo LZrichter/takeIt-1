@@ -97,10 +97,13 @@ class Painel extends CI_Controller{
 
 		$dados["user_id"] = $this->session->userdata('user_id');
 		$dados["interesses"] = $this->IN->interessesPorUsuario($dados["user_id"]);
-		foreach ($dados["interesses"] as $row)
-			foreach ($row as $key => $value)
-				$dados["busca_item"][] = $this->IM->buscaItemPorId($value)[0];
-
+		
+		if (!empty($dados["interesses"])) {
+			foreach ($dados["interesses"] as $row)
+				foreach ($row as $key => $value)
+					$dados["busca_item"][] = $this->IM->buscaItemPorId($value)[0];
+		}
+		
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
 		$this->load->view('itens_painel', $dados);

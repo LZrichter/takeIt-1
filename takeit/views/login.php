@@ -11,7 +11,7 @@
             <div class="form-group">
                 <label for="inputPassword">Senha</label>
                 <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Senha" required oninvalid="this.setCustomValidity('A senha é obrigatória!')" oninput="setCustomValidity('')">
-                <a href="#">Esqueceu sua senha?</a>
+                <a href="#" data-toggle="tooltip" data-placement="bottom" title="Informe nosso suporte que iremos ajuda-lo a resolver: suporte@takeit.com.br">Esqueceu sua senha?</a>
             </div>
             <div class="form-group" id="div_mensagem" style="display: none;">
                 <div id="mensagem"></div>

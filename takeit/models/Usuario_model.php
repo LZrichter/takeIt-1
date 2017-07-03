@@ -101,17 +101,10 @@ class Usuario_model extends CI_Model{
 	}
 
 	/**
-	 * 
-	 * @param 	$idUser		
-	 * @param  	$dados 		array com 
-	 * @return 				Boolean indicando o sucesso da alteração ou array com mensagem de erro
-	 *  
-	 */
-	/**
 	 * Altera os dados de um usuário no Banco de Dados
 	 * @param  int    $idUser ID do usuário a ser alterado
 	 * @param  array  $dados  todos os dados do usuario (preenchidos via formulário)
-	 * @return                Boolean indicando o sucesso da alteração ou array com mensagem de erro array("Error" => "msg")
+	 * @return                Array com mensagem de erro ou sucesso array("tipo"=>"erro","msg"=>"exemplo")
 	 */
 	public function alteraUsuario(int $idUser, array $dados){
 		if(!isset($idUser) || !isset($dados))
@@ -122,14 +115,13 @@ class Usuario_model extends CI_Model{
 				return ["tipo" => "erro", "msg" => "Campos obrigatórios ainda não foram preenchidos.", "campo" => $campo];
 		}
 
-		if($dados["senha"] != $dados["confirmacao"]) 
+		if($dados["senha"] != $dados["confirmacao"])
 			return ["tipo" => "erro", "msg" => "Confirmação da senha esta incorreta!", "campo" => "confirmacao"];
 
 		foreach ($dados as $key => $value)
-			$$key = $value;		
+			$$key = $value;
 
 		try{
-			$imagem = ($imagem=="NULL") ? "NULL" : $this->db->escape($imagem);
 			$this->db->trans_begin();
 			$sql = "UPDATE usuario SET 
 						usuario_nome 		= ".$this->db->escape($nome).", 
@@ -140,8 +132,7 @@ class Usuario_model extends CI_Model{
 						usuario_complemento = ".$this->db->escape($complemento).", 
 						usuario_telefone 	= ".$this->db->escape($telefone).", 
 						usuario_resumo 		= ".$this->db->escape($resumo).", 
-						cidade_id 			= ".$this->db->escape($cidade).",
-						imagem_id			= ".$imagem;
+						cidade_id 			= ".$this->db->escape($cidade);
 			
 			if(str_replace("*", '', $senha) != ''){
 				$this->load->helper("passBCrypt");
@@ -155,12 +146,41 @@ class Usuario_model extends CI_Model{
 			if(!$query = $this->db->query($sql)){
 				if($this->db->error()){
 					$this->db->trans_rollback();
-					return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de atualizar o Usuário. Por favor, mude os dados inseridos ou tente mais tarde. Código: ".$error["code"]];
+					return ["tipo" => "erro", "msg" => "Ocorreu um problema ao atualizar o Usuário. Por favor, mude os dados inseridos ou tente mais tarde. Código: ".$error["code"]];
 				}
 			} else {
 				$this->db->trans_commit();
 				return ["tipo" => "sucesso", "msg" => "Atualização efetuado com sucesso."];
 			}
+		} catch(Exception $E) {
+			return ["tipo" => "erro", "msg" => "Problema interno do sistema. Por favor, tente mais tarde!"];
+		}
+	}
+
+	/**
+	 * Atualiza apenas a imagem do usuário
+	 * @param  int    $idUser ID do usuário sendo modificado
+	 * @param  int    $img_id ID da imagem [JÁ INSERIDA NO BANCO]
+	 * @return array          Array indicando erro ou sucesso
+	 */
+	public function alteraImgUsuario(int $idUser, int $img_id){
+		if(!isset($idUser) || !isset($img_id))
+			return ["tipo" => "erro", "msg" => "Parâmetros insuficientes para atualizar o Usuário."];
+
+		try{
+			$this->db->trans_begin();
+			$sql = "UPDATE usuario SET imagem_id = ".$this->db->escape($img_id)." WHERE usuario_id = ".$idUser;
+
+			if(!$query = $this->db->query($sql)){
+				if($this->db->error()){
+					$this->db->trans_rollback();
+					return ["tipo" => "erro", "msg" => "Ocorreu um problema ao atualizar a imagem do Usuário. Por favor, mude o arquivo inserido ou tente mais tarde. Código: ".$error["code"]];
+				}
+			} else {
+				$this->db->trans_commit();
+				return ["tipo" => "sucesso", "msg" => "Atualização efetuada com sucesso."];
+			}
+
 		} catch(Exception $E) {
 			return ["tipo" => "erro", "msg" => "Problema interno do sistema. Por favor, tente mais tarde!"];
 		}

@@ -71,6 +71,8 @@ $("#cadastroForm").on("submit", function(e){
     	if(($.trim(obj.val()).length === 0)){
     		var sair = false;
 
+    		console.log(obj);
+
     		if(item == "cpf" && !$("#radio_pessoa").prop("checked")) sair = true;
     		if(item == "cnpj" && !$("#radio_instituicao").prop("checked")) sair = true;
 
@@ -102,6 +104,7 @@ $("#cadastroForm").on("submit", function(e){
 					$("#select_cidade option").remove();
 					$('#select_cidade').prop('disabled', true);
 					$("#select_cidade").append('<option>Selecione o estado.</option>');
+					location.href = "login";
 				}
 			},
 			error: function(data){

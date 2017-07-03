@@ -88,12 +88,12 @@ class Pessoa_model extends Usuario_model{
 			return ["tipo" => "erro", "msg" => "CPF já registrado no sistema.", "campo" => "cpf"];
 
 		try{
-			$this->db->trans_begin();
 			$resposta = $this->alteraUsuario($idPessoa, $dados);
 
 			if($resposta["tipo"] == "sucesso"){
 				$sql = "UPDATE pessoa SET pessoa_cpf = ".$this->db->escape($dados['cpf'])." WHERE pessoa_id = ".$this->db->escape($idPessoa);
 
+				$this->db->trans_begin();
 				if(!$query = $this->db->query($sql)){
 					if($this->db->error()){
 						$this->db->trans_rollback();
@@ -103,9 +103,6 @@ class Pessoa_model extends Usuario_model{
 	    			$this->db->trans_commit();
 					return ["tipo" => "sucesso", "msg" => "Atualização efetuada com sucesso."];
 				}
-			}else{
-				$this->db->trans_rollback();
-				return $resposta;
 			}
 			
 		} catch(Exception $E) {

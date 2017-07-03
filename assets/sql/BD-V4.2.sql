@@ -331,6 +331,48 @@ ALTER TABLE `instituicao` DROP FOREIGN KEY `fk_instituicao_usuario1`;
 ALTER TABLE `instituicao` ADD CONSTRAINT `fk_instituicao_usuario1` FOREIGN KEY (`instituicao_id`) REFERENCES `usuario` (`usuario_id`) ON UPDATE CASCADE ON DELETE CASCADE;
 
 -- -----------------------------------------------------
+-- MUDANÇAS LUIZ - 01/06/2017
+-- -----------------------------------------------------
+
+-- Colocando o nível do usuário como Enum e adicionando a opção de Admin
+ALTER TABLE `usuario` CHANGE COLUMN `usuario_nivel` `usuario_nivel` ENUM('Admin','Pessoa','Instituição') NOT NULL DEFAULT 'Pessoa' AFTER `usuario_ativo`;
+
+-- -----------------------------------------------------
+-- MUDANÇAS LUCAS - 05/06/2017
+-- -----------------------------------------------------
+
+-- Adicionando campos no usuário que foram esquecidos
+ALTER TABLE `usuario` ADD COLUMN `usuario_resumo` text NULL;
+ALTER TABLE `usuario` ADD COLUMN `imagem_id` int(11) NULL DEFAULT NULL;
+ALTER TABLE `usuario` CHANGE COLUMN `usuario_resumo` `usuario_resumo` text CHARACTER SET utf8 NULL AFTER `usuario_nivel`;
+
+-- -----------------------------------------------------
+-- MUDANÇAS LUIZ - 26/06/2017
+-- -----------------------------------------------------
+
+-- Adicionando campos para controle do chat
+ALTER TABLE `interesse`
+  ADD COLUMN `chat_lst_msg_doador` INT NULL AFTER `usuario_id`,
+  ADD COLUMN `chat_lst_msg_beneficiario` INT NULL AFTER `chat_lst_msg_doador`,
+  ADD CONSTRAINT `fk_interesse_msg_doador` FOREIGN KEY (`chat_lst_msg_doador`) REFERENCES `chat` (`chat_id`) ON UPDATE SET NULL ON DELETE SET NULL,
+  ADD CONSTRAINT `fk_interesse_msg_beneficiario` FOREIGN KEY (`chat_lst_msg_beneficiario`) REFERENCES `chat` (`chat_id`) ON UPDATE SET NULL ON DELETE SET NULL;
+
+-- -----------------------------------------------------
+-- MUDANÇAS LUCAS - 01/07/2017
+-- -----------------------------------------------------
+
+-- Adicionado imagem para o perfil do usuário
+ALTER TABLE `usuario` ADD FOREIGN KEY (`imagem_id`) REFERENCES `imagem` (`imagem_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `imagem` CHANGE `item_id` `item_id` INT(11) NULL;
+
+-- -----------------------------------------------------
+-- MUDANÇAS LUCAS - 02/07/2017
+-- -----------------------------------------------------
+
+-- Adicionado index para q item_id + usuario_id seja único na tabela de interesse
+ALTER TABLE `interesse` ADD UNIQUE INDEX (`item_id`,`usuario_id`);
+
+-- -----------------------------------------------------
 -- INSERÇÃO DE CATEGORIAS
 -- -----------------------------------------------------
 INSERT INTO `categoria` (`categoria_nome`)

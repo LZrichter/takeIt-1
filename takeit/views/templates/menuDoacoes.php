@@ -3,7 +3,7 @@
 <input type="hidden" id="idCategoria" value="<?php echo $this->session->userdata['categoria']; ?>">
 
 <div id="mySidenav" class="sidenav"> 
-    <a href="javascript:void(0)" class="closebtn"><span class="fa fa-times-circle-o 2x"></span></a>   
+    <a href="javascript:void(0)" class="closebtn"><span class="fa fa-angle-double-left 2x"></span></a>   
     <p class="sidenav-itens">
         <ul class="list-group">
         <li class="list-group-item active">

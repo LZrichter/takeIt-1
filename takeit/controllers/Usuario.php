@@ -5,8 +5,8 @@ class Usuario extends CI_Controller{
 	function __construct(){
 		parent::__construct();
 		$this->load->helper('url');
+		
 		$this->load->helper('login');
-
 		testaLogin();
 	}
 
@@ -63,28 +63,48 @@ class Usuario extends CI_Controller{
 
 		$user_tipo = $this->session->userdata('user_tipo');
 		$user_id = $this->session->userdata('user_id');
+
+		if($user_tipo == "Pessoa"){
+			$this->load->model("Pessoa_model", "pessoa");
+			$resposta = $this->pessoa->alteraPessoa($user_id, $dados);
+		}else{
+			$this->load->model("Instituicao_model", "instituicao");
+			$resposta = $this->instituicao->alteraInstituicao($user_id, $dados);
+		}
 		
-		if(isset($flag_foto)){
-			$desc = preg_replace('/\s+/', '', $nome.$user_id);
-			$path = "./assets/img/users/".$desc;
-			$dirname = iconv("UTF-8","UTF-8",$path);
+		if($resposta["tipo"]=="sucesso" && isset($flag_foto)){
+			$folder = preg_replace('/\s+/', '', $nome.$user_id);
+			$path = "./assets/img/users/".$folder;
+			if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+				$dirname = iconv("UTF-8","Windows-1252",$path);
+			else
+			    $dirname = iconv("UTF-8","UTF-8",$path);
 
 			//cria o diretorio para uploads se ele ja não existir
 			if (!is_dir($dirname))
 				mkdir($dirname, 0777, true);
 
 			if (!empty($_FILES["foto"]['name'])) {
-				$config['upload_path']      = $dirname;
-				$config['allowed_types']    = 'gif|jpg|png|jpeg';
-				$config['encrypt_name']		= TRUE;
+				$config['upload_path']		= $dirname;
+				$config['allowed_types']	= 'gif|jpg|png|jpeg';
 				$config['overwrite']		= TRUE;
-				$config['max_size']         = 2048; //KB
+				$config['max_size']			= 2048; //KB
+
+				// Verifica se já existe uma foto, se já existe mantem o mesmo nome
+				if($old_foto!=''){
+					$config['encrypt_name']	= FALSE;
+					$config['file_name'] = $old_foto;
+				// Se ainda não existe insere uma nova
+				}else{
+					$config['encrypt_name']		= TRUE;
+					$imagemNova = 1;
+				}
 
 				$this->load->library('upload', $config);
 				$this->upload->initialize($config);
 
 				if(!$this->upload->do_upload("foto")) // Erro no upload
-					$apagarPasta = 1;
+					$erroNaImagem = 1;
 				else{ // Upload OK
 					$success = $this->upload->data();
 					$dadosImg["imagem_nome"] = $success['file_name'];
@@ -92,21 +112,19 @@ class Usuario extends CI_Controller{
 					$dadosImg["imagem_tamanho"] = $success['file_size'];
 				}
 			}
-		}
 
-		if (isset($apagarPasta)){
-			foreach(scandir($dirname) as $file) {
-				if ('.' === $file || '..' === $file) continue;
-				if (is_dir("$dirname/$file")) rmdir_recursive("$dirname/$file");
-				else unlink("$dirname/$file");
-			}
-			rmdir($dirname);
-			$resposta = ["msg" => $this->upload->display_errors(), "tipo" => "erro", "campo" => "fotos"];
-			echo json_encode($resposta);
-			return;
+			if (isset($erroNaImagem) && $old_foto==''){
+				foreach(scandir($dirname) as $file) {
+					if ('.' === $file || '..' === $file) continue;
+					if (is_dir("$dirname/$file")) rmdir_recursive("$dirname/$file");
+					else unlink("$dirname/$file");
+				}
+				rmdir($dirname);
+				$resposta = ["msg" => $this->upload->display_errors(), "tipo" => "erro", "campo" => "fotos"];
+				echo json_encode($resposta);
+				return;
 
-		}else{
-			if(isset($flag_foto)){
+			}else if($old_foto==''){
 				$dadosImg["item_id"] = "NULL";
 				$this->db->trans_begin();
 				$this->load->model('Imagem_model', 'IMG');
@@ -121,21 +139,52 @@ class Usuario extends CI_Controller{
 				}
 				$imagem_id = $this->db->insert_id();
 				$this->db->trans_commit();
-			}else{
-				$imagem_id = "NULL";
-			}
-			$dados["imagem"] = $imagem_id;
 
-			if($user_tipo == "Pessoa"){
-				$this->load->model("Pessoa_model", "pessoa");
-				$resposta = $this->pessoa->alteraPessoa($user_id, $dados);
-			}else{
-				$this->load->model("Instituicao_model", "instituicao");
-				$resposta = $this->instituicao->alteraInstituicao($user_id, $dados);
+				$this->load->model('Usuario_model', 'user');
+				$resposta = $this->user->alteraImgUsuario($user_id, $imagem_id);
+				if($resposta["tipo"] != "sucesso"){
+					foreach(scandir($dirname) as $file) {
+						if ('.' === $file || '..' === $file) continue;
+						if (is_dir("$dirname/$file")) rmdir_recursive("$dirname/$file");
+						else unlink("$dirname/$file");
+					}
+					rmdir($dirname);
+					$resposta = ["msg" => $this->upload->display_errors(), "tipo" => "erro", "campo" => "fotos"];
+					echo json_encode($resposta);
+					return;
+				}
 			}
-			echo json_encode($resposta);
-			return;
 		}
+
+		$this->session->set_userdata("user_email", $email);
+		$this->session->set_userdata("user_name", $nome);
+		$this->session->set_userdata("user_cidade", $cidade_id);
+		$this->session->set_userdata("user_estado", $estado_id);
+
+		echo json_encode($resposta);
+		return;
+	}
+
+	public function visualizar($id = NULL){
+
+		$dados["css"]  = "painel.css";
+		$dados["js"]    = "item.js";
+
+		$this->load->model('Usuario_model', 'user');
+		$dados["usuario"] = $this->user->selecionaUsuario($id, TRUE);
+
+		if($dados["usuario"]["nivel"]=="Instituição"){
+			$this->load->model('Categoria_model', 'cat');
+			$dados["categorias"] = $this->cat->buscaCategorias();
+
+			$this->load->model('Instituicao_model', 'inst');
+			$dados["categorias_interesse"] = $this->inst->buscaCategoriasInteresse($id);
+		}
+
+		$this->load->view('templates/head', $dados);
+		$this->load->view('templates/menu', $dados);
+		$this->load->view('usuario', $dados);
+		$this->load->view('templates/footer');
 	}
 
 	/**
@@ -157,4 +206,3 @@ class Usuario extends CI_Controller{
 		echo json_encode(["tipo" => "erro", "msg" => "Ocorreu um erro ao sistema, tente novamente mais tarde."]);
 	}
 }
-

@@ -16,7 +16,7 @@
 	<div class="row">
 	  	<div class="panel panel-default">
 	  		<div class="panel-heading">
-	  			<h2><span class="fa fa-product-hunt"></span> <?= $item[0]["item_descricao"] ?></h2>
+	  			<h2><span class="fa fa-archive"></span> <?= $item[0]["item_descricao"] ?></h2>
 	  		</div>
 	  		<div class="panel-body">
 	  			<div class="col-sm-6 col-md-6 col-lg-4 text-center">
@@ -58,7 +58,10 @@
 				<div class="col-sm-6 col-md-6 col-lg-8">
 					<div class="center-block text-left">
 						<p><strong>Quantidade:</strong> <?= $item[0]["item_qtde"] ?></p>
-						<p><strong>Doador:</strong> <?= $dadosDoador['nome'] ?></p>
+						<p>	
+							<strong>Doador: </strong>
+							<a href="/Usuario/visualizar/<?= $dadosDoador['id'];?>"><?= $dadosDoador['nome'] ?> <span class="fa fa-external-link"></span></a>
+						</p>
 						<p><strong>Cidade/UF:</strong> <?= $dadosDoador['cidade_nome'].' / '.$dadosDoador['estado_uf'] ?></p>
 						<p><strong>Status:</strong>
 							<? if ($item[0]["item_status"] == 'Disponível'):?>

@@ -53,19 +53,31 @@ class Chat extends CI_Controller{
 			$dados["tipo_pessoa"] = "Beneficiário";
 		}
 
-		// Busca a lista de todas as pessoa interessadas
-		$dados["interessados"] = $this->interesse->todosInteressados($dados["item_id"]);
-		if(!isset($dados["interessados"]["tipo"]) || (isset($dados["interessados"]["tipo"]) && $dados["interessados"]["tipo"] != "erro"))
-			$dados["interesse_id"] = $dados["interessados"][0]["interesse_id"];
+		$this->load->model("Chat_model", "chat");
 
-		if(!$dados["usuario_doador"]){
+		if($dados["usuario_doador"]){
+			// Busca a lista de todas as pessoa interessadas
+			$dados["interessados"] = $this->interesse->todosInteressados($dados["item_id"]);
+			if(!isset($dados["interessados"]["tipo"]) || (isset($dados["interessados"]["tipo"]) && $dados["interessados"]["tipo"] != "erro"))
+				$dados["interesse_id"] = $dados["interessados"][0]["interesse_id"];
+
+			$dados["conta_nao_lidas"] = $this->chat->qtdeMsgsNaoLidasDoador($dados["item_id"]);
+		}else{
+			// Busca os dados do interesse para pegar o usuário a partir do item
+			$chat_interesse = $this->interesse->buscaInteresseItemUsuario($idItem, $this->session->userdata("user_id"));
+			$dados["interesse_id"] = $chat_interesse[0]["interesse_id"];
+
 			/* Busca os dados para o chat quando ele deve ser mostrado como a primeira coisa */
-			$this->load->model("Chat_model", "chat");
+			$this->chat->tipoPessoa = $dados["tipo_pessoa"];
 			$dados["chat"]["chat"] = $this->chat->porcaoChatLimite($dados["interesse_id"]);
+
+			$this->load->model("Item_model", "item");
+			$item = $this->item->buscaItemPorId($chat_interesse[0]["item_id"]); // Busca o id do usuário a partir do item
 
 			/* Busca os dados do usuário em si */
 			$this->load->model("Usuario_model", "user");
-			$this->user->selecionaUsuario($this->session->userdata("user_id"));
+			$this->user->selecionaUsuario($item[0]["usuario_id"]);
+
 			$dados["chat"]["usuario_nome"] = $this->user->nome;
 			$dados["chat"]["imagem_link"] = base_url().substr($this->user->imagem_caminho."/".$this->user->imagem_nome, 2);
 		}
@@ -113,5 +125,10 @@ class Chat extends CI_Controller{
 		if(!empty($idInteresse) && !empty($IDUltimaMsg))
 			echo json_encode($this->chat->novasMensagens($idInteresse, $IDUltimaMsg));
 		else return;
+	}
+
+	public function buscaCountNaoLidas(){
+		$this->load->model("Chat_model", "chat");
+		echo json_encode($this->chat->qtdeMsgsNaoLidasDoador($this->input->post()["item_id"]));
 	}
 }

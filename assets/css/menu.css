@@ -1,3 +1,9 @@
+.alert-default {
+    color: #757575;
+    background-color: #ddd;
+    border-color: #757575 !important;
+}
+
 #logo {
     /* vermelho: #cc3333 */
     width: 100px;
@@ -65,7 +71,7 @@
     margin-right: 7%;
 }
 
-#main-menu.navbar-default .navbar-nav>li#notificacao .btn:focus, .btn:hover {
+#main-menu.navbar-default .navbar-nav>li#notificacao .btn:focus,  #main-menu a:hover, .btn:hover {
     text-decoration: none !important; 
 }
 

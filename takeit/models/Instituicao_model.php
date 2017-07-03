@@ -224,28 +224,34 @@ class Instituicao_model extends Usuario_model{
 	/**
 	 * Associa categorias a uma instituição
 	 * @param  array  $idsCat Array com IDs das categorias a serem inseridas
-	 * @return bool|array     Array caso ocorra um erro ou true se deu tudo certo
+	 * @return bool|array     Array informando sucesso ou erro
 	 */
     public function associarInstituicaoCategorias(array $idsCat){
-    	if(!isset($idsCat) || !is_array($idsCat) || empty(array_filter($idsCat)))
+    	if(!isset($idsCat) || !is_array($idsCat))
 			return ["tipo" => "erro", "msg" => "Nenhuma categoria informada"];
 
-		if(empty($this->getId()))
-			return ["tipo" => "erro", "msg" => "Nenhuma instituição selecionada para a inserção das categorias."];
-
+		$id_instituicao = $this->session->userdata('user_id');
 		try{
-			$sql = "INSERT INTO instituicao_categoria (instituicao_id, categoria_id) VALUES ";
+			$sql_cleaner = "DELETE FROM instituicao_categoria WHERE instituicao_id = ".$this->db->escape($id_instituicao);
+			
+			if($query = $this->db->query($sql_cleaner)){
+				if($idsCat[0]!=NULL){
+					$sql = "INSERT INTO instituicao_categoria (instituicao_id, categoria_id) VALUES ";
 
-			foreach($idsCat as $i => $idCat)
-				$sql .= "(".$this->db->escape($this->getId()).", ".$this->db->escape($idCat)."), ";
+					foreach($idsCat as $i => $idCat)
+						$sql .= "(".$this->db->escape($id_instituicao).", ".$this->db->escape($idCat)."), ";
 
-			$sql = substr($sql, 0, -2)."";
+					$sql = substr($sql, 0, -2)."";
+					if(!$query = $this->db->query($sql)){
+						if($this->db->error())
+							return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de cadastrar as categorias para a Instituição. Por favor, mude os dados inseridos ou tente mais tarde."];
+					}else
+						return ["tipo" => "sucesso", "msg" => "Preferências salvas com sucesso!"];
+				}else
+					return ["tipo" => "sucesso", "msg" => "Preferências salvas com sucesso!"];
+			}else
+				return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de cadastrar as categorias para a Instituição. Por favor, tente mais tarde ou entre em contato com nosso suporte."];
 
-			if(!$query = $this->db->query($sql)){
-				if($this->db->error())
-					return ["tipo" => "erro", "msg" => "Ocorreu um problema na hora de cadastrar as categorias para a Instituição. Por favor, mude os dados inseridos ou tente mais tarde."];
-			}else 
-				return true;
 		}catch(PDOException $PDOE){
 			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
 		}catch(Exception $NE){
@@ -290,6 +296,40 @@ class Instituicao_model extends Usuario_model{
 		}
 
 		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
+    }
+
+    /**
+     * Retorna os IDs de todas as categorias de interesse da instituição
+     * @param  int  $id_intituicao 	ID da instituição
+     * @return array 				Array com os IDs de todas as categorias
+     */
+    public function buscaCategoriasInteresse($id_intituicao){
+    	if (!isset($id_intituicao))
+    		return ["tipo" => "erro", "msg" => "Nenhuma instituição informada!"];
+
+    	$result = array();
+    	try{
+    		$sql = "SELECT categoria_id FROM instituicao_categoria WHERE instituicao_id =".$this->db->escape($id_intituicao);
+
+    		if(!$query = $this->db->query($sql)){
+				if($this->db->error())
+					return ["tipo" => "erro", "msg" => "Ocorreu um problema ao buscar as categorias. Por favor, contate nosso suporte."];
+			}else{
+				$count = 0;
+				foreach($query->result() as $row){
+					foreach ($row as $campo => $valor) {
+						$result[$count] = $valor;
+					}
+					$count++;
+				}
+				return $result;
+			} 
+
+    	}catch(PDOException $PDOE){
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+		}catch(Exception $NE){
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
+		}
     }
 
 }

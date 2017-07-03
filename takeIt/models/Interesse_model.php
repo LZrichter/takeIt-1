@@ -80,6 +80,12 @@ class Interesse_model extends CI_Model{
 		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
 	}
 
+	/**
+	 * Adiciona registro de interesse do usuário por um item
+	 * @param  int 	$item_id ID do item em que o usuário tem interesse
+	 * @param  int 	$user_id ID do usuário com interesse
+	 * @return array         Array indicando sucesso ou erro
+	 */
 	public function manifestarInteresse($item_id, $user_id){
 		if(!isset($item_id) || !isset($user_id)) 
 			return ["tipo" => "erro", "msg" => "Parâmetros insuficientes para executar a função."];
@@ -108,6 +114,12 @@ class Interesse_model extends CI_Model{
 		}
 	}
 
+	/**
+	 * Remove registro de interesse do usuário por um item
+	 * @param  int 	$item_id ID do item em que o usuário não tem mais interesse
+	 * @param  int 	$user_id ID do usuário que não tem mais interesse
+	 * @return array         Array indicando sucesso ou erro
+	 */
 	public function removerInteresse($item_id, $user_id){
 		if(!isset($item_id) || !isset($user_id)) 
 			return ["tipo" => "erro", "msg" => "Parâmetros insuficientes para executar a função."];

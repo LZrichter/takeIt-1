@@ -125,7 +125,6 @@ $("#form_perfil").on("submit", function(event){
 					changeClass($("[name='" + data["campo"] + "']"), "add");
 			},
 			error: function(data){
-				console.log(data);
 				$("#btnSend").button('reset');
 				mensagem("erro", "Ocorreu um problema na hora de realizar o cadastro. Por favor, tente mais tarde ou contate o suporte através do e-mail: <b>suporte@takeit.com.br</b>", "mensagem");
 			},

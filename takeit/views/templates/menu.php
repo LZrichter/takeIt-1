@@ -5,7 +5,7 @@
 <div id="main-menu" class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="<? echo $tipo_usuario == 'Pessoa' ? "/doacoes" : "#" ?>">
+            <a class="navbar-brand" href="<?=$tipo_usuario != 'Admin' ? "/doacoes":"#";?>">
                 <img id="logo" src="<?= base_url();?>assets/img/logo.png">
             </a>
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-menubuilder">
@@ -28,10 +28,10 @@
                 <li id="painel">
                     <a href="/Painel">Meu Painel</a>
                 </li>
-                <li id="instituicoes">
-                    <a href="/Instituicoes">Instituições</a>
-                </li>
                 <? if($tipo_usuario == 'Pessoa'): ?>
+                    <li id="instituicoes">
+                        <a href="/Instituicoes">Instituições</a>
+                    </li>
                     <li id="fazer_doacoes">
                         <a href="/doacoes/cadastrarItem"><span class="fa fa-heart"></span> Fazer Doação</a>
                     </li>

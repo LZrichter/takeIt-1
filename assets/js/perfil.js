@@ -57,59 +57,62 @@ $("#select_estado").on("change", function(a){
  * Quando é dado submit no formulário, aqui ele é tratado e enviado por ajax
  */
 $("#form_perfil").on("submit", function(event){
-    event.preventDefault();
+	event.preventDefault();
 
-    var erro = false;
-    $("#btnSend").button('loading');
+	var erro = false;
+	$("#btnSend").button('loading');
 
-    obrigatorio.forEach(function(item, index){
-    	var obj = $('[name="' + item + '"]');
+	nivel = $("#user_nivel").val();
 
-    	if(($.trim(obj.val()).length === 0)){
-    		var sair = false;
+	obrigatorio.forEach(function(item, index){
+		var obj = $('[name="' + item + '"]');
 
-    		if($("#user_nivel").val()=="Pessoa" && item == "cnpj") sair = true;
-    		if($("#user_nivel").val()=="instituição" && item == "cpf") sair = true;
+		if(($.trim(obj.val()).length === 0)){
+			var flag = false;
 
-    		if(!sair){
-    			changeClass(obj, "add");
-	    		erro = true;
-    		}
-    	}
-    });
+			if(nivel == "Pessoa" && item == "cnpj") flag = true;
+			if(nivel == "Instituição" && item == "cpf") flag = true;
 
-    // Caso tenha sido selecionada uma imagem para foto
-    if(!erro && $("#file_foto").val().split('\\').pop().trim()){
-    	$('input[type=file]').upload("/Usuario/alterarPerfil",{
-    		nome: 		 $("input[name='nome']").val(),
-    		website: 	 $("input[name='website']").val(),
-    		resumo: 	 $("textarea[name='resumo']").val(),
-    		cpf: 		 $("input[name='cpf']").val(),
-    		cnpj: 		 $("input[name='cnpj']").val(),
-    		email: 		 $("input[name='email']").val(),
-    		senha: 		 $("input[name='senha']").val(),
-    		confirmacao: $("input[name='confirmacao']").val(),
-    		endereco: 	 $("input[name='endereco']").val(),
-    		bairro: 	 $("input[name='bairro']").val(),
-    		numero: 	 $("input[name='numero']").val(),
-    		complemento: $("input[name='complemento']").val(),
-    		estado: 	 $("#select_estado option:selected").val(),
-    		cidade: 	 $("#select_cidade option:selected").val(),
-    		telefone: 	 $("input[name='telefone']").val(),
-    		old_foto: 	 $("input[name='old_foto'").val(),
-    		flag_foto: 	 1,
-    		ajax: 		 1
-    	}, function(data){
-    		$("#btnSend").button('reset');
+			if(!flag){
+				changeClass(obj, "add");
+				erro = true;
+			}
+		}
+	});
+
+	// Caso tenha sido selecionada uma imagem para foto
+	if(!erro && $("#file_foto").val().split('\\').pop().trim()){
+		$('input[type=file]').upload("/Usuario/alterarPerfil",{
+			nome: 		 $("[name='nome']").val(),
+			website: 	 $("[name='website']").val(),
+			resumo: 	 $("[name='resumo']").val(),
+			cpf: 		 $("[name='cpf']").val(),
+			cnpj: 		 $("[name='cnpj']").val(),
+			email: 		 $("[name='email']").val(),
+			senha: 		 $("[name='senha']").val(),
+			confirmacao: $("[name='confirmacao']").val(),
+			endereco: 	 $("[name='endereco']").val(),
+			bairro: 	 $("[name='bairro']").val(),
+			numero: 	 $("[name='numero']").val(),
+			complemento: $("[name='complemento']").val(),
+			estado: 	 $("#select_estado option:selected").val(),
+			cidade: 	 $("#select_cidade option:selected").val(),
+			telefone: 	 $("[name='telefone']").val(),
+			old_foto: 	 $("[name='old_foto'").val(),
+			flag_foto: 	 1,
+			ajax: 		 1
+		}, function(data){
+			$("#btnSend").button('reset');
 			mensagem(data["tipo"], data["msg"], "mensagem");
 			$("#div_mensagem").show();
 
-			if(data["tipo"] == "erro")
+			if(data["tipo"] == "erro" && data["campo"]){
 				changeClass($("[name='" + data["campo"] + "']"), "add");
+			}
 		});
 	// Caso não tenha imagem
-    } else if(!erro){
-    	$.ajax({
+	} else if(!erro){
+		$.ajax({
 			url: 'alterarPerfil',
 			type: 'POST',
 			data: $("#form_perfil").serialize(),
@@ -118,11 +121,11 @@ $("#form_perfil").on("submit", function(event){
 				$("#btnSend").button('reset');
 				mensagem(data["tipo"], data["msg"], "mensagem");
 				$("#div_mensagem").show();
-
-				if(data["tipo"] == "erro")
+				if(data["tipo"] == "erro" && data["campo"])
 					changeClass($("[name='" + data["campo"] + "']"), "add");
 			},
 			error: function(data){
+				console.log(data);
 				$("#btnSend").button('reset');
 				mensagem("erro", "Ocorreu um problema na hora de realizar o cadastro. Por favor, tente mais tarde ou contate o suporte através do e-mail: <b>suporte@takeit.com.br</b>", "mensagem");
 			},
@@ -130,9 +133,9 @@ $("#form_perfil").on("submit", function(event){
 				$("#btnSend").button('reset');
 			}
 		});
-    }else{
+	}else{
 		$("#btnSend").button('reset');
-    	mensagem("erro", "Campos obrigatórios não estão preenchidos.", "mensagem");
+		mensagem("erro", "Campos obrigatórios não estão preenchidos.", "mensagem");
 		$("#div_mensagem").show();
 	}
 

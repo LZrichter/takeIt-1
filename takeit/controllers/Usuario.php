@@ -5,8 +5,8 @@ class Usuario extends CI_Controller{
 	function __construct(){
 		parent::__construct();
 		$this->load->helper('url');
+		
 		$this->load->helper('login');
-
 		testaLogin();
 	}
 
@@ -75,7 +75,10 @@ class Usuario extends CI_Controller{
 		if($resposta["tipo"]=="sucesso" && isset($flag_foto)){
 			$folder = preg_replace('/\s+/', '', $nome.$user_id);
 			$path = "./assets/img/users/".$folder;
-			$dirname = iconv("UTF-8","UTF-8",$path);
+			if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+				$dirname = iconv("UTF-8","Windows-1252",$path);
+			else
+			    $dirname = iconv("UTF-8","UTF-8",$path);
 
 			//cria o diretorio para uploads se ele ja não existir
 			if (!is_dir($dirname))

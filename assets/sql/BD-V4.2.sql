@@ -366,6 +366,13 @@ ALTER TABLE `usuario` ADD FOREIGN KEY (`imagem_id`) REFERENCES `imagem` (`imagem
 ALTER TABLE `imagem` CHANGE `item_id` `item_id` INT(11) NULL;
 
 -- -----------------------------------------------------
+-- MUDANÇAS LUCAS - 02/07/2017
+-- -----------------------------------------------------
+
+-- Adicionado index para q item_id + usuario_id seja único na tabela de interesse
+ALTER TABLE `interesse` ADD UNIQUE INDEX (`item_id`,`usuario_id`);
+
+-- -----------------------------------------------------
 -- INSERÇÃO DE CATEGORIAS
 -- -----------------------------------------------------
 INSERT INTO `categoria` (`categoria_nome`)

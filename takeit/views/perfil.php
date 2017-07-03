@@ -140,7 +140,7 @@
 					  	  	  	<div id="mensagem"></div>
 					  	  	</div>
 					  	</div>
-					  	<? if($usuario['nivel']=='Instituição'): ?>
+					  	<? if($usuario['nivel']=='Instituiçãoasdf'): ?>
 						  	<div class="form-group text-center">
 						  	  	<h4>Categorias de Interesse</h4>
 				  	  	  		<hr>
@@ -162,7 +162,6 @@
 						  	</div>
 						<? endif; ?>
   						<input type="hidden" name="user_nivel" id="user_nivel"" value="<?= $usuario['nivel'];?>">
-
 						<!-- Mensagem com os erros  -->
 	  					<div class="form-group" id="div_mensagem">
 					  	  	<div class="col-sm-10 col-sm-offset-2 text-center">

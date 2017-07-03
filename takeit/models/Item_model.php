@@ -350,7 +350,10 @@ class Item_model extends CI_Model {
 		*/
         public function buscaItemPorId($idItem){
         	try{
-				$sql =" SELECT * from item where item_id =".$idItem;
+				$sql = " SELECT i.*, 
+						(SELECT imagem_caminho FROM imagem WHERE imagem.item_id = i.item_id LIMIT 1) AS imagem_caminho , 
+						(SELECT imagem_nome FROM imagem WHERE imagem.item_id = i.item_id LIMIT 1) AS imagem_nome 
+						FROM item i WHERE i.item_id =".$idItem;
 
 				if(!$query = $this->db->query($sql)){
 					if($this->db->error()){

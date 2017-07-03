@@ -5,6 +5,9 @@ class Instituicoes extends CI_Controller{
 	function __construct(){
 		parent::__construct();
 		$this->load->helper('url');
+
+		$this->load->helper('login');
+		testaLogin();
 	}
 
 	public function index(){
@@ -59,5 +62,21 @@ class Instituicoes extends CI_Controller{
 		$this->load->view('templates/menu', $dados);
 		$this->load->view('instituicoes', $dados);
 		$this->load->view('templates/footer', $dados);
+	}
+
+	public function categorias(){
+		$dados["css"]  = "painel.css";
+		$dados["js"]  = "categorias.js";
+
+		$this->load->model('Usuario_model', 'user');
+		$dados["usuario"] = $this->user->selecionaUsuario($this->session->userdata('user_id'), TRUE);
+
+		$this->load->model('Categoria_model', 'cat');
+		$dados["categorias"] = $this->cat->buscaCategorias();
+
+		$this->load->view('templates/head', $dados);
+		$this->load->view('templates/menu', $dados);
+		$this->load->view('categorias', $dados);
+		$this->load->view('templates/footer');
 	}
 }

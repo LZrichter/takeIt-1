@@ -20,8 +20,10 @@
                 <? if($tipo_usuario == 'Pessoa'): ?>
                     <li id="notificacao">
                         <button class="btn btn-lg btn-link">
-                            <span class="fa fa-bell notify-bell"></span>
-                            <span class="badge badge-notify">3</span>
+                            <a href="<?= base_url();?>Doacoes/notificacao">
+                                <span class="fa fa-bell notify-bell"></span>
+                                <span class="badge badge-notify">3</span>
+                            </a>
                         </button>
                     </li>
                 <? endif; ?>

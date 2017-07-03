@@ -281,7 +281,7 @@ class Item_model extends CI_Model {
 				if ($dados['categoria_id'] != 0) {
 					$sql .= " AND categoria_id = ".$dados['categoria_id'];
 				}
-				$sql .= " LIMIT ".(($dados['indice']-1)*30).", 30";
+				$sql .= " LIMIT ".(($dados['indice']-1)*2).", 2";
 
 				$sql2 = "SELECT count(*) as qtde FROM usuario u NATURAL JOIN item i WHERE cidade_id = ".$dados['cidade_id']." AND (item_status = 'Disponível' OR item_status = 'Solicitado') AND item_descricao LIKE '%".$dados['busca']."%' AND u.usuario_id <> ".$dados['usuario_id'];
 				if ($dados['categoria_id'] != 0) {
@@ -318,7 +318,7 @@ class Item_model extends CI_Model {
 							return array("tipo" => "erro", "msg" => $this->db->_error_message());
 						}
 					} else {
-						$result["paginas_qtde"] = floor($query->result()[0]->qtde / 30 + 1);
+						$result["paginas_qtde"] = floor($query->result()[0]->qtde / 2 + $query->result()[0]->qtde % 2);
 						return $result;
 					}
 

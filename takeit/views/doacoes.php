@@ -72,7 +72,7 @@
 	 			<?php if ($this->session->userdata['indice'] == $count) { ?>
 	 				<li class="active"><a href="doacoes/index/<?= $count ?>"><?=$count?></a></li>
 	 			<?php } else { ?>
-	 				<li><a href="doacoes/index/<?= $count ?>"><?=$count?></a></li>
+	 				<li><a href="<?= base_url() ?>doacoes/index/<?= $count ?>"><?=$count?></a></li>
 	 			<?php } ?>
 	 		<? } ?>
 	 	</ul>

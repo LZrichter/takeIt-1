@@ -61,7 +61,7 @@
 	 	<ul class="pagination">
 	 		<? for($count = 1; $count <= $itens["paginas_qtde"]; $count++){ ?>
 	 			<?php if ($this->session->userdata['indice'] == $count) { ?>
-	 				<li class="active"><?=$count?></li>
+	 				<li class="active"><a href="doacoes/index/<?= $count ?>"><?=$count?></a></li>
 	 			<?php } else { ?>
 	 				<li><a href="doacoes/index/<?= $count ?>"><?=$count?></a></li>
 	 			<?php } ?>

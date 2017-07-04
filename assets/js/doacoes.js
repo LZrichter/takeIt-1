@@ -7,7 +7,7 @@ function interesse(OBJ, item_id){
 					acao: 	 "adicionar" },
 			dataType: "json",
 			success: function(data){
-				if(data["tipo"] == "erro" && data["campo"]){
+				if(data["tipo"] == "erro"){
 					mensagem(data["tipo"], data["msg"], "mensagem");
 					$("#div_mensagem").show();
 				}else{
@@ -28,13 +28,13 @@ function interesse(OBJ, item_id){
 					acao: 	 "remover" },
 			dataType: "json",
 			success: function(data){
-				if(data["tipo"] == "erro" && data["campo"]){
+				if(data["tipo"] == "erro"){
 					mensagem(data["tipo"], data["msg"], "mensagem");
 					$("#div_mensagem").show();
 				}else{
 					OBJ.className = "btn btn-danger btn-sm";
 					OBJ.innerHTML = "<i class='fa fa-heart'></i> Manifestar interesse";
-					OBJ.value 	  = "manifestar";
+					OBJ.value 	  = "a";
 				}
 			},
 			error: function(data){

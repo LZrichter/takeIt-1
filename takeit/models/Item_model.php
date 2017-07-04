@@ -277,11 +277,12 @@ class Item_model extends CI_Model {
         		!isset($dados["busca"]) || !isset($dados["usuario_id"])){
 				return array( "tipo" => "erro", "msg" => "Informação insuficiente para executar a consulta.");
 			} else {
+				$limite = 30;
 				$sql = "SELECT item_id, item_descricao, item_qtde, (SELECT imagem_caminho FROM imagem WHERE imagem.item_id = i.item_id LIMIT 1) AS imagem_caminho, (SELECT imagem_nome FROM imagem WHERE imagem.item_id = i.item_id LIMIT 1) AS imagem_nome, (SELECT count(*) FROM interesse WHERE interesse.item_id = i.item_id and interesse.usuario_id = ".$dados['usuario_id'].") as interessado FROM usuario u NATURAL JOIN item i WHERE cidade_id = ".$dados['cidade_id']." AND (item_status = 'Disponível' OR item_status = 'Solicitado') AND item_descricao LIKE '%".$dados['busca']."%' AND u.usuario_id <> ".$dados['usuario_id'];
 				if ($dados['categoria_id'] != 0) {
 					$sql .= " AND categoria_id = ".$dados['categoria_id'];
 				}
-				$sql .= " LIMIT ".(($dados['indice']-1)*2).", 2";
+				$sql .= " LIMIT ".(($dados['indice']-1)*$limite).", ".$limite;
 
 				$sql2 = "SELECT count(*) as qtde FROM usuario u NATURAL JOIN item i WHERE cidade_id = ".$dados['cidade_id']." AND (item_status = 'Disponível' OR item_status = 'Solicitado') AND item_descricao LIKE '%".$dados['busca']."%' AND u.usuario_id <> ".$dados['usuario_id'];
 				if ($dados['categoria_id'] != 0) {
@@ -304,21 +305,20 @@ class Item_model extends CI_Model {
 							}
 							$count++;
 						}
-						
 					}
 
 				}catch(Exception $E){
-					return array("tipo" => "erro", "msg" => "Erro inexperado ao realizar a consulta, por favor tenta mais tarde!!!");
+					return array("tipo" => "erro", "msg" => "Erro inexperado ao realizar a consulta, por favor tente mais tarde!");
 				}
 
 				try{
-
 					if(!$query = $this->db->query($sql2)){
 						if($this->db->error()){
 							return array("tipo" => "erro", "msg" => $this->db->_error_message());
 						}
 					} else {
-						$result["paginas_qtde"] = floor($query->result()[0]->qtde / 2 + $query->result()[0]->qtde % 2);
+						$sum = (($query->result()[0]->qtde % $limite == 0) ? 0 : 1);
+						$result["paginas_qtde"] = floor($query->result()[0]->qtde/$limite + $sum);
 						return $result;
 					}
 

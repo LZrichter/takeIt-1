@@ -165,17 +165,27 @@ class Interesse_model extends CI_Model{
 			return ["tipo" => "erro", "msg" => "Parâmetros insuficientes para executar a função."];
 
 		try{
-			$this->db->trans_begin();
-			$sql = "DELETE FROM interesse WHERE item_id = ".$this->db->escape($item_id)." AND usuario_id = ".$this->db->escape($user_id);
-			
-			if(!$query = $this->db->query($sql)){
-				if($error = $this->db->error()){
-					$this->db->trans_rollback();
-					return ["tipo" => "erro", "msg" => "Não foi possivel remover seu interesse"];
+			$sql = "SELECT chat_id FROM chat c JOIN interesse i ON i.interesse_id = c.interesse_id
+					WHERE item_id = ".$this->db->escape($item_id)." AND usuario_id = ".$this->db->escape($user_id);
+			if($query = $this->db->query($sql)){
+				if(count($query->result())>0){
+					return ["tipo" => "erro", "msg" => "Você já iniciou um chat a partir desse item. Seu interesse não pode ser removido"];
+				}else{
+					$this->db->trans_begin();
+					$sql = "DELETE FROM interesse WHERE item_id = ".$this->db->escape($item_id)." AND usuario_id = ".$this->db->escape($user_id);
+					
+					if(!$query = $this->db->query($sql)){
+						if($error = $this->db->error()){
+							$this->db->trans_rollback();
+							return ["tipo" => "erro", "msg" => "Não foi possivel remover seu interesse"];
+						}
+					}else{
+						$this->db->trans_commit();
+						return ["tipo" => "sucesso"];
+					}
 				}
 			}else{
-				$this->db->trans_commit();
-				return ["tipo" => "sucesso"];
+				return ["tipo" => "erro", "msg" => "Desculpe, erro inesperado no sistema. Por favor, contato o suporte!"];
 			}
 
 		}catch(PDOException $PDOE){

@@ -1,5 +1,3 @@
-<main id="mainItem" class="footer-align">
-
 <? if($_SESSION['user_id'] == $item[0]["usuario_id"]): ?>
 	<ul class="breadcrumb">
 	  <li><a href="/painel">Meu Painel</a></li>
@@ -12,6 +10,7 @@
 	  <li><a href="#">Item</a></li>
 	</ul>
 <? endif; ?>
+<main id="mainItem" class="footer-align">
 <div class="container">
 	<div class="row">
 	  	<div class="panel panel-default">
@@ -58,6 +57,7 @@
 				<div class="col-sm-6 col-md-6 col-lg-8">
 					<div class="center-block text-left">
 						<p><strong>Quantidade:</strong> <?= $item[0]["item_qtde"] ?></p>
+						<p><strong>Categoria:</strong> <?= $categoria[0]["categoria_nome"] ?></p>
 						<p>	
 							<strong>Doador: </strong>
 							<a href="/Usuario/visualizar/<?= $dadosDoador['id'];?>"><?= $dadosDoador['nome'] ?> <span class="fa fa-external-link"></span></a>

@@ -4,15 +4,15 @@
 </ul>
 
 <div class="container footer-align" id="main">
-	<div class="row">
+	<div class="row" id="mainUser">
 	  	<div class="panel panel-default">
 	  		<div class="panel-heading text-center">
 	  			<h2><span class="fa fa-archive"></span> Perfil de usuário</h2>
 	  		</div>
-	  		<div class="panel-body">
+	  		<div class="panel-body info-perfil">
 	  			<div class="row">
 		  			<div class="col-sm-6 col-md-6 col-lg-4 text-center">
-		  				<img id="perfil_img" src="<?=($usuario['imagem_id'])?base_url().$usuario['imagem_caminho'].'/'.$usuario['imagem_nome']:base_url().'/assets/img/painel_perfil.png'?>" alt="Foto do usuário">
+		  				<img id="info-img" src="<?=($usuario['imagem_id'])?base_url().$usuario['imagem_caminho'].'/'.$usuario['imagem_nome']:base_url().'/assets/img/painel_perfil.png'?>" alt="Foto do usuário">
 		  			</div>
 					<div class="col-sm-6 col-md-6 col-lg-8">
 						<div class="center-block text-left">
@@ -22,7 +22,7 @@
 							<? if($usuario['nivel']=='Instituição'): ?>
 						  	  	<p><strong>Endereço: </strong><?= $usuario["endereco"] ?></p>
 						  	  	<p>
-						  	  		<strong>Número: </strong><?= $usuario["numero"] ?> | <?= $usuario["complemento"] ?>
+						  	  		<strong>Número: </strong><?= $usuario["numero"] ?> <?= $usuario["complemento"] ?>
 						  	  		<strong>Bairro: </strong><?= $usuario["bairro"] ?>
 						  	  	</p>
 						  	  	<p><strong><a href="http://<?= $usuario["instituicao_site"] ?>" target="_blank"><?= $usuario["instituicao_site"] ?></a></strong></p>
@@ -41,12 +41,14 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-10 col-md-offset-1 text-center" id="agradecimentos">
-						<hr>
-						<h4>Agradecimentos para o usuario</h4>
+				<? if($usuario['nivel']=='Pessoa'): ?>
+					<div class="row">
+						<div class="col-md-10 col-md-offset-1 text-center" id="agradecimentos">
+							<hr>
+							<h4><strong>Agradecimentos para o usuario</strong></h4>
+						</div>
 					</div>
-				</div>
+				<? endif; ?>
 	  		</div>
 	  		<div class="panel-footer text-center">
 	  			<button id="btn-reportar" class="btn btn-danger" data-toggle="popover" ><span class="fa fa-flag"></span> Reportar Usuário</button>

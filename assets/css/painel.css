@@ -10,6 +10,11 @@ textarea {
   max-width: 602px;
 }
 
+#mainUser {
+    margin-top: 20px;
+    padding: 5px;
+}
+
 #div_mensagem {
   display: none;
 }
@@ -88,6 +93,18 @@ textarea {
     padding-left: 0px;
 }
 
+.info-perfil {
+  font-size: 14pt;
+}
+
+#info-img {
+    max-width: 250px;
+    max-height: 250px;
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+}
+
 #perfil_img {
     max-width: 150px;
     max-height: 150px;
@@ -102,7 +119,7 @@ textarea {
 }
 
 .left-recebidos > div{
-    padding: 15px;
+    padding: 5px 15px;
 }
 
 .left-recebidos > div > p {
@@ -110,7 +127,7 @@ textarea {
 }
 
 .right-recebidos {
-    height: 185px;
+    height: 165px;
     display: flex;
     align-items: center;
 }

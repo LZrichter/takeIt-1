@@ -71,8 +71,8 @@ class Doacoes extends CI_Controller{
 		$dados["css"]    = "item.css";
 		$dados["js"]    = "item.js";
 
-
 		$dados["item"] = $this->IM->buscaItemPorId($id);
+		$dados["categoria"] = $this->CM->buscaCategoriaPorId($dados["item"][0]["categoria_id"]);;
 		$dados["imagens"] = $this->IMG->buscaImagensPorItem($id);
 		$dados["user_id"] = $this->session->userdata('user_id');
 

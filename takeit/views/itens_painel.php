@@ -68,7 +68,6 @@
 									</div>
 									<? if(isset($instituicoes_interessadas) && count($instituicoes_interessadas[$i]) > 0): ?>
 										<div class="text-center"><a href="/instituicoes/intituicoesInteressadas/<?= $i ?>"> Existem <p class="badge" style="font-size: 10px; margin-bottom: 0px"><?= count($instituicoes_interessadas[$i]) ?></p> Instituições interessadas nessa categoria de item.</a></div>
-										</div>
 									<? endif; ?>
 								</div>
 							</div>
@@ -83,7 +82,8 @@
 					</div>
 				<? endif;?>
 			</div>
-		</div>	
+			<div class="panel-footer text-center"></div>
+		</div>
 	</div>
 </div>
 

@@ -1,0 +1,1 @@
+ALTER TABLE `interesse` ADD COLUMN `chat_bloqueado` TINYINT(1) NULL DEFAULT '0' AFTER `chat_lst_msg_beneficiario`;

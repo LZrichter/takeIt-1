@@ -81,7 +81,7 @@ class Chat_model extends CI_Model{
 	 */
 	public function salvaMensagem($msg, int $idInteresse, $tipoPessoa){
 		if(!isset($msg) || empty(trim($msg)) || !isset($idInteresse) || !isset($tipoPessoa))
-			return array("tipo" => "erro", "msg" => "Sem informações suficientes para mandar a mensagem, tente novamente mais tarde.");
+			return ["tipo" => "erro", "msg" => "Sem informações suficientes para mandar a mensagem, tente novamente mais tarde."];
 
 		try{
 			$data = date('Y-m-d H:i:s');
@@ -226,7 +226,7 @@ class Chat_model extends CI_Model{
 				$i = 0;
 				while($i<count($query->result())){
 					$res = $query->result()[$i];
-					
+
 					$dados[$res->interesse_id] = [
 						"usuario_id" => $res->usuario_id,
 						"num" 		 => $res->num
@@ -237,6 +237,30 @@ class Chat_model extends CI_Model{
 
 				return $dados;
 			}
+		}catch(PDOException $PDOE){
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+		}catch(Exception $NE){
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
+		}
+
+		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
+	}
+
+	/**
+	 * Cancela um bate-papo
+	 * @param  int $idInteresse   ID do interesse do baate-papo
+	 * @return array              Array com a resposta
+	 */
+	public function cancelarBatePapo($idInteresse){
+		if(!isset($idInteresse))
+			return ["tipo" => "erro", "msg" => "Informação insufuciente para realizar a atualização."];
+
+		try{
+			$sql = "UPDATE interesse SET chat_bloqueado = 1 WHERE interesse_id = $idInteresse";
+
+			if(!$query = $this->db->query($sql))
+				return ["tipo" => "erro", "msg" => "Não foi possivel cancelar o bate-papo."];
+			else return ["tipo" => "sucesso", "msg" => "OK"];
 		}catch(PDOException $PDOE){
 			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
 		}catch(Exception $NE){

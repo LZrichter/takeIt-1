@@ -187,6 +187,11 @@ class Interesse_model extends CI_Model{
 		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
 	}
 
+	/**
+	 * Busca todos os dados relacionado ao interesse
+	 * @param  int $idInteresse ID do interesse
+	 * @return array            Array com os dados
+	 */
 	public function selecionaInteresse($idInteresse){
 		if(!isset($idInteresse) || empty(trim($idInteresse)))
 			return array("tipo" => "erro", "msg" => "Informação insuficiente para executar a consulta.");

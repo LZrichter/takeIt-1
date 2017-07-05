@@ -168,7 +168,13 @@ class Chat extends CI_Controller{
 				"quantidade" => $dados["qtde_itens"],
 				"interesse_id" => $dados["interesse_id"],
 				"agradecimento" => ""
-			]) === true) echo json_encode(["tipo" => "sucesso", "msg" => "OK"]);
+			]) === true){
+				$qtde_doada_nova = $this->doacao->qtdeDoadaItem($dados["item_id"]);
+				if($qtde_doada_nova == $item[0]["item_qtde"])
+					$this->item->alteraStatusItemPorId($dados["item_id"], "Doado");
+
+				echo json_encode(["tipo" => "sucesso", "msg" => "OK"]);	
+			}
 			else echo json_encode($resposta);
 		}else echo json_encode(["tipo" => "erro", "msg" => "Não possui itens suficientes!"]);
 	}

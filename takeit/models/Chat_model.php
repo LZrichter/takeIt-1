@@ -41,7 +41,7 @@ class Chat_model extends CI_Model{
 					WHERE interesse_id = $idInteresse $where_flag_chat
 					ORDER BY chat_id DESC
 					LIMIT $limite_inicial, $limite_final
-				) X
+				) x
 				ORDER BY x.chat_id ASC
 			";
 

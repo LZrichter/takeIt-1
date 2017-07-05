@@ -22,7 +22,7 @@
                         <button class="btn btn-lg btn-link">
                             <a href="<?= base_url();?>Painel/notificacao">
                                 <span class="fa fa-bell notify-bell"></span>
-                                <span id="badge" class="badge badge-notify"></span>
+                                <span id="badge" class="badge badge-notify">0</span>
                             </a>
                         </button>
                     </li>

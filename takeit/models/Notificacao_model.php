@@ -18,8 +18,11 @@ class Notificacao_model extends CI_Model {
 	 *				"notificacao_id" => "",
 	 *				"notificacao_tipo" => "",
 	 *				"notificacao_lida" => "",
+	 *				"interesse_id" => "",
 	 *				"usuario_id" => "",
 	 *				"usuario_nome" => "",
+	 *				"usuario_id_interesse" => "",
+	 *				"usuario_nome_interesse" => "",
 	 *				"item_id" => "",
 	 *				"item_descricao" => ""
 	 *			),
@@ -34,8 +37,10 @@ class Notificacao_model extends CI_Model {
 
 		try{
 
-			$sql = "SELECT notificacao_id, notificacao_tipo, notificacao_lida, it.usuario_id, u.usuario_nome, it.item_id, it.item_descricao 
-			FROM notificacao NATURAL JOIN interesse i JOIN item it JOIN usuario u
+			$sql = "SELECT notificacao_id, notificacao_tipo, notificacao_lida, i.interesse_id, it.usuario_id, 
+			u.usuario_nome, u2.usuario_id AS usuario_id_interesse, u2.usuario_nome AS usuario_nome_interesse, 
+			it.item_id, it.item_descricao 
+			FROM notificacao NATURAL JOIN interesse i NATURAL JOIN usuario u2 JOIN item it JOIN usuario u
 			WHERE it.item_id = i.item_id AND it.usuario_id = u.usuario_id
 			AND i.usuario_id = ".$this->db->escape($idUsuario);
 
@@ -51,6 +56,7 @@ class Notificacao_model extends CI_Model {
 					foreach ($row as $campo => $valor) {
 						$result[$count][$campo] = $valor;
 					}
+					
 					$count++;
 				}
 				return $result;
@@ -80,7 +86,7 @@ class Notificacao_model extends CI_Model {
 			} else if (empty($query->result())) {
 				return array("Error" => "No data found");
 			} else {
-				
+
 				$result["paginas_qtde"] = $query->result()[0]->qtde;
 				
 				return $result;

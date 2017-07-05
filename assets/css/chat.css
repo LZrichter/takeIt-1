@@ -194,3 +194,7 @@
 #centro_mensagens > div:focus{
 	outline: none;
 }
+
+.mudanca-button-doacao{
+    margin: 0 4px 0 3px !important;
+}

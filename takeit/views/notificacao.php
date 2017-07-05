@@ -18,7 +18,12 @@
 					case 'doacao_adquirida': ?>
 						<div class="alert <?= $row["notificacao_lida"]==1?"alert-default":"alert-success" ?>">
 							<strong>Doação Adquirida!</strong> O item "<?= $row["item_descricao"] ?>", pelo qual você estava interessado foi doado para você.<br/>
-							<a class="btn btn-success" data-toggle='modal' data-target='#modalAgradecimento'><i class="fa fa-heart-o"></i> Agradecer</a>
+							<a class="btn btn-success" id="agradecer" 
+								data-toggle='modal' 
+								data-target='#modalAgradecimento'
+								data-interesse='<?= $row['interesse_id'] ?>'
+							><i class="fa fa-heart-o"></i> Agradecer
+							</a>
 							<a href="/chat/<?= arrumaString($notificacoes[$count]['item_descricao']) . "-" . $notificacoes[$count]['item_id']; ?>" class="btn btn-primary"><i class="fa fa-comments-o"></i> Abrir Chat</a>
 						</div>
 						<?php break;
@@ -63,15 +68,13 @@
 
 		            <div class="modal-body">
 		           		<h4>Escreva uma mensagem para agradecer a doação!</h4>
-		           		
-		           		<textarea class="form-control" rows="10" id="agradecimento" name="agradecimento" required></textarea>
+		           		<form method="post" id="formAgradecimento">
+		           			<textarea class="form-control" rows="10" id="agradecimento" name="agradecimento" required></textarea>
 		                
-		                <div class="modal-footer">
-		                    <form method="post" action="produtosCRUD.php">
-			                    <button type="button" class="btn btn-success" data-dismiss="modal">Enviar</button>
-		                    </form>
-		                </div>
-		                
+			                <div class="modal-footer">  
+				                <button type="button" class="btn btn-success" data-dismiss="modal">Enviar</button>
+			                </div>
+		                </form>
 		        	</div>
 		    	</div>
 		    </div>

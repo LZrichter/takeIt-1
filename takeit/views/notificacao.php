@@ -39,18 +39,16 @@
 						<?php break;
 					case 'nova_mensagem': ?>
 						<div class="alert <?= $row["notificacao_lida"]==1?"alert-default":"alert-info" ?>">
-							<strong>Nova Mensagem!</strong> O usuário "<?= $row["usuario_nome"] ?>" te mandou uma nova mensagem sobre o item "<?= $row["item_descricao"] ?>".<br />
+							<strong>Nova Mensagem!</strong> O usuário "<? echo $row["usuario_nome"] == $this->session->userdata('user_name') ? $row["usuario_nome_interesse"]:  $row["usuario_nome"]; ?>" te mandou uma nova mensagem sobre o item "<?= $row["item_descricao"] ?>".<br />
 							<a href="#" class="btn btn-primary"><i class="fa fa-comments-o"></i> Abrir Chat</a>
 							<a href="<?= base_url();?>doacoes/item/<?=$row["item_id"]?>" class="btn btn-warning"><i class="fa fa-external-link"></i> Abrir Página do Produto</a>
-							<br/><strong>Modificar a consulta desse aki para exibir o nome do usuário que enviou a mensagem não o usuário que cadastrou o item!</strong>
 						</div>
 						<?php break;
 					case 'novo_interessado': ?>
 						<div class="alert <?= $row["notificacao_lida"]==1?"alert-default":"alert-info" ?>">
-							<strong>Novo Interessado!</strong> O usuário "<?= $row["usuario_nome"] ?>" se interessou pelo item "<?= $row["item_descricao"] ?>" que você está doando.<br />
+							<strong>Novo Interessado!</strong> O usuário "<?= $row["usuario_nome_interesse"] ?>" se interessou pelo item "<?= $row["item_descricao"] ?>" que você está doando.<br />
 							<a href="#" class="btn btn-primary"><i class="fa fa-comments-o"></i> Abrir Chat</a>
 							<a href="<?= base_url();?>doacoes/item/<?=$row["item_id"]?>" class="btn btn-warning"><i class="fa fa-external-link"></i> Abrir Página do Produto</a>
-							<br/><strong>Modificar a consulta desse aki para exibir o nome do usuário que se interessou não o usuário que cadastrou o item!</strong>
 						</div>
 						<?php break;
 				}

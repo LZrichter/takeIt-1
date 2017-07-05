@@ -61,4 +61,34 @@ class Notificacao_model extends CI_Model {
 		}
 	}
 
+	/**
+	 * Busca no Banco de Dados a quantidade de notificações de um usuário e as retorna
+	 * @param 	$idUsuario
+	 * @return 	Quantidade ou mensagem de erro
+	 */
+	public function quantidadeDeNotificacoes($idUsuario){
+
+		try{
+
+			$sql = "SELECT COUNT(*) as qtde FROM notificacao NATURAL JOIN interesse i 
+			WHERE i.usuario_id = ".$this->db->escape($idUsuario);
+
+			if(!$query = $this->db->query($sql)){
+				if($this->db->error()){
+					return array("Error" => "$error[message]");
+				}
+			} else if (empty($query->result())) {
+				return array("Error" => "No data found");
+			} else {
+				
+				$result["paginas_qtde"] = $query->result()[0]->qtde;
+				
+				return $result;
+			}
+
+		} catch(Exception $E) {
+			return array("Error" => "Server was unable to execute query");
+		}
+	}	
+
 }

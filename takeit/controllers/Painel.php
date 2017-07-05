@@ -140,6 +140,30 @@ class Painel extends CI_Controller{
 		$this->load->view('templates/footer');
 	}
 
+	public function notificacao(){
+
+		$this->load->model('Notificacao_model', 'NM');
+
+		$dados["titulo"] = "Notificações";
+		$dados["css"] = "welcome.css";
+
+		$dados["notificacoes"] = $this->NM->buscaNotificacoes($this->session->userdata('user_id'));
+
+		$this->load->view('templates/head', $dados);
+		$this->load->view('templates/menu', $dados);
+		$this->load->view('notificacao', $dados);
+		$this->load->view('templates/footer');
+
+	}
+
+	public function getQuantidade(){
+
+		$this->load->model('Notificacao_model', 'NM');
+		$quantidade = $this->NM->quantidadeDeNotificacoes($this->session->userdata('user_id'));
+		echo( json_encode($quantidade) );
+
+	}
+
 	public function denuncias(){
 		if ($this->session->userdata('user_tipo') == 'Admin') {
 			

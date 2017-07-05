@@ -17,7 +17,7 @@
 					case 'doacao_adquirida': ?>
 						<div class="alert <?= $row["notificacao_lida"]==1?"alert-default":"alert-success" ?>">
 							<strong>Doação Adquirida!</strong> O item "<?= $row["item_descricao"] ?>", pelo qual você estava interessado foi doado para você.<br/>
-							<a class="btn btn-success" href="#"><i class="fa fa-heart-o"></i> Agradecer</a>
+							<a class="btn btn-success" data-toggle='modal' data-target='#modalAgradecimento'><i class="fa fa-heart-o"></i> Agradecer</a>
 							<a href="#" class="btn btn-primary"><i class="fa fa-comments-o"></i> Abrir Chat</a>
 						</div>
 						<?php break;
@@ -34,7 +34,7 @@
 					case 'nova_mensagem': ?>
 						<div class="alert <?= $row["notificacao_lida"]==1?"alert-default":"alert-info" ?>">
 							<strong>Nova Mensagem!</strong> O usuário "<?= $row["usuario_nome"] ?>" te mandou uma nova mensagem sobre o item "<?= $row["item_descricao"] ?>".<br />
-							<a class="btn btn-success" href="#"><i class="fa fa-heart-o"></i> Agradecer</a>
+							<a href="#" class="btn btn-primary"><i class="fa fa-comments-o"></i> Abrir Chat</a>
 							<a href="<?= base_url();?>doacoes/item/<?=$row["item_id"]?>" class="btn btn-warning"><i class="fa fa-external-link"></i> Abrir Página do Produto</a>
 							<br/><strong>Modificar a consulta desse aki para exibir o nome do usuário que enviou a mensagem não o usuário que cadastrou o item!</strong>
 						</div>
@@ -50,6 +50,29 @@
 				}
 			}
 		} ?>
+		<div class="modal fade" id="modalAgradecimento" tabindex="-1" role="dialog" aria-labelledby="label">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
 
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		                <h3 class="modal-title" id="label"><strong>Agradecer Doação</strong></h3>
+		            </div>
+
+		            <div class="modal-body">
+		           		<h4>Escreva uma mensagem para agradecer a doação!</h4>
+		           		
+		           		<textarea class="form-control" rows="10" id="agradecimento" name="agradecimento" required></textarea>
+		                
+		                <div class="modal-footer">
+		                    <form method="post" action="produtosCRUD.php">
+			                    <button type="button" class="btn btn-success" data-dismiss="modal">Enviar</button>
+		                    </form>
+		                </div>
+		                
+		        	</div>
+		    	</div>
+		    </div>
+		</div>
 	</div>
 </main>

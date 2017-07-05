@@ -19,3 +19,16 @@ function mensagem(tipo, msg, nome_objeto){
 		$("#" + nome_objeto).append('<div class="alert alert-success alert-dismissable fade in"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + msg + '</div>');
 	}else $("#" + nome_objeto).html(msg);
 }
+
+$(document).ready(function() {
+    $.ajax({
+		url: '/Painel/getQuantidade',
+		type: 'POST',
+		dataType: "json"
+	}).done(function(data) {
+			$('#badge').text(data['paginas_qtde']);
+			console.log(data['paginas_qtde']);
+	}).fail(function() {
+			console.log("error");
+	});
+});

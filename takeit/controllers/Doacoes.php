@@ -15,7 +15,6 @@ class Doacoes extends CI_Controller{
 		$this->load->model('Item_model', 'IM');
 		$this->load->model('Imagem_model', 'IMG');
 		$this->load->model('usuario_model', 'UM');
-		$this->load->model('Notificacao_model', 'NM');
 
 	}
 
@@ -48,20 +47,6 @@ class Doacoes extends CI_Controller{
 		$this->load->view('templates/menuDoacoes', $dados);
 		$this->load->view('doacoes', $dados);
 		$this->load->view('templates/footer');
-	}
-
-	public function notificacao(){
-
-		$dados["titulo"] = "Notificações";
-		$dados["css"] = "welcome.css";
-
-		$dados["notificacoes"] = $this->NM->buscaNotificacoes($this->session->userdata('user_id'));
-
-		$this->load->view('templates/head', $dados);
-		$this->load->view('templates/menu', $dados);
-		$this->load->view('notificacao', $dados);
-		$this->load->view('templates/footer');
-
 	}
 	
 	public function item($id = NULL){
@@ -407,7 +392,13 @@ class Doacoes extends CI_Controller{
 	}
 
 	public function setSessaoCategoria($idCategoria){
-		$this->session->set_userdata("categoria", $idCategoria);
+		if($idCategoria == $this->session->userdata('categoria')){
+			$this->session->set_userdata("categoria", 0);
+		} else {
+			$this->session->set_userdata("categoria", $idCategoria);
+		}
+		
+		
 		echo( json_encode($idCategoria) );
 	}
 

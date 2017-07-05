@@ -20,7 +20,7 @@ function mensagem(tipo, msg, nome_objeto){
 	}else $("#" + nome_objeto).html(msg);
 }
 
-$(document).ready(function() {
+$(document).ready(setTimeout(function() {
     $.ajax({
 		url: '/Painel/getQuantidade',
 		type: 'POST',
@@ -31,4 +31,4 @@ $(document).ready(function() {
 	}).fail(function() {
 			console.log("error");
 	});
-});
+}, 2000));

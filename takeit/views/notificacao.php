@@ -12,13 +12,14 @@
 					</div>
 			</div>';
 		} else {
+			$count = 0;
 			foreach ($notificacoes as $row) {
 				switch ($row["notificacao_tipo"]) {
 					case 'doacao_adquirida': ?>
 						<div class="alert <?= $row["notificacao_lida"]==1?"alert-default":"alert-success" ?>">
 							<strong>Doação Adquirida!</strong> O item "<?= $row["item_descricao"] ?>", pelo qual você estava interessado foi doado para você.<br/>
 							<a class="btn btn-success" data-toggle='modal' data-target='#modalAgradecimento'><i class="fa fa-heart-o"></i> Agradecer</a>
-							<a href="#" class="btn btn-primary"><i class="fa fa-comments-o"></i> Abrir Chat</a>
+							<a href="/chat/<?= arrumaString($notificacoes[$count]['item_descricao']) . "-" . $notificacoes[$count]['item_id']; ?>" class="btn btn-primary"><i class="fa fa-comments-o"></i> Abrir Chat</a>
 						</div>
 						<?php break;
 					case 'doacao_perdida': ?>
@@ -48,6 +49,7 @@
 						</div>
 						<?php break;
 				}
+				$count++;
 			}
 		} ?>
 		<div class="modal fade" id="modalAgradecimento" tabindex="-1" role="dialog" aria-labelledby="label">

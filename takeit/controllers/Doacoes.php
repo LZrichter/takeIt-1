@@ -15,6 +15,7 @@ class Doacoes extends CI_Controller{
 		$this->load->model('Item_model', 'IM');
 		$this->load->model('Imagem_model', 'IMG');
 		$this->load->model('usuario_model', 'UM');
+
 	}
 
 	public function index($indice = 1){
@@ -55,8 +56,8 @@ class Doacoes extends CI_Controller{
 		$dados["css"]    = "item.css";
 		$dados["js"]    = "item.js";
 
-
 		$dados["item"] = $this->IM->buscaItemPorId($id);
+		$dados["categoria"] = $this->CM->buscaCategoriaPorId($dados["item"][0]["categoria_id"]);;
 		$dados["imagens"] = $this->IMG->buscaImagensPorItem($id);
 		$dados["user_id"] = $this->session->userdata('user_id');
 
@@ -338,7 +339,7 @@ class Doacoes extends CI_Controller{
 		 	);
 
 		 	if ($result) {
-		 		echo json_encode(["tipo" => "sucesso", "msg" => "Sua Denúncia foi reportada ao Administrador para uma avaliação. Obrigado por nos ajudar <3"]); 
+		 		echo json_encode(["tipo" => "sucesso", "msg" => "Sua Denúncia foi reportada ao Administrador para uma avaliação. Obrigado por ajudar <span class='fa fa-heart'></span> "]); 
 		 	}else{
 		 		echo json_encode($result);
 		 	}
@@ -363,6 +364,20 @@ class Doacoes extends CI_Controller{
 
 		echo json_encode($resposta);
 		return;
+	}
+
+	public function agradecimentoAjax(){
+		if (isset($_POST['id_interesse'])){
+			
+			$this->load->model("Doacao_model", "DM");
+			
+			$return = $this->DM->agradecerDoacao($_POST['id_interesse']);
+			
+			if($return)
+				echo json_encode(["tipo" => "sucesso", "msg" => "Seu agradecimento foi realizado com sucesso! "]);
+			else
+				echo json_encode($return);
+		}
 	}
 
 	public function carregaEstadosMenu(){
@@ -391,7 +406,13 @@ class Doacoes extends CI_Controller{
 	}
 
 	public function setSessaoCategoria($idCategoria){
-		$this->session->set_userdata("categoria", $idCategoria);
+		if($idCategoria == $this->session->userdata('categoria')){
+			$this->session->set_userdata("categoria", 0);
+		} else {
+			$this->session->set_userdata("categoria", $idCategoria);
+		}
+		
+		
 		echo( json_encode($idCategoria) );
 	}
 

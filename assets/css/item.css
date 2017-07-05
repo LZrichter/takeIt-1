@@ -1,14 +1,10 @@
-.breadcrumb {
-  margin-top: 0px !important;
-}
-
 .add-img {
     width: 100px;
     cursor: pointer;
 }
 
 #mainItem {
-    margin-top: 60px;
+    margin-top: 20px;
     padding: 5px;
 }
 

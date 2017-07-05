@@ -1,4 +1,4 @@
-<div id="main">
+<div id="main" class="footer-align">
 	<ul class="breadcrumb">
 	  <li><a href="/doacoes">Doações</a></li>
 	  <li><a href="#">Instituições Beneficientes</a></li>
@@ -36,12 +36,12 @@
 				                <td><?= isset($campos["usuario_nome"]) ? $campos["usuario_nome"] : $campos["nome"]; ?></td>
 				                <td><?= $campos["cidade_nome"]; ?></td>
 				                <td><?= $campos["estado_uf"]; ?></td>
-				                <td><a class="btn btn-success" href="/Usuario/visualizar/<?= $campos['usuario_id'] ?>">Ver Perfil</a></td>
+				                <td><a class="btn btn-success" href="/Usuario/visualizar/<?= isset($campos['usuario_id']) ? $campos['usuario_id'] : $campos['id'] ?>">Ver Perfil</a></td>
 				            </tr>							
 						<? } ?>
 			        </tbody>
 				</table>
 			</div>
-		</div>
 		<? } ?>
+	</div>
 </div>

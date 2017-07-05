@@ -28,7 +28,7 @@
 							  	<div class="form-group">
 							  	  	<label for="select_categoria" class="col-xs-3 col-sm-2 col-md-2 control-label">Categoria</label>
 							  	  	<div class="col-xs-5 col-sm-7 col-md-7" id="div_select">
-							  	  	  	<select class="form-control" name="categoria[]" id="select_categoria">
+							  	  	  	<select class="form-control" name="categoria[]" id="select_categoria" onchange="verificaCategoria(this);">
 							  	  	  		<? if(isset($categorias)){ ?>
 							  	  	  			<option selected="true" disabled="true" value="0">Selecione...</option>
 												<? foreach ($categorias as $n => $val){ ?>

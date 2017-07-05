@@ -1,0 +1,83 @@
+<main id="mainLogin" class="footer-align">
+	<div class="container">
+		<?php echo "<pre>"; print_r($notificacoes); echo "</pre>";?>
+
+		<?php if (isset($notificacoes['Error'])) {
+			echo '<div class="panel-body">
+				<div class="alert alert-warning text-center">
+						<div class="row">
+							<div class="col-md-6 col-md-offset-3"><h3>Parece que você não possui nenhuma notificação.</h3>					
+							</div>
+						</div>
+					</div>
+			</div>';
+		} else {
+			$count = 0;
+			foreach ($notificacoes as $row) {
+				switch ($row["notificacao_tipo"]) {
+					case 'doacao_adquirida': ?>
+						<div class="alert <?= $row["notificacao_lida"]==1?"alert-default":"alert-success" ?>">
+							<strong>Doação Adquirida!</strong> O item "<?= $row["item_descricao"] ?>", pelo qual você estava interessado foi doado para você.<br/>
+							<a class="btn btn-success" id="agradecer" 
+								data-toggle='modal' 
+								data-target='#modalAgradecimento'
+								data-interesse='<?= $row['interesse_id'] ?>'
+							><i class="fa fa-heart-o"></i> Agradecer
+							</a>
+							<a href="/chat/<?= arrumaString($notificacoes[$count]['item_descricao']) . "-" . $notificacoes[$count]['item_id']; ?>" class="btn btn-primary"><i class="fa fa-comments-o"></i> Abrir Chat</a>
+						</div>
+						<?php break;
+					case 'doacao_perdida': ?>
+						<div class="alert <?= $row["notificacao_lida"]==1?"alert-default":"alert-warning" ?>">
+							<strong>Doação Perdida!</strong> O item "<?= $row["item_descricao"] ?>", pelo qual você estava interessado foi doado para outro usuário.
+						</div>
+						<?php break;
+					case 'doacao_cancelada': ?>
+						<div class="alert <?= $row["notificacao_lida"]==1?"alert-default":"alert-warning" ?>">
+							<strong>Doação Perdida!</strong> O item "<?= $row["item_descricao"] ?>", pelo qual você estava interessado não está mais sendo doado.
+						</div>
+						<?php break;
+					case 'nova_mensagem': ?>
+						<div class="alert <?= $row["notificacao_lida"]==1?"alert-default":"alert-info" ?>">
+							<strong>Nova Mensagem!</strong> O usuário "<?= $row["usuario_nome"] ?>" te mandou uma nova mensagem sobre o item "<?= $row["item_descricao"] ?>".<br />
+							<a href="#" class="btn btn-primary"><i class="fa fa-comments-o"></i> Abrir Chat</a>
+							<a href="<?= base_url();?>doacoes/item/<?=$row["item_id"]?>" class="btn btn-warning"><i class="fa fa-external-link"></i> Abrir Página do Produto</a>
+							<br/><strong>Modificar a consulta desse aki para exibir o nome do usuário que enviou a mensagem não o usuário que cadastrou o item!</strong>
+						</div>
+						<?php break;
+					case 'novo_interessado': ?>
+						<div class="alert <?= $row["notificacao_lida"]==1?"alert-default":"alert-info" ?>">
+							<strong>Novo Interessado!</strong> O usuário "<?= $row["usuario_nome"] ?>" se interessou pelo item "<?= $row["item_descricao"] ?>" que você está doando.<br />
+							<a href="#" class="btn btn-primary"><i class="fa fa-comments-o"></i> Abrir Chat</a>
+							<a href="<?= base_url();?>doacoes/item/<?=$row["item_id"]?>" class="btn btn-warning"><i class="fa fa-external-link"></i> Abrir Página do Produto</a>
+							<br/><strong>Modificar a consulta desse aki para exibir o nome do usuário que se interessou não o usuário que cadastrou o item!</strong>
+						</div>
+						<?php break;
+				}
+				$count++;
+			}
+		} ?>
+		<div class="modal fade" id="modalAgradecimento" tabindex="-1" role="dialog" aria-labelledby="label">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		                <h3 class="modal-title" id="label"><strong>Agradecer Doação</strong></h3>
+		            </div>
+
+		            <div class="modal-body">
+		           		<h4>Escreva uma mensagem para agradecer a doação!</h4>
+		           		<form method="post" id="formAgradecimento">
+		           			<textarea class="form-control" rows="10" id="agradecimento" name="agradecimento" required></textarea>
+		                
+			                <div class="modal-footer">  
+				                <button type="button" class="btn btn-success" data-dismiss="modal">Enviar</button>
+			                </div>
+		                </form>
+		        	</div>
+		    	</div>
+		    </div>
+		</div>
+	</div>
+</main>

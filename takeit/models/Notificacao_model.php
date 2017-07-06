@@ -95,6 +95,33 @@ class Notificacao_model extends CI_Model {
 		} catch(Exception $E) {
 			return array("Error" => "Server was unable to execute query");
 		}
-	}	
+	}
+
+	/**
+	 * Marca as notificações já lidas de um usuário como lidas
+	 * @param 	$idUsuario
+	 * @return 	Boolean indicando o sucesso ou mensagem de erro
+	 */
+	public function marcaLidas($idUsuario){
+		try{
+
+			$sql = "UPDATE notificacao NATURAL JOIN interesse SET notificacao_lida = 1 
+			WHERE usuario_id = ".$this->db->escape($idUsuario);
+
+			if(!$query = $this->db->query($sql)){
+				if($this->db->error()){
+					return array("Error" => "$error[message]");
+				}
+			} else if (empty($query->result())) {
+				return array("Error" => "No data found");
+			} else {
+				
+				return true;
+			}
+
+		} catch(Exception $E) {
+			return array("Error" => "Server was unable to execute query");
+		}
+	}
 
 }

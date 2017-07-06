@@ -33,7 +33,7 @@ class Doacao_model extends CI_Model {
 				INSERT INTO doacao (doacao_qtde, doacao_data, interesse_id, doacao_agradecimento) 
 				VALUES (
 					".$this->db->escape($dados['quantidade']).",
-					".date('Y-m-d').",
+					'".date('Y-m-d')."',
 					".$this->db->escape($dados['interesse_id']).",
 					".$this->db->escape($dados['agradecimento'])."
 				)

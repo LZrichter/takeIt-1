@@ -20,7 +20,7 @@ function mensagem(tipo, msg, nome_objeto){
 	}else $("#" + nome_objeto).html(msg);
 }
 
-var alertas = setInterval(function(){ chama_alertas(); }, 60000);
+var alertas = setInterval(function(e){ e.preventDefault(); chama_alertas(); }, 5100);
 
 function chama_alertas(){
 	$.ajax({
@@ -28,7 +28,7 @@ function chama_alertas(){
 		type: 'POST',
 		dataType: "json"
 	}).done(function(data) {
-		$('#badge').text(data['paginas_qtde']);
+		$('.badge-notify').text(data['paginas_qtde']);
 	}).fail(function() {
 			
 	});

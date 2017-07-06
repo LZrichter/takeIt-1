@@ -43,9 +43,17 @@
 				</div>
 				<? if($usuario['nivel']=='Pessoa'): ?>
 					<div class="row">
-						<div class="col-md-10 col-md-offset-1 text-center" id="agradecimentos">
+						<div class="col-md-6 col-md-offset-3 text-center" id="agradecimentos">
 							<hr>
 							<h4><strong>Agradecimentos para o usuario</strong></h4>
+							<!-- ESSA É A DIV DE CADA AGRADECIMENTO -->
+							<div class="agradecimento">
+								<p>
+									<i class="fa fa-quote-left" aria-hidden="true"></i>
+									Olár, muito obrigado por ter doado o chinelo do Anthony para mim, agora vou poder andar por onde eu quiser! Deus lhe pague em muitos outros chinelos!
+									<i class="fa fa-quote-right" aria-hidden="true"></i>
+								</p>
+							</div>
 						</div>
 					</div>
 				<? endif; ?>

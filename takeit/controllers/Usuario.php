@@ -171,7 +171,7 @@ class Usuario extends CI_Controller{
 
 	public function visualizar($id = NULL){
 		$dados["css"]  = "painel.css";
-		$dados["js"]    = "item.js";
+		$dados["js"]   = "item.js";
 
 		$this->load->model('Usuario_model', 'user');
 		if($id == NULL)

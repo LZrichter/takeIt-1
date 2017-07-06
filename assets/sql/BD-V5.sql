@@ -373,6 +373,70 @@ ALTER TABLE `imagem` CHANGE `item_id` `item_id` INT(11) NULL;
 ALTER TABLE `interesse` ADD UNIQUE INDEX (`item_id`,`usuario_id`);
 
 -- -----------------------------------------------------
+-- MUDANÇAS FRANCIEL - 02/07/2017
+-- -----------------------------------------------------
+
+CREATE TABLE `notificacao` (
+  `notificacao_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `notificacao_tipo` ENUM('doacao_adquirida','doacao_perdida','doacao_cancelada','nova_mensagem','novo_interessado') NOT NULL,
+  `notificacao_lida` TINYINT(4) NOT NULL,
+  `interesse_id` INT(11) NOT NULL,
+  PRIMARY KEY (`notificacao_id`),
+  INDEX `FK_notificacao_interesse` (`interesse_id`),
+  CONSTRAINT `FK_notificacao_interesse` FOREIGN KEY (`interesse_id`) REFERENCES `interesse` (`interesse_id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+) COLLATE='utf8_general_ci' ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- MUDANÇAS LUIZ - 05/07/2017
+-- -----------------------------------------------------
+
+ALTER TABLE `interesse` ADD COLUMN `chat_bloqueado` TINYINT(1) NULL DEFAULT '0' AFTER `chat_lst_msg_beneficiario`;
+
+-- -----------------------------------------------------
+-- MUDANÇAS FRANCIEL - 05/07/2017 - TRIIIIIIIIGGRRRRERS
+-- -----------------------------------------------------
+
+DELIMITER $
+
+CREATE TRIGGER Tgr_Notificacao_Interesse
+AFTER INSERT ON interesse
+FOR EACH ROW BEGIN
+  INSERT INTO notificacao (notificacao_tipo, notificacao_lida, interesse_id)
+  VALUES ('novo_interessado', 0, NEW.interesse_id);
+END$
+
+CREATE TRIGGER Tgr_Notificacao_Doacao
+AFTER INSERT ON doacao
+FOR EACH ROW BEGIN
+  INSERT INTO notificacao (notificacao_tipo, notificacao_lida, interesse_id)
+  VALUES ('doacao_adquirida', 0, 
+  (SELECT interesse_id FROM doacao NATURAL JOIN interesse WHERE doacao_id = NEW.doacao_id LIMIT 1));
+END$
+
+CREATE TRIGGER Tgr_Notificacao_Cancelado
+AFTER UPDATE ON item
+FOR EACH ROW BEGIN
+  IF (OLD.item_status != 'Cancelado' AND NEW.item_status = 'Cancelado') THEN
+  INSERT INTO notificacao (notificacao_tipo, notificacao_lida, interesse_id)
+  VALUES ('doacao_cancelada', 0, 
+  (SELECT interesse_id FROM interesse i WHERE NEW.item_id = i.item_id));
+  END IF;
+END$
+
+CREATE TRIGGER Tgr_Notificacao_Perdida
+AFTER UPDATE ON item
+FOR EACH ROW BEGIN
+  IF (OLD.item_status != 'Doado' AND NEW.item_status = 'Doado') THEN
+  INSERT INTO notificacao (notificacao_tipo, notificacao_lida, interesse_id)
+  VALUES ('doacao_perdida', 0, 
+  (SELECT interesse_id FROM interesse i WHERE NEW.item_id = i.item_id AND i.interesse_id 
+  NOT IN (SELECT interesse_id FROM doacao)));
+  END IF;
+END$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
 -- INSERÇÃO DE CATEGORIAS
 -- -----------------------------------------------------
 INSERT INTO `categoria` (`categoria_nome`)

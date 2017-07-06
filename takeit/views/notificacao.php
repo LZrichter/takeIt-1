@@ -19,15 +19,17 @@
 						<div class="alert <?= $row["notificacao_lida"]==1?"alert-default":"alert-success" ?>">
 							<strong>Doação Adquirida!</strong> O item "<?= $row["item_descricao"] ?>", pelo qual você estava interessado foi doado para você.<br/>
 							<div class="botoes">
-								<a class="btn btn-success" id="agradecer" 
+							<?php if ( isset($row["ja_agradeceu"]) && !$row["ja_agradeceu"]): ?>
+								<button class="btn btn-success" id="agradecer" 
 									data-toggle='modal' 
 									data-target='#modalAgradecimento'
 									data-interesse='<?= $row['interesse_id'] ?>'
 								><i class="fa fa-heart-o"></i> Agradecer
+								</button>
+							<?php endif ?>
 								</a>
 								<a href="/chat/<?= arrumaString($notificacoes[$count]['item_descricao']) . "-" . $notificacoes[$count]['item_id']; ?>" class="btn btn-primary"><i class="fa fa-comments-o"></i> Abrir Chat</a>
 							</div>
-						</div>
 						<?php break;
 					case 'doacao_perdida': ?>
 						<div class="alert <?= $row["notificacao_lida"]==1?"alert-default":"alert-warning" ?>">
@@ -72,14 +74,31 @@
 
 		            <div class="modal-body">
 		           		<h4>Escreva uma mensagem para agradecer a doação!</h4>
-		           		<form method="post" id="formAgradecimento">
-		           			<textarea class="form-control" rows="10" id="agradecimento" name="agradecimento" required></textarea>
+		           		
+		           		<textarea class="form-control" rows="10" id="agradecimento" name="agradecimento" required></textarea>
 		                
-			                <div class="modal-footer">  
-				                <button type="button" class="btn btn-success" data-dismiss="modal">Enviar</button>
-			                </div>
-		                </form>
+		                <div class="modal-footer">  
+			                <button id="enviarAgradecimento" type="button" class="btn btn-success" data-dismiss="modal">Enviar</button>
+		                </div>
 		        	</div>
+		    	</div>
+		    </div>
+		</div>
+
+		<div class="modal fade" id="modalRetorno" tabindex="-1" role="dialog" aria-labelledby="labelRetorno">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		                <h3 class="modal-title" id="labelRetorno"></h3>
+		            </div>
+		            <div class="modal-body" id="bodyRetorno">
+		                
+		        	</div>
+	                <div class="modal-footer">  
+		                <button id="fechar" type="button" class="btn btn-success" data-dismiss="modal">Fechar</button>
+	                </div>
 		    	</div>
 		    </div>
 		</div>

@@ -33,7 +33,7 @@ class Doacao_model extends CI_Model {
 				INSERT INTO doacao (doacao_qtde, doacao_data, interesse_id, doacao_agradecimento) 
 				VALUES (
 					".$this->db->escape($dados['quantidade']).",
-					".date('Y-m-d').",
+					'".date('Y-m-d')."',
 					".$this->db->escape($dados['interesse_id']).",
 					".$this->db->escape($dados['agradecimento'])."
 				)
@@ -245,7 +245,6 @@ class Doacao_model extends CI_Model {
 		}catch(Exception $NE){
 			return 0;
 		}
-
 		return 0;
 	}
 
@@ -297,7 +296,6 @@ class Doacao_model extends CI_Model {
 		try{
 
 			$count = $this->db->query("SELECT * FROM doacao WHERE interesse_id = $idInteresse ");
-
 			$sql = "UPDATE doacao SET 
 				doacao_agradecimento = $this->db->escape($agradecimento) WHERE interesse_id = $idInteresse";
 
@@ -305,6 +303,35 @@ class Doacao_model extends CI_Model {
 				foreach ($row as $campo => $valor) {
 					if ($campo == 'doacao_agradecimento' && empty($valor)) {
 						$this->db->query($sql);
+						return TRUE;								
+					}
+				}
+			}
+
+		}catch(PDOException $PDOE){
+			return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+		}catch(Exception $NE){
+			return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
+		}
+	}
+
+	/**
+	 * Função que verifica se uma doação ja foi agradecida
+	 * @param int $idInteresse -> id do interesse da doacao
+	 * @return array com erros | boolean TRUE se o a doação ja foi agradecida
+	 */
+	public function verificarAgradecimento($idInteresse){
+		if(!isset($idInteresse)){
+			return ["tipo" => "erro", "msg" => "Informação insufuciente para realizar a consulta."];
+		}
+
+		try{
+
+			$count = $this->db->query("SELECT * FROM doacao WHERE interesse_id = $idInteresse ");
+
+			foreach($count->result() as $row){
+				foreach ($row as $campo => $valor) {
+					if ($campo == 'doacao_agradecimento' && !empty($valor)) {
 						return TRUE;								
 					}
 				}

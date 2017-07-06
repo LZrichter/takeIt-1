@@ -98,7 +98,7 @@ class Painel extends CI_Controller{
 		$dados["user_id"] = $this->session->userdata('user_id');
 		$dados["interesses"] = $this->IN->interessesPorUsuario($dados["user_id"]);
 		
-		if (!empty($dados["interesses"])) {
+		if (!isset($dados["interesses"]["tipo"]) && $dados["interesses"]["tipo"] != "erro") {
 			foreach ($dados["interesses"] as $row)
 				foreach ($row as $key => $value)
 					$dados["busca_item"][] = $this->IM->buscaItemPorId($value)[0];
@@ -143,11 +143,24 @@ class Painel extends CI_Controller{
 	public function notificacao(){
 
 		$this->load->model('Notificacao_model', 'NM');
+		$this->load->model('Doacao_model', 'DM');
 
 		$dados["titulo"] = "Notificações";
 		$dados["css"] = "welcome.css";
+		$dados["js"] = "notificacoes.js";
 
 		$dados["notificacoes"] = $this->NM->buscaNotificacoes($this->session->userdata('user_id'));
+		
+		$i = 0;
+		foreach ($dados["notificacoes"] as $row) {
+			if ($row["notificacao_tipo"] == 'doacao_adquirida') {
+				if( $this->DM->verificarAgradecimento($row["interesse_id"]) )//ja agradeceu
+					$dados['notificacoes'][$i]["ja_agradeceu"] = true;
+				else
+					$dados['notificacoes'][$i]["ja_agradeceu"] = false;
+			}
+		$i++;
+		}
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
@@ -169,7 +182,7 @@ class Painel extends CI_Controller{
 			
 			$this->load->model('Denuncia_model', "DM");
 			$this->load->model('Item_model', 'IM');
-			$this->load->model('usuario_model', 'UM');
+			$this->load->model('Usuario_model', 'UM');
 
 			$dados["titulo"] = "Denúncias";	
 			$dados["css"] = "painel.css";
@@ -187,7 +200,9 @@ class Painel extends CI_Controller{
 				for($i=0; $i < count($dados["denuncia"]); $i++):
 					array_push($dados["usuarios_vacilao"], $this->UM->selecionaUsuario($dados["denuncia"][$i]["usuario_vacilao"], TRUE));
 					array_push($dados["usuarios_xnove"], $this->UM->selecionaUsuario($dados["denuncia"][$i]["usuario_xnove"], TRUE));
-					array_push( $dados["item"], $this->IM->buscaItemPorId($dados["denuncia"][$i]["item_vacilao"]));
+					if (isset($dados["denuncia"][$i]["item_vacilao"])) {
+						array_push( $dados["item"], $this->IM->buscaItemPorId($dados["denuncia"][$i]["item_vacilao"]));
+					}
 				endfor;
 			}
 

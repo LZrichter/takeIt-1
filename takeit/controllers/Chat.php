@@ -82,12 +82,18 @@ class Chat extends CI_Controller{
 			/* Verifica se o usuário que está logado no momento recebeu uma doação deste item */
 			$dados["usuario_doacao"] = $this->doacao->possuiDoacaoitem($this->session->userdata("user_id"), $dados["item_id"]);
 
+			/* Verifica se o chat com esse usuário foi bloqueado */
+			$dados["chat_bloqueado"] = $this->chat->testeChatCancelado($dados["interesse_id"]);
+
 			/* Busca os dados do usuário em si */
 			$this->load->model("Usuario_model", "user");
 			$this->user->selecionaUsuario($item[0]["usuario_id"]);
 
 			$dados["chat"]["usuario_nome"] = $this->user->nome;
-			$dados["chat"]["imagem_link"] = base_url().substr($this->user->imagem_caminho."/".$this->user->imagem_nome, 2);
+			
+			$dados["chat"]["imagem_link"] = ((is_null($this->user->imagem_caminho)) ? 
+				base_url()."assets/img/painel_perfil.png" : 
+				base_url().substr($this->user->imagem_caminho."/".$this->user->imagem_nome, 2));
 		}
 		
 		$this->load->view('templates/head', $dados);
@@ -96,6 +102,10 @@ class Chat extends CI_Controller{
 		$this->load->view('templates/footer');
 	}
 
+	/**
+	 * Mostra o chat inicial quando clicado no nome de uma pessoa
+	 * @return html retorna uma view para o ajax
+	 */
 	public function chatInicial(){
 		$this->load->model("Chat_model", "chat");
 
@@ -105,7 +115,11 @@ class Chat extends CI_Controller{
 		$this->load->model("Doacao_model", "doacao");
 		$qtde_doada = $this->doacao->qtdeDoadaItem($dados["item_id"]);
 
+		/* Verifica se o usuário que está logado no momento recebeu uma doação deste item */
 		$dados["usuario_doacao"] = $this->doacao->possuiDoacaoitem($dados["usuario_id"], $dados["item_id"]);
+
+		/* Verifica se o chat com esse usuário foi bloqueado */
+		$dados["chat_bloqueado"] = $this->chat->testeChatCancelado($dados["interesse_id"]);
 
 		$this->load->model("Item_model", "item");
 		$item = $this->item->buscaItemPorId($dados["item_id"]); // Busca o id do usuário a partir do item
@@ -153,6 +167,10 @@ class Chat extends CI_Controller{
 		echo json_encode($this->chat->qtdeMsgsNaoLidasDoador($this->input->post()["item_id"]));
 	}
 
+	/**
+	 * Doa o item a partir de sua quantidade
+	 * @return string echo em um JSON da resposta
+	 */
 	public function doarItem(){
 		$dados = $this->input->post();
 
@@ -177,5 +195,15 @@ class Chat extends CI_Controller{
 			}
 			else echo json_encode($resposta);
 		}else echo json_encode(["tipo" => "erro", "msg" => "Não possui itens suficientes!"]);
+	}
+
+	/**
+	 * Cancela o bate-papo
+	 * @return string Echo de um json de resposta
+	 */
+	public function cancelarBatePapo(){
+		$this->load->model("Chat_model", "chat");
+
+		echo json_encode($this->chat->cancelarBatePapo($this->input->post()["interesse_id"]));
 	}
 }

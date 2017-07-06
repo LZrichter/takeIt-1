@@ -6,6 +6,8 @@
 	  	<li><a href="#"><?= $titulo ?></a></li>
 	</ul>
 
+	<? var_dump($usuarios_xnove)?>
+
 	<div class="container recebidos">
 		<div class="panel panel-default">
 			<div class="panel-heading text-center">
@@ -19,17 +21,20 @@
 							<div class="row">
 								<div class="col-sm-9 col-md-8 text-center left-recebidos">
 			   	    				<div class="text-left">
-			   	    					<p><strong>Item: </strong>
-			   	    					<a href="/doacoes/item/<?= $item[$i][0]["item_id"] ?>" ><?= $item[$i][0]["item_descricao"] ?>&nbsp<i class="fa fa-external-link"></i></a>
-			   	    					</p>
+			   	    					<?php if (isset($item) && !empty($item)): ?>
+			   	    						<p><strong>Item: </strong>
+			   	    							<a href="/doacoes/item/<?= $item[$i][0]["item_id"] ?>" ><?= $item[$i][0]["item_descricao"] ?>&nbsp<i class="fa fa-external-link"></i></a>
+			   	    						</p>	
+			   	    					<?php endif ?>
+			   	    					
 			   	    					<p><strong>Denúncia: </strong>
 			   	    					<?= $denuncia[$i]["denuncia_text"] ?>
 			   	    					</p>
 			   	    					<p><strong>Usuário x9: </strong>
-			   	    						<a href="#" ><?= $usuarios_xnove[$i]["nome"] ?>&nbsp<i class="fa fa-external-link"></i></a>
+			   	    						<a href="/Usuario/visualizar/<?= $usuarios_xnove[$i]["id"] ?>" ><?= $usuarios_xnove[$i]["nome"] ?>&nbsp<i class="fa fa-external-link"></i></a>
 			   	    					</p>
 			   	    					<p><strong>Usuário Vacilão: </strong>
-			   	    						<a href="#" ><?= $usuarios_vacilao[$i]["nome"] ?>&nbsp<i class="fa fa-external-link"></i></a>
+			   	    						<a href="/Usuario/visualizar/<?= $usuarios_vacilao[$i]["id"] ?>" ><?= $usuarios_vacilao[$i]["nome"] ?>&nbsp<i class="fa fa-external-link"></i></a>
 			   	    					</p>
 			   	    					<p><strong>Data: </strong>
 			   	    						<?
@@ -73,16 +78,17 @@
 											>
 												<i class="fa fa-ban"></i> Bloquear Vacilão
 											</a>
-											<a class="btn btn-danger btn-item" 
-												data-toggle="modal" 
-												data-target="#action-modal" 
-												data-id="<?= $denuncia[$i]['item_vacilao']?>"
-												data-denuncia ="<?= $denuncia[$i]['denuncia_id']?>"
-												data-title="Você deseja Cancelar este Item?"
-												data-panel="panel-<?= $denuncia[$i]['denuncia_id']?>"
-											>
-												<i class="fa fa-trash"></i> Cancelar Item
-											</a>
+											<?php if (isset($item)): ?>
+												<a class="btn btn-danger btn-item" 
+													data-toggle="modal" 
+													data-target="#action-modal" 
+													data-id="<?= $denuncia[$i]['item_vacilao']?>"
+													data-denuncia ="<?= $denuncia[$i]['denuncia_id']?>"
+													data-title="Você deseja Cancelar este Item?"
+													data-panel="panel-<?= $denuncia[$i]['denuncia_id']?>">
+													<i class="fa fa-trash"></i> Cancelar Item
+												</a>	
+											<?php endif ?>
 										</p>
 									</div>
 									<? endif; ?>

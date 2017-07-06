@@ -14,7 +14,7 @@
 				</div>
 			<? }else{
 				for($i = 0; $i < count($interessados); $i++){
-					$user = $interessados[$i]; 
+					$user = $interessados[$i];
 					$imagem_link = is_null($user["imagem_caminho"]) ? base_url() ."assets/img/painel_perfil.png" : base_url() . substr($user["imagem_caminho"], 2); 
 
 					$conta_num = 0;
@@ -24,8 +24,8 @@
 								$conta_num = $conta["num"];
 						}
 					} ?>
-
-					<div class="row user-card" name="userButton" data-usuario-nome="<?= $user["usuario_nome"]; ?>" data-usuario-id="<?= $user["usuario_id"]; ?>" data-imagem-link="<?= $imagem_link; ?>" data-interesse-id="<?= $user["interesse_id"]; ?>">
+					
+					<div class="row user-card  <?= (($user["usuario_nivel"] == "Instituição") ? "label-info" : ""); ?>" name="userButton" data-usuario-nome="<?= $user["usuario_nome"]; ?>" data-usuario-id="<?= $user["usuario_id"]; ?>" data-imagem-link="<?= $imagem_link; ?>" data-interesse-id="<?= $user["interesse_id"]; ?>">
 						<div class="col-xs-1 col-md-1 user-img">
 							<img src="<?= $imagem_link; ?>" alt="<?= $user["usuario_nome"]; ?>" class="img-circle">
 						</div>

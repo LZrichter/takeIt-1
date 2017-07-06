@@ -198,3 +198,21 @@
 .mudanca-button-doacao{
     margin: 0 4px 0 3px !important;
 }
+
+#model_cancelar, #modal_aviso, #model_doar {
+	margin-top: 15%;
+}
+
+.botoes {
+	float: right;
+	margin: -7px -7px 0 0;
+}
+
+#qtde_itens{
+	width: auto;
+	max-width: 50px;
+}
+
+.instituicao{
+	background: gold !important;
+}

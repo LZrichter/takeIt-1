@@ -213,7 +213,7 @@ class Chat_model extends CI_Model{
 					count(*) as num,
 					i.usuario_id, i.interesse_id
 				FROM interesse i NATURAL LEFT JOIN usuario u LEFT JOIN chat c ON c.interesse_id = i.interesse_id
-				WHERE i.item_id = $idItem AND IF(i.chat_lst_msg_doador is null, 0, i.chat_lst_msg_doador) < c.chat_id
+				WHERE i.item_id = $idItem AND IF(i.chat_lst_msg_doador is null, 0, i.chat_lst_msg_doador) < c.chat_id  AND c.chat_quem = 'Beneficiário'
 				GROUP BY u.usuario_id, i.interesse_id
 			";
 

@@ -107,3 +107,15 @@
 		</div>
 	</div>
 </div>
+
+<!-- MODAL ALERTA -->
+<div class="modal fade" id="modal_aviso" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="alert" id="modal_alerta" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            <span id="modal_msg"></span>
+            <button type="button" class="btn btn-default close" data-dismiss="modal" aria-label="Close">X</button>
+        </div>
+    </div>
+</div>

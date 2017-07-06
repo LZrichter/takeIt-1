@@ -87,7 +87,10 @@ class Chat extends CI_Controller{
 			$this->user->selecionaUsuario($item[0]["usuario_id"]);
 
 			$dados["chat"]["usuario_nome"] = $this->user->nome;
-			$dados["chat"]["imagem_link"] = base_url().substr($this->user->imagem_caminho."/".$this->user->imagem_nome, 2);
+			
+			$dados["chat"]["imagem_link"] = ((is_null($this->user->imagem_caminho)) ? 
+				base_url()."assets/img/painel_perfil.png" : 
+				base_url().substr($this->user->imagem_caminho."/".$this->user->imagem_nome, 2));
 		}
 		
 		$this->load->view('templates/head', $dados);

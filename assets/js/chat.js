@@ -91,42 +91,6 @@ function doarItem(){
 	}
 }
 
-// Responsavel pelo botão de doar item
-function doarItem(){
-	$.ajax({
-		url: 'doarItem',
-		type: 'POST',
-		data: {
-			item_id: $('#item_id').val(),
-			interesse_id: $('[name="interesse_id"]').val(),
-			qtde_itens: $('[name="qtd-itens"]').val()
-		},
-		dataType: "json",
-		success: function(data){
-			if(data["tipo"] == "sucesso"){
-				$.ajax({
-					url: "chatInicial",
-					data: {
-						usuario_id 	 : $("#selecionado_usuario_id").val(),
-						usuario_nome : $("#nomePessoa").html(),
-						imagem_link  : $("#selecionado_img_pessoa").val(),
-						interesse_id : $('[name="interesse_id"]').val(),
-						item_id 	 : $("#item_id").val(),
-						tipo_pessoa  : $("#tipo_pessoa_chat").val()
-					},
-					type: "POST",
-					success: function(data){
-						console.log("Aqui");
-						$("#painelMsgs").html(data);
-					}
-				});
-			}else{
-
-			}
-		}
-	});
-}
-
 // Teste para verificar se a quantidade correta com o limite
 function changeNumItens(obj){
 	if(eval($(obj).val() <= $("#qtdeRestante").html())){

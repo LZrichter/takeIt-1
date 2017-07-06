@@ -83,6 +83,9 @@ class Chat_model extends CI_Model{
 		if(!isset($msg) || empty(trim($msg)) || !isset($idInteresse) || !isset($tipoPessoa))
 			return ["tipo" => "erro", "msg" => "Sem informações suficientes para mandar a mensagem, tente novamente mais tarde."];
 
+		if($this->testeChatCancelado($idInteresse))
+			return ["tipo" => "erro", "msg" => "Impossivel mandar mensagem, bate-papo foi cancelado!"];
+
 		try{
 			$data = date('Y-m-d H:i:s');
 			
@@ -251,7 +254,7 @@ class Chat_model extends CI_Model{
 	 * @param  int $idInteresse ID do interesse do bate-papo
 	 * @return bool             TRUE se bate-papo cancelado, FALSE se não
 	 */
-	public function testeBatePapoCancelado($idInteresse){
+	public function testeChatCancelado($idInteresse){
 		if(!isset($idInteresse))
 			return false;
 
@@ -263,8 +266,9 @@ class Chat_model extends CI_Model{
 			else{
 				if(!count($query->result())) 
 					return false;
-
-				return true;
+				if($query->result()[0]->chat_bloqueado == "1")
+					return true;
+				else return false;
 			}
 		}catch(PDOException $PDOE){
 			return false;

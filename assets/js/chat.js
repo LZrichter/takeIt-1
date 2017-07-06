@@ -32,14 +32,20 @@ $(document).on("submit", "#formChat", function(e){
 			data: $("#formChat").serialize(),
 			dataType: "json",
 			success: function(data){
-				var id_box = "chat_mensagem_"+data.msg["id"];
+				if(typeof data["tipo"] != "undefined" && data["tipo"] == "erro"){
+					$("#modal_msg").html(data["msg"]);
+				    $("#modal_aviso").css("overflow", "hidden");
+				    $('#modal_aviso').modal('show');
+				}else{
+					var id_box = "chat_mensagem_"+data.msg["id"];
 
-				$("#centro_mensagens").append('<div class="alert alert-info col-sm-8 col-sm-offset-4 text-right" id="' + id_box + '" tabindex="1"><p>' + data.msg["msg"] + '</p><div class="data-enviado-direita pull-left">Enviado: ' + data.msg["data"] + '</div></div>');
+					$("#centro_mensagens").append('<div class="alert alert-info col-sm-8 col-sm-offset-4 text-right" id="' + id_box + '" tabindex="1"><p>' + data.msg["msg"] + '</p><div class="data-enviado-direita pull-left">Enviado: ' + data.msg["data"] + '</div></div>');
 
-				$('#' + id_box).focus();
-				
-				$("#inputMsg").val("").focus();
-				$("#id_ultima_msg").val(data.msg["id"]);
+					$('#' + id_box).focus();
+					
+					$("#inputMsg").val("").focus();
+					$("#id_ultima_msg").val(data.msg["id"]);
+				}
 			}, error: function(data){
 			    $("#modal_msg").html("Ocorreu um problema na hora de realizar o cadastro. Por favor, mude os dados inseridos ou tente mais tarde.");			   
 			    $("#modal_aviso").css("overflow", "hidden");
@@ -109,10 +115,11 @@ $(document).on("click", "#botao_doar_sim", function(){
 
 // Teste para verificar se a quantidade correta com o limite
 $(document).on("change", "#qtde_itens", function(){
-	if(eval($(obj).val() <= $("#qtdeRestante").html())){
-		$(obj).removeClass("alert alert-danger mudanca-button-doacao");
+	console.log($(this).val());
+	if(eval($(this).val() <= $("#qtdeRestante").html())){
+		$(this).removeClass("alert alert-danger mudanca-button-doacao");
 	}else{
-		$(obj).addClass("alert alert-danger mudanca-button-doacao");
+		$(this).addClass("alert alert-danger mudanca-button-doacao");
 	}
 });
 
@@ -173,9 +180,7 @@ function carregacountNaoLidas(){
 					$(divs[i]).html("<p>0</p>");
 			}
 		}, error: function(data){
-		    console.log("----- Erro no count! -----");
-		    console.log(data);
-		    console.log("--------------------------");
+		    console.log("Erro no count!");
 		}
 	});
 }

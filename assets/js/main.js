@@ -20,7 +20,7 @@ function mensagem(tipo, msg, nome_objeto){
 	}else $("#" + nome_objeto).html(msg);
 }
 
-var alertas = setInterval(function(){ loadDoc(); }, 500);
+var alertas = setInterval(function(){ chama_alertas(); }, 60000);
 
 function chama_alertas(){
 	$.ajax({
@@ -32,15 +32,4 @@ function chama_alertas(){
 	}).fail(function() {
 			
 	});
-}
-
-function loadDoc() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("badge").innerHTML = parseInt(this.responseText.paginas_qtde);
-    }
-  };
-  xhttp.open("GET", "/Painel/getQuantidade", true);
-  xhttp.send();
 }

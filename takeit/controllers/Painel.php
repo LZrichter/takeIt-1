@@ -150,14 +150,18 @@ class Painel extends CI_Controller{
 		$dados["js"] = "notificacoes.js";
 
 		$dados["notificacoes"] = $this->NM->buscaNotificacoes($this->session->userdata('user_id'));
+		$this->NM->marcaLidas($this->session->userdata('user_id'));
+		$dados["contador"] = $this->NM->quantidadeDeNotificacoes($this->session->userdata('user_id'));
 		
 		$i = 0;
 		foreach ($dados["notificacoes"] as $row) {
-			if ($row["notificacao_tipo"] == 'doacao_adquirida') {
-				if( $this->DM->verificarAgradecimento($row["interesse_id"]) )//ja agradeceu
-					$dados['notificacoes'][$i]["ja_agradeceu"] = true;
-				else
-					$dados['notificacoes'][$i]["ja_agradeceu"] = false;
+			if(isset($row["notificacao_tipo"])){
+				if ($row["notificacao_tipo"] == 'doacao_adquirida') {
+					if( $this->DM->verificarAgradecimento($row["interesse_id"]) )//ja agradeceu
+						$dados['notificacoes'][$i]["ja_agradeceu"] = true;
+					else
+						$dados['notificacoes'][$i]["ja_agradeceu"] = false;
+				}
 			}
 		$i++;
 		}

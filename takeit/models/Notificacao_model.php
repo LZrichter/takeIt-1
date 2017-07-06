@@ -40,9 +40,12 @@ class Notificacao_model extends CI_Model {
 			$sql = "SELECT notificacao_id, notificacao_tipo, notificacao_lida, i.interesse_id, it.usuario_id, 
 			u.usuario_nome, u2.usuario_id AS usuario_id_interesse, u2.usuario_nome AS usuario_nome_interesse, 
 			it.item_id, it.item_descricao 
-			FROM notificacao NATURAL JOIN interesse i NATURAL JOIN usuario u2 JOIN item it JOIN usuario u
-			WHERE it.item_id = i.item_id AND it.usuario_id = u.usuario_id
-			AND i.usuario_id = ".$this->db->escape($idUsuario);
+			FROM notificacao n
+			JOIN interesse i ON i.interesse_id = n.interesse_id
+			JOIN item it ON it.item_id = i.item_id
+			JOIN usuario u ON it.usuario_id = u.usuario_id
+			JOIN usuario u2 ON u2.usuario_id = i.usuario_id
+			WHERE u.usuario_id = ".$this->db->escape($idUsuario)." OR u2.usuario_id = ".$this->db->escape($idUsuario);
 
 			if(!$query = $this->db->query($sql)){
 				if($this->db->error()){
@@ -75,9 +78,15 @@ class Notificacao_model extends CI_Model {
 	public function quantidadeDeNotificacoes($idUsuario){
 
 		try{
-
-			$sql = "SELECT COUNT(*) as qtde FROM notificacao NATURAL JOIN interesse i 
-			WHERE i.usuario_id = ".$this->db->escape($idUsuario);
+			$sql = "SELECT COUNT(*) as qtde FROM notificacao n
+			JOIN interesse i ON i.interesse_id = n.interesse_id
+			JOIN item it ON it.item_id = i.item_id
+			WHERE i.usuario_id != ".$idUsuario." AND it.usuario_id =".$idUsuario."
+			UNION
+			SELECT COUNT(*) as qtde FROM notificacao n
+			JOIN interesse i ON i.interesse_id = n.interesse_id
+			JOIN item it ON it.item_id = i.item_id
+			WHERE it.usuario_id = ".$idUsuario." AND i.usuario_id != ".$idUsuario;
 
 			if(!$query = $this->db->query($sql)){
 				if($this->db->error()){
@@ -95,6 +104,31 @@ class Notificacao_model extends CI_Model {
 		} catch(Exception $E) {
 			return array("Error" => "Server was unable to execute query");
 		}
-	}	
+	}
+
+	/**
+	 * Marca as notificações já lidas de um usuário como lidas
+	 * @param 	$idUsuario
+	 * @return 	Boolean indicando o sucesso ou mensagem de erro
+	 */
+	public function marcaLidas($idUsuario){
+		try{
+
+			$sql = "UPDATE notificacao NATURAL JOIN interesse SET notificacao_lida = 1 
+			WHERE usuario_id = ".$this->db->escape($idUsuario);
+
+			if(!$query = $this->db->query($sql)){
+				if($this->db->error()){
+					return array("Error" => "$error[message]");
+				}
+			} else {
+				
+				return true;
+			}
+
+		} catch(Exception $E) {
+			return array("Error" => "Server was unable to execute query");
+		}
+	}
 
 }

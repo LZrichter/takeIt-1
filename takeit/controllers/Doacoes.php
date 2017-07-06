@@ -379,16 +379,18 @@ class Doacoes extends CI_Controller{
 	}
 
 	public function agradecimentoAjax(){
-		if (isset($_POST['id_interesse'])){
+		if (isset($_POST['id_interesse']) && isset($_POST['agradecimento'])){
 			
 			$this->load->model("Doacao_model", "DM");
 			
-			$return = $this->DM->agradecerDoacao($_POST['id_interesse']);
+			$return = $this->DM->agradecerDoacao($_POST['id_interesse'], $_POST['agradecimento']);
 			
 			if($return)
 				echo json_encode(["tipo" => "sucesso", "msg" => "Seu agradecimento foi realizado com sucesso! "]);
 			else
 				echo json_encode($return);
+		}else{
+			echo json_encode(["tipo" => "erro", "msg" => "Dados insuficiente para consulta!!"]);
 		}
 	}
 

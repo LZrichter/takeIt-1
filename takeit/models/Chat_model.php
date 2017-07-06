@@ -83,6 +83,9 @@ class Chat_model extends CI_Model{
 		if(!isset($msg) || empty(trim($msg)) || !isset($idInteresse) || !isset($tipoPessoa))
 			return ["tipo" => "erro", "msg" => "Sem informações suficientes para mandar a mensagem, tente novamente mais tarde."];
 
+		if($this->testeChatCancelado($idInteresse))
+			return ["tipo" => "erro", "msg" => "Impossivel mandar mensagem, bate-papo foi cancelado!"];
+
 		try{
 			$data = date('Y-m-d H:i:s');
 			
@@ -213,7 +216,7 @@ class Chat_model extends CI_Model{
 					count(*) as num,
 					i.usuario_id, i.interesse_id
 				FROM interesse i NATURAL LEFT JOIN usuario u LEFT JOIN chat c ON c.interesse_id = i.interesse_id
-				WHERE i.item_id = $idItem AND IF(i.chat_lst_msg_doador is null, 0, i.chat_lst_msg_doador) < c.chat_id
+				WHERE i.item_id = $idItem AND IF(i.chat_lst_msg_doador is null, 0, i.chat_lst_msg_doador) < c.chat_id  AND c.chat_quem = 'Beneficiário'
 				GROUP BY u.usuario_id, i.interesse_id
 			";
 
@@ -244,6 +247,36 @@ class Chat_model extends CI_Model{
 		}
 
 		return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
+	}
+
+	/**
+	 * Testa se o bate-papo foi cancelado
+	 * @param  int $idInteresse ID do interesse do bate-papo
+	 * @return bool             TRUE se bate-papo cancelado, FALSE se não
+	 */
+	public function testeChatCancelado($idInteresse){
+		if(!isset($idInteresse))
+			return false;
+
+		try{
+			$sql = "SELECT chat_bloqueado FROM interesse WHERE interesse_id = $idInteresse";
+
+			if(!$query = $this->db->query($sql))
+				return false;
+			else{
+				if(!count($query->result())) 
+					return false;
+				if($query->result()[0]->chat_bloqueado == "1")
+					return true;
+				else return false;
+			}
+		}catch(PDOException $PDOE){
+			return false;
+		}catch(Exception $NE){
+			return false;
+		}
+
+		return false;
 	}
 
 	/**

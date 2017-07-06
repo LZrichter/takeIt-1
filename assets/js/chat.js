@@ -32,17 +32,24 @@ $(document).on("submit", "#formChat", function(e){
 			data: $("#formChat").serialize(),
 			dataType: "json",
 			success: function(data){
-				var id_box = "chat_mensagem_"+data.msg["id"];
+				if(typeof data["tipo"] != "undefined" && data["tipo"] == "erro"){
+					$("#modal_msg").html(data["msg"]);
+				    $("#modal_aviso").css("overflow", "hidden");
+				    $('#modal_aviso').modal('show');
+				}else{
+					var id_box = "chat_mensagem_"+data.msg["id"];
 
-				$("#centro_mensagens").append('<div class="alert alert-info col-sm-8 col-sm-offset-4 text-right" id="' + id_box + '" tabindex="1"><p>' + data.msg["msg"] + '</p><div class="data-enviado-direita pull-left">Enviado: ' + data.msg["data"] + '</div></div>');
+					$("#centro_mensagens").append('<div class="alert alert-info col-sm-8 col-sm-offset-4 text-right" id="' + id_box + '" tabindex="1"><p>' + data.msg["msg"] + '</p><div class="data-enviado-direita pull-left">Enviado: ' + data.msg["data"] + '</div></div>');
 
-				$('#' + id_box).focus();
-				
-				$("#inputMsg").val("").focus();
-				$("#id_ultima_msg").val(data.msg["id"]);
-			},
-			error: function(data){
-				mensagem("erro", "Ocorreu um problema na hora de realizar o cadastro. Por favor, mude os dados inseridos ou tente mais tarde.", "mensagem");
+					$('#' + id_box).focus();
+					
+					$("#inputMsg").val("").focus();
+					$("#id_ultima_msg").val(data.msg["id"]);
+				}
+			}, error: function(data){
+			    $("#modal_msg").html("Ocorreu um problema na hora de realizar o cadastro. Por favor, mude os dados inseridos ou tente mais tarde.");			   
+			    $("#modal_aviso").css("overflow", "hidden");
+			    $('#modal_aviso').modal('show');
 			}
 		});
     }
@@ -50,9 +57,33 @@ $(document).on("submit", "#formChat", function(e){
 	e.preventDefault();
 });
 
+$(document).on("click", "#botao_cancelar_sim", function(){
+	$.ajax({
+		url: 'cancelarBatePapo',
+		type: 'POST',
+		data:{
+			interesse_id: $('[name="interesse_id"]').val()
+		},
+		dataType: "json",
+		success: function(data){
+			if(data["tipo"] == "sucesso"){
+				atualiza_meio();
+			}else{
+			    $("#modal_msg").html(data["msg"]);
+			    $("#modal_aviso").css("overflow", "hidden");
+			    $('#modal_aviso').modal('show');
+			}
+		}, error: function(data){
+		    $("#modal_msg").html("Ocorreu um problema na hora de cancelar. Por favor, tente mais tarde.");
+		    $("#modal_aviso").css("overflow", "hidden");
+		    $('#modal_aviso').modal('show');
+		}
+	});
+});
+
 // Responsavel pelo botão de doar item
-function doarItem(){
-	if(!eval($('[name="qtd-itens"]').val() <= $("#qtdeRestante").html())){
+$(document).on("click", "#botao_doar_sim", function(){
+	if(!eval($('#qtde_itens').val() <= $("#qtdeRestante").html())){
 		$('[name="qtd-itens"]').addClass("alert alert-danger mudanca-button-doacao");
 		$('[name="qtd-itens"]').focus();
 	}else{
@@ -67,74 +98,30 @@ function doarItem(){
 			dataType: "json",
 			success: function(data){
 				if(data["tipo"] == "sucesso"){
-					$.ajax({
-						url: "chatInicial",
-						data: {
-							usuario_id 	 : $("#selecionado_usuario_id").val(),
-							usuario_nome : $("#nomePessoa").html(),
-							imagem_link  : $("#selecionado_img_pessoa").val(),
-							interesse_id : $('[name="interesse_id"]').val(),
-							item_id 	 : $("#item_id").val(),
-							tipo_pessoa  : $("#tipo_pessoa_chat").val()
-						},
-						type: "POST",
-						success: function(data){
-							console.log("Aqui");
-							$("#painelMsgs").html(data);
-						}
-					});
+					atualiza_meio();
 				}else{
-
+				    $("#modal_msg").html(data["msg"]);
+				    $("#modal_aviso").css("overflow", "hidden");
+				    $('#modal_aviso').modal('show');
 				}
+			}, error: function(data){
+			    $("#modal_msg").html("Ocorreu um problema na hora de doar. Por favor, tente mais tarde.");			   
+			    $("#modal_aviso").css("overflow", "hidden");
+			    $('#modal_aviso').modal('show');
 			}
 		});
 	}
-}
-
-// Responsavel pelo botão de doar item
-function doarItem(){
-	$.ajax({
-		url: 'doarItem',
-		type: 'POST',
-		data: {
-			item_id: $('#item_id').val(),
-			interesse_id: $('[name="interesse_id"]').val(),
-			qtde_itens: $('[name="qtd-itens"]').val()
-		},
-		dataType: "json",
-		success: function(data){
-			if(data["tipo"] == "sucesso"){
-				$.ajax({
-					url: "chatInicial",
-					data: {
-						usuario_id 	 : $("#selecionado_usuario_id").val(),
-						usuario_nome : $("#nomePessoa").html(),
-						imagem_link  : $("#selecionado_img_pessoa").val(),
-						interesse_id : $('[name="interesse_id"]').val(),
-						item_id 	 : $("#item_id").val(),
-						tipo_pessoa  : $("#tipo_pessoa_chat").val()
-					},
-					type: "POST",
-					success: function(data){
-						console.log("Aqui");
-						$("#painelMsgs").html(data);
-					}
-				});
-			}else{
-
-			}
-		}
-	});
-}
+});
 
 // Teste para verificar se a quantidade correta com o limite
-function changeNumItens(obj){
-	if(eval($(obj).val() <= $("#qtdeRestante").html())){
-		$(obj).removeClass("alert alert-danger mudanca-button-doacao");
+$(document).on("change", "#qtde_itens", function(){
+	console.log($(this).val());
+	if(eval($(this).val() <= $("#qtdeRestante").html())){
+		$(this).removeClass("alert alert-danger mudanca-button-doacao");
 	}else{
-		$(obj).addClass("alert alert-danger mudanca-button-doacao");
+		$(this).addClass("alert alert-danger mudanca-button-doacao");
 	}
-}
+});
 
 // É chamada constântemente e é responsavel por colocar novas mensagens no chat
 function carregaMsgsChat(){
@@ -167,8 +154,7 @@ function carregaMsgsChat(){
 						}
 					});
 				}
-			},
-			error: function(data){
+			}, error: function(data){
 				mensagem("erro", "Ocorreu um problema na hora de realizar o cadastro. Por favor, mude os dados inseridos ou tente mais tarde.", "mensagem");
 			}
 		});
@@ -193,9 +179,26 @@ function carregacountNaoLidas(){
 				else
 					$(divs[i]).html("<p>0</p>");
 			}
+		}, error: function(data){
+		    console.log("Erro no count!");
+		}
+	});
+}
+
+function atualiza_meio(){
+	$.ajax({
+		url: "chatInicial",
+		data: {
+			usuario_id 	 : $("#selecionado_usuario_id").val(),
+			usuario_nome : $("#nomePessoa").html(),
+			imagem_link  : $("#selecionado_img_pessoa").val(),
+			interesse_id : $('[name="interesse_id"]').val(),
+			item_id 	 : $("#item_id").val(),
+			tipo_pessoa  : $("#tipo_pessoa_chat").val()
 		},
-		error: function(data){
-			mensagem("erro", "Ocorreu um problema na hora de realizar o cadastro. Por favor, mude os dados inseridos ou tente mais tarde.", "mensagem");
+		type: "POST",
+		success: function(data){
+			$("#painelMsgs").html(data);
 		}
 	});
 }

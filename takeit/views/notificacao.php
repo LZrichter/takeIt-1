@@ -1,8 +1,8 @@
 <main id="mainLogin" class="footer-align">
 	<div class="container">
-		<?php echo "<pre>"; print_r($notificacoes); echo "</pre>";?>
-
-		<?php if (isset($notificacoes['Error'])) {
+		<?php 
+		$user_id = $this->session->userdata("user_id");
+		if (isset($contador)) {
 			echo '<div class="panel-body">
 				<div class="alert alert-warning text-center">
 						<div class="row">
@@ -15,7 +15,8 @@
 			$count = 0;
 			foreach ($notificacoes as $row) {
 				switch ($row["notificacao_tipo"]) {
-					case 'doacao_adquirida': ?>
+					case 'doacao_adquirida': 
+						if($row["usuario_id"]==$user_id) continue; ?>
 						<div class="alert <?= $row["notificacao_lida"]==1?"alert-default":"alert-success" ?>">
 							<strong>Doação Adquirida!</strong> O item "<?= $row["item_descricao"] ?>", pelo qual você estava interessado foi doado para você.<br/>
 							<div class="botoes">
@@ -31,26 +32,20 @@
 								<a href="/chat/<?= arrumaString($notificacoes[$count]['item_descricao']) . "-" . $notificacoes[$count]['item_id']; ?>" class="btn btn-primary"><i class="fa fa-comments-o"></i> Abrir Chat</a>
 							</div>
 						<?php break;
-					case 'doacao_perdida': ?>
+					case 'doacao_perdida': 
+						if($row["usuario_id"]==$user_id) continue; ?>
 						<div class="alert <?= $row["notificacao_lida"]==1?"alert-default":"alert-warning" ?>">
 							<strong>Doação Perdida!</strong> O item "<?= $row["item_descricao"] ?>", pelo qual você estava interessado foi doado para outro usuário.
 						</div>
 						<?php break;
-					case 'doacao_cancelada': ?>
+					case 'doacao_cancelada': 
+						if($row["usuario_id"]==$user_id) continue; ?>
 						<div class="alert <?= $row["notificacao_lida"]==1?"alert-default":"alert-warning" ?>">
 							<strong>Doação Perdida!</strong> O item "<?= $row["item_descricao"] ?>", pelo qual você estava interessado não está mais sendo doado.
 						</div>
 						<?php break;
-					case 'nova_mensagem': ?>
-						<div class="alert <?= $row["notificacao_lida"]==1?"alert-default":"alert-info" ?>">
-							<strong>Nova Mensagem!</strong> O usuário "<? echo $row["usuario_nome"] == $this->session->userdata('user_name') ? $row["usuario_nome_interesse"]:  $row["usuario_nome"]; ?>" te mandou uma nova mensagem sobre o item "<?= $row["item_descricao"] ?>".<br />
-							<div class="botoes">
-								<a href="/chat/<?= arrumaString($notificacoes[$count]['item_descricao']) . "-" . $notificacoes[$count]['item_id']; ?>" class="btn btn-primary"><i class="fa fa-comments-o"></i> Abrir Chat</a>
-								<a href="<?= base_url();?>doacoes/item/<?=$row["item_id"]?>" class="btn btn-warning"><i class="fa fa-external-link"></i> Abrir Página do Produto</a>
-							</div>
-						</div>
-						<?php break;
-					case 'novo_interessado': ?>
+					case 'novo_interessado': 
+						if($row["usuario_id_interesse"]==$user_id) continue; ?>
 						<div class="alert <?= $row["notificacao_lida"]==1?"alert-default":"alert-info" ?>">
 							<strong>Novo Interessado!</strong> O usuário "<?= $row["usuario_nome_interesse"] ?>" se interessou pelo item "<?= $row["item_descricao"] ?>" que você está doando.<br />
 							<div class="botoes">

@@ -151,6 +151,7 @@ class Painel extends CI_Controller{
 
 		$dados["notificacoes"] = $this->NM->buscaNotificacoes($this->session->userdata('user_id'));
 		$this->NM->marcaLidas($this->session->userdata('user_id'));
+		$dados["contador"] = $this->NM->quantidadeDeNotificacoes($this->session->userdata('user_id'));
 		
 		$i = 0;
 		foreach ($dados["notificacoes"] as $row) {

@@ -54,6 +54,14 @@ class Chat extends CI_Controller{
 		}
 
 		$this->load->model("Chat_model", "chat");
+		
+		$this->load->model("Doacao_model", "doacao");
+		$qtde_doada = $this->doacao->qtdeDoadaItem($dados["item_id"]);
+
+		$this->load->model("Item_model", "item");
+		$item = $this->item->buscaItemPorId($dados["item_id"]); // Busca o id do usuário a partir do item
+
+		$dados["qtde"] = ["itens" => $item[0]["item_qtde"], "doados" => $qtde_doada];
 
 		if($dados["usuario_doador"]){
 			// Busca a lista de todas as pessoa interessadas
@@ -71,8 +79,8 @@ class Chat extends CI_Controller{
 			$this->chat->tipoPessoa = $dados["tipo_pessoa"];
 			$dados["chat"]["chat"] = $this->chat->porcaoChatLimite($dados["interesse_id"]);
 
-			$this->load->model("Item_model", "item");
-			$item = $this->item->buscaItemPorId($chat_interesse[0]["item_id"]); // Busca o id do usuário a partir do item
+			/* Verifica se o usuário que está logado no momento recebeu uma doação deste item */
+			$dados["usuario_doacao"] = $this->doacao->possuiDoacaoitem($this->session->userdata("user_id"), $dados["item_id"]);
 
 			/* Busca os dados do usuário em si */
 			$this->load->model("Usuario_model", "user");
@@ -94,6 +102,15 @@ class Chat extends CI_Controller{
 		foreach($this->input->post() as $chave => $valor)
 			$dados[$chave] = $valor;
 
+		$this->load->model("Doacao_model", "doacao");
+		$qtde_doada = $this->doacao->qtdeDoadaItem($dados["item_id"]);
+
+		$dados["usuario_doacao"] = $this->doacao->possuiDoacaoitem($dados["usuario_id"], $dados["item_id"]);
+
+		$this->load->model("Item_model", "item");
+		$item = $this->item->buscaItemPorId($dados["item_id"]); // Busca o id do usuário a partir do item
+
+		$dados["qtde"] = ["itens" => $item[0]["item_qtde"], "doados" => $qtde_doada];
 		$dados["chat"] = $this->chat->porcaoChatLimite($dados["interesse_id"]);
 
 		echo $this->load->view("chat_principal", $dados)->output->final_output;
@@ -127,8 +144,38 @@ class Chat extends CI_Controller{
 		else return;
 	}
 
+	/**
+	 * Busca a quantidade de mensagens que ainda não foram lidas
+	 * @return string JSON com os dados
+	 */
 	public function buscaCountNaoLidas(){
 		$this->load->model("Chat_model", "chat");
 		echo json_encode($this->chat->qtdeMsgsNaoLidasDoador($this->input->post()["item_id"]));
+	}
+
+	public function doarItem(){
+		$dados = $this->input->post();
+
+		$this->load->model("Doacao_model", "doacao");
+		$qtde_doada = $this->doacao->qtdeDoadaItem($dados["item_id"]);
+
+		$this->load->model("Item_model", "item");
+		$item = $this->item->buscaItemPorId($dados["item_id"]);
+
+		$restante = $item[0]["item_qtde"] - $qtde_doada;
+		if($restante >= $dados["qtde_itens"]){
+			if($resporta = $this->doacao->registraDoacao([
+				"quantidade" => $dados["qtde_itens"],
+				"interesse_id" => $dados["interesse_id"],
+				"agradecimento" => ""
+			]) === true){
+				$qtde_doada_nova = $this->doacao->qtdeDoadaItem($dados["item_id"]);
+				if($qtde_doada_nova == $item[0]["item_qtde"])
+					$this->item->alteraStatusItemPorId($dados["item_id"], "Doado");
+
+				echo json_encode(["tipo" => "sucesso", "msg" => "OK"]);	
+			}
+			else echo json_encode($resposta);
+		}else echo json_encode(["tipo" => "erro", "msg" => "Não possui itens suficientes!"]);
 	}
 }

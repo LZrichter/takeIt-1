@@ -1,6 +1,6 @@
 // Vai ficar buscando sempre por uma mensagem nova que pode ter sido mandada
-var carregandoChat = setInterval(function(){ carregaMsgsChat(); }, 200);
-var carregandocountNaoLidas = setInterval(function(){ carregacountNaoLidas(); }, 200);
+var carregandoChat = setInterval(function(){ carregaMsgsChat(); }, 1000);
+var carregandocountNaoLidas = setInterval(function(){ carregacountNaoLidas(); }, 1000);
 
 // Carrega o chat de um usuário
 $('[name="userButton"]').on("click", function(){ 
@@ -50,6 +50,93 @@ $(document).on("submit", "#formChat", function(e){
 	e.preventDefault();
 });
 
+// Responsavel pelo botão de doar item
+function doarItem(){
+	if(!eval($('[name="qtd-itens"]').val() <= $("#qtdeRestante").html())){
+		$('[name="qtd-itens"]').addClass("alert alert-danger mudanca-button-doacao");
+		$('[name="qtd-itens"]').focus();
+	}else{
+		$.ajax({
+			url: 'doarItem',
+			type: 'POST',
+			data: {
+				item_id: $('#item_id').val(),
+				interesse_id: $('[name="interesse_id"]').val(),
+				qtde_itens: $('[name="qtd-itens"]').val()
+			},
+			dataType: "json",
+			success: function(data){
+				if(data["tipo"] == "sucesso"){
+					$.ajax({
+						url: "chatInicial",
+						data: {
+							usuario_id 	 : $("#selecionado_usuario_id").val(),
+							usuario_nome : $("#nomePessoa").html(),
+							imagem_link  : $("#selecionado_img_pessoa").val(),
+							interesse_id : $('[name="interesse_id"]').val(),
+							item_id 	 : $("#item_id").val(),
+							tipo_pessoa  : $("#tipo_pessoa_chat").val()
+						},
+						type: "POST",
+						success: function(data){
+							console.log("Aqui");
+							$("#painelMsgs").html(data);
+						}
+					});
+				}else{
+
+				}
+			}
+		});
+	}
+}
+
+// Responsavel pelo botão de doar item
+function doarItem(){
+	$.ajax({
+		url: 'doarItem',
+		type: 'POST',
+		data: {
+			item_id: $('#item_id').val(),
+			interesse_id: $('[name="interesse_id"]').val(),
+			qtde_itens: $('[name="qtd-itens"]').val()
+		},
+		dataType: "json",
+		success: function(data){
+			if(data["tipo"] == "sucesso"){
+				$.ajax({
+					url: "chatInicial",
+					data: {
+						usuario_id 	 : $("#selecionado_usuario_id").val(),
+						usuario_nome : $("#nomePessoa").html(),
+						imagem_link  : $("#selecionado_img_pessoa").val(),
+						interesse_id : $('[name="interesse_id"]').val(),
+						item_id 	 : $("#item_id").val(),
+						tipo_pessoa  : $("#tipo_pessoa_chat").val()
+					},
+					type: "POST",
+					success: function(data){
+						console.log("Aqui");
+						$("#painelMsgs").html(data);
+					}
+				});
+			}else{
+
+			}
+		}
+	});
+}
+
+// Teste para verificar se a quantidade correta com o limite
+function changeNumItens(obj){
+	if(eval($(obj).val() <= $("#qtdeRestante").html())){
+		$(obj).removeClass("alert alert-danger mudanca-button-doacao");
+	}else{
+		$(obj).addClass("alert alert-danger mudanca-button-doacao");
+	}
+}
+
+// É chamada constântemente e é responsavel por colocar novas mensagens no chat
 function carregaMsgsChat(){
 	if((typeof $("[name='interesse_id']").val() != "undefined") && (typeof $("#id_ultima_msg").val() != "undefined")){
 		$.ajax({
@@ -75,7 +162,7 @@ function carregaMsgsChat(){
 							$("#centro_mensagens").append('<div class="' + classe[0] + '" id="' + id_box + '" tabindex="1"><p>' + msg.chat_text + '</p><div class="' + classe[1] + '">Enviado: ' + msg.chat_data_formatada + '</div></div>');
 
 							$('#' + id_box).focus();
-							$("#inputMsg").val("").focus();
+							$("#inputMsg").focus();
 							$("#id_ultima_msg").val(msg.chat_id);
 						}
 					});
@@ -88,6 +175,7 @@ function carregaMsgsChat(){
 	}
 }
 
+// É chamada constântemente e é responsavel por contar o numero de mensgens não lidas
 function carregacountNaoLidas(){
 	$.ajax({
 		url: 'buscaCountNaoLidas',

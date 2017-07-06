@@ -137,6 +137,12 @@ textarea {
     /*margin-right: 2px;*/
 }
 
+.agradecimento {
+    color: #868686;
+    font-size: 11pt;
+    font-style: italic;
+}
+
 
 /*div.painel-admin-div {
   display: relative;

@@ -98,7 +98,7 @@ class Painel extends CI_Controller{
 		$dados["user_id"] = $this->session->userdata('user_id');
 		$dados["interesses"] = $this->IN->interessesPorUsuario($dados["user_id"]);
 		
-		if (!isset($dados["interesses"]["tipo"]) && $dados["interesses"]["tipo"] != "erro") {
+		if (!isset($dados["interesses"]["tipo"])){
 			foreach ($dados["interesses"] as $row)
 				foreach ($row as $key => $value)
 					$dados["busca_item"][] = $this->IM->buscaItemPorId($value)[0];

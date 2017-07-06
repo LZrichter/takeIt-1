@@ -126,6 +126,7 @@ class Chat extends CI_Controller{
 
 		$dados["qtde"] = ["itens" => $item[0]["item_qtde"], "doados" => $qtde_doada];
 		$dados["chat"] = $this->chat->porcaoChatLimite($dados["interesse_id"]);
+		$dados["js"]   = "notificacoes.js";
 
 		echo $this->load->view("chat_principal", $dados)->output->final_output;
 	}

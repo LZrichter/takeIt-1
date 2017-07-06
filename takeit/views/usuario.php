@@ -48,11 +48,15 @@
 							<h4><strong>Agradecimentos para o usuario</strong></h4>
 							<!-- ESSA É A DIV DE CADA AGRADECIMENTO -->
 							<div class="agradecimento">
-								<p>
-									<i class="fa fa-quote-left" aria-hidden="true"></i>
-									Olár, muito obrigado por ter doado o chinelo do Anthony para mim, agora vou poder andar por onde eu quiser! Deus lhe pague em muitos outros chinelos!
-									<i class="fa fa-quote-right" aria-hidden="true"></i>
-								</p>
+								<? if (isset($agradecimentos)):?>
+									<? foreach ($agradecimentos as $row):?>
+										<p>
+										<i class="fa fa-quote-left" aria-hidden="true"></i>
+											<?= $row["doacao_agradecimento"] ?>
+										<i class="fa fa-quote-right" aria-hidden="true"></i>
+										</p>
+									<? endforeach?>
+								<? endif ?>
 							</div>
 						</div>
 					</div>

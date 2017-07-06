@@ -31,7 +31,12 @@
 							<div class="alert alert-success" style="margin: -4px -8px -5px 0;">
 								<strong>
 									Doação realizada!
-									<a href="<?= base_url(); ?>">Agradeça o Doador! </a>
+									<button class="btn btn-success btn-sm" id="agradecer" 
+									data-toggle='modal' 
+									data-target='#modalAgradecimento'
+									data-interesse='<?= $row['interesse_id'] ?>'
+									><i class="fa fa-heart-o"></i> Agradecer
+									</button>
 								</strong>
 							</div>
 						<? }else{ ?>
@@ -165,5 +170,48 @@
             	<button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">Cancelar</button>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- MODAL AGRADECER -->
+<div class="modal fade" id="modalAgradecimento" tabindex="-1" role="dialog" aria-labelledby="label">
+<div class="modal-dialog">
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3 class="modal-title" id="label"><strong>Agradecer Doação</strong></h3>
+        </div>
+
+        <div class="modal-body">
+       		<h4>Escreva uma mensagem para agradecer a doação!</h4>
+       		
+       		<textarea class="form-control" rows="10" id="agradecimento" name="agradecimento" required></textarea>
+            
+            <div class="modal-footer">  
+                <button id="enviarAgradecimento" type="button" class="btn btn-success" data-dismiss="modal">Enviar</button>
+            </div>
+    	</div>
+	</div>
+</div>
+</div>
+
+
+<!-- MODAL AGRADECER -->
+<div class="modal fade" id="modalRetorno" tabindex="-1" role="dialog" aria-labelledby="labelRetorno">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title" id="labelRetorno"></h3>
+            </div>
+            <div class="modal-body" id="bodyRetorno">
+                
+        	</div>
+            <div class="modal-footer">  
+                <button id="fechar" type="button" class="btn btn-success" data-dismiss="modal">Fechar</button>
+            </div>
+    	</div>
     </div>
 </div>

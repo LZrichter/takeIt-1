@@ -78,14 +78,15 @@ class Notificacao_model extends CI_Model {
 	public function quantidadeDeNotificacoes($idUsuario){
 
 		try{
-
 			$sql = "SELECT COUNT(*) as qtde FROM notificacao n
 			JOIN interesse i ON i.interesse_id = n.interesse_id
 			JOIN item it ON it.item_id = i.item_id
-			JOIN usuario u ON it.usuario_id = u.usuario_id
-			JOIN usuario u2 ON u2.usuario_id = i.usuario_id
-			WHERE (u.usuario_id = ".$this->db->escape($idUsuario)." AND u2.usuario_id != ".$this->db->escape($idUsuario).")
-			OR (u.usuario_id != ".$this->db->escape($idUsuario)." AND u2.usuario_id = ".$this->db->escape($idUsuario).");
+			WHERE i.usuario_id != ".$idUsuario." AND it.usuario_id =".$idUsuario."
+			UNION
+			SELECT COUNT(*) as qtde FROM notificacao n
+			JOIN interesse i ON i.interesse_id = n.interesse_id
+			JOIN item it ON it.item_id = i.item_id
+			WHERE it.usuario_id = ".$idUsuario." AND i.usuario_id != ".$idUsuario;
 
 			if(!$query = $this->db->query($sql)){
 				if($this->db->error()){

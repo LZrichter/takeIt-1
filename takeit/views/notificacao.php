@@ -2,7 +2,7 @@
 	<div class="container">
 		<?php 
 		$user_id = $this->session->userdata("user_id");
-		if (isset($notificacoes['Error'])) {
+		if (isset($contador)) {
 			echo '<div class="panel-body">
 				<div class="alert alert-warning text-center">
 						<div class="row">

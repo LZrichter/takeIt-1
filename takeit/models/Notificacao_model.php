@@ -40,9 +40,12 @@ class Notificacao_model extends CI_Model {
 			$sql = "SELECT notificacao_id, notificacao_tipo, notificacao_lida, i.interesse_id, it.usuario_id, 
 			u.usuario_nome, u2.usuario_id AS usuario_id_interesse, u2.usuario_nome AS usuario_nome_interesse, 
 			it.item_id, it.item_descricao 
-			FROM notificacao NATURAL JOIN interesse i NATURAL JOIN usuario u2 JOIN item it JOIN usuario u
-			WHERE it.item_id = i.item_id AND it.usuario_id = u.usuario_id
-			AND i.usuario_id = ".$this->db->escape($idUsuario);
+			FROM notificacao n
+			JOIN interesse i ON i.interesse_id = n.interesse_id
+			JOIN item it ON it.item_id = i.item_id
+			JOIN usuario u ON it.usuario_id = u.usuario_id
+			JOIN usuario u2 ON u2.usuario_id = i.usuario_id
+			WHERE u.usuario_id = ".$this->db->escape($idUsuario)." OR u2.usuario_id = ".$this->db->escape($idUsuario);
 
 			if(!$query = $this->db->query($sql)){
 				if($this->db->error()){
@@ -76,8 +79,13 @@ class Notificacao_model extends CI_Model {
 
 		try{
 
-			$sql = "SELECT COUNT(*) as qtde FROM notificacao NATURAL JOIN interesse i 
-			WHERE i.usuario_id = ".$this->db->escape($idUsuario);
+			$sql = "SELECT COUNT(*) as qtde FROM notificacao n
+			JOIN interesse i ON i.interesse_id = n.interesse_id
+			JOIN item it ON it.item_id = i.item_id
+			JOIN usuario u ON it.usuario_id = u.usuario_id
+			JOIN usuario u2 ON u2.usuario_id = i.usuario_id
+			WHERE (u.usuario_id = ".$this->db->escape($idUsuario)." AND u2.usuario_id != ".$this->db->escape($idUsuario).")
+			OR (u.usuario_id != ".$this->db->escape($idUsuario)." AND u2.usuario_id = ".$this->db->escape($idUsuario).");
 
 			if(!$query = $this->db->query($sql)){
 				if($this->db->error()){

@@ -155,11 +155,13 @@ class Painel extends CI_Controller{
 		
 		$i = 0;
 		foreach ($dados["notificacoes"] as $row) {
-			if ($row["notificacao_tipo"] == 'doacao_adquirida') {
-				if( $this->DM->verificarAgradecimento($row["interesse_id"]) )//ja agradeceu
-					$dados['notificacoes'][$i]["ja_agradeceu"] = true;
-				else
-					$dados['notificacoes'][$i]["ja_agradeceu"] = false;
+			if(isset($row["notificacao_tipo"])){
+				if ($row["notificacao_tipo"] == 'doacao_adquirida') {
+					if( $this->DM->verificarAgradecimento($row["interesse_id"]) )//ja agradeceu
+						$dados['notificacoes'][$i]["ja_agradeceu"] = true;
+					else
+						$dados['notificacoes'][$i]["ja_agradeceu"] = false;
+				}
 			}
 		$i++;
 		}

@@ -121,8 +121,6 @@ class Notificacao_model extends CI_Model {
 				if($this->db->error()){
 					return array("Error" => "$error[message]");
 				}
-			} else if (empty($query->result())) {
-				return array("Error" => "No data found");
 			} else {
 				
 				return true;

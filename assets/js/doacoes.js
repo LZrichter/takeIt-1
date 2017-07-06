@@ -1,7 +1,7 @@
 function interesse(OBJ, item_id){
 	if(OBJ.value=="adicionar"){
 		$.ajax({
-			url: 'Doacoes/interesse',
+			url: '/Doacoes/interesse',
 			type: 'POST',
 			data: { item_id: item_id,
 					acao: 	 "adicionar" },
@@ -22,7 +22,7 @@ function interesse(OBJ, item_id){
 		});
 	}else{
 		$.ajax({
-			url: 'Doacoes/interesse',
+			url: '/Doacoes/interesse',
 			type: 'POST',
 			data: { item_id: item_id,
 					acao: 	 "remover" },

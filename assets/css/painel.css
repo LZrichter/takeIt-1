@@ -105,7 +105,7 @@ textarea {
     border-radius: 10px;
 }
 
-#perfil_img {
+.perfil_img {
     max-width: 150px;
     max-height: 150px;
     width: auto;

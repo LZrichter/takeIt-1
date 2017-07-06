@@ -204,18 +204,20 @@ class Item_model extends CI_Model {
 						WHERE usuario_id = ".$idUsuario;
 
 				if ( is_array($status)){
-					$sql .= ' AND item_status=';
+					$sql .= ' AND ( item_status=';
 					foreach ($status as $key => $value){
 						if( $key == count($status)-1 )
 							$sql .= $this->db->escape($value);	
 						else
 							$sql .= $this->db->escape($value)." OR item_status=";
 					}
+					$sql .= ")";
 				}else{
 					$sql .= " AND item_status=".$this->db->escape($status);
 				}	
 
 				$sql .= " ORDER BY item_data DESC";
+
 			}
 
 			$result = array();
@@ -349,6 +351,9 @@ class Item_model extends CI_Model {
 		*		)
 		*/
         public function buscaItemPorId($idItem){
+        	if (!isset($idItem)) {
+        		return array("tipo" => "erro", "msg" => "Dados insuficientes para realizar este consulta!!!");
+        	}
         	try{
 				$sql = " SELECT i.*, 
 						(SELECT imagem_caminho FROM imagem WHERE imagem.item_id = i.item_id LIMIT 1) AS imagem_caminho , 

@@ -219,7 +219,38 @@ class Doacao_model extends CI_Model {
 		 * @param int $idInteresse -> id do interesse da doacao
 		 * @return array com erros | boolean TRUE no sucesso da inserção do agradecimento
 		 */
-		public function agradecerDoacao($idInteresse){
+		public function agradecerDoacao($idInteresse, $agradecimento){
+			if(!isset($idInteresse) && !isset($agradecimento)){
+				return ["tipo" => "erro", "msg" => "Informação insufuciente para realizar a consulta."];
+			}
+
+			try{
+
+				$count = $this->db->query("SELECT * FROM doacao WHERE interesse_id = $idInteresse ");
+
+				$sql = "UPDATE doacao SET doacao_agradecimento =".$this->db->escape($agradecimento)." WHERE interesse_id = $idInteresse";
+
+				foreach($count->result() as $row){
+					foreach ($row as $campo => $valor) {
+						if ($campo == 'doacao_agradecimento' && empty($valor)) {
+							$sql .= " AND doacao_id=".$row->doacao_id;							
+							$this->db->query($sql);
+							return TRUE;								
+						}
+					}
+				}
+
+			}catch(PDOException $PDOE){
+				return ["tipo" => "erro", "msg" => "Problema ao processar os dados no sistema. - Código: " . $PDOE->getCode()];
+			}catch(Exception $NE){
+				return ["tipo" => "erro", "msg" => "Problema ao executar a tarefa no sistema. - Código: " . $NE->getCode()];
+			}
+
+			return ["tipo" => "erro", "msg" => "Problema inesperado no sistema. Tente novamente mais tarde!"];
+		}
+
+
+		public function verificarAgradecimento($idInteresse){
 			if(!isset($idInteresse)){
 				return ["tipo" => "erro", "msg" => "Informação insufuciente para realizar a consulta."];
 			}
@@ -228,13 +259,9 @@ class Doacao_model extends CI_Model {
 
 				$count = $this->db->query("SELECT * FROM doacao WHERE interesse_id = $idInteresse ");
 
-				$sql = "UPDATE doacao SET 
-					doacao_agradecimento = $this->db->escape($agradecimento) WHERE interesse_id = $idInteresse";
-
 				foreach($count->result() as $row){
 					foreach ($row as $campo => $valor) {
-						if ($campo == 'doacao_agradecimento' && empty($valor)) {
-							$this->db->query($sql);
+						if ($campo == 'doacao_agradecimento' && !empty($valor)) {
 							return TRUE;								
 						}
 					}

@@ -1,24 +1,40 @@
+var id_interesse;
+
 $(document).on("click" , "#agradecer", function(e){
 	e.preventDefault();
 
-	var id_interesse = $(this).data("interesse");
+	id_interesse = $(this).data("interesse");
+	
+});
 
-	$(document).on("submit", "formAgradecimento", function(e){
+$('#enviarAgradecimento').on("click", function(e){
 		e.preventDefault();
 
-		var agradecimento = $('#agradecimento').val();
+		var agradecimento = $("#agradecimento").val();
 
 		$.ajax({
 			url: '/doacoes/agradecimentoAjax/',
 			type: 'POST',
 			dataType: 'json',
-			data: {id_interesse: id_interesse}
+			data: {id_interesse: id_interesse, agradecimento : agradecimento}
 		})
 		.done(function(data) {
-			console.log("success", data);
+			if( data["tipo"] == "sucesso" ){
+				$('#labelRetorno').html("Agradecimento registrado!");
+				$('#bodyRetorno').html(data["msg"]+" Seu feedback é muito importante para nós <i class='fa fa-heart'></i>");
+				$('#modalRetorno').modal('show');
+				$("#agradecer").prop("disabled", true);
+			}else{
+				$('#labelRetorno').html("Erro ao registrar agradecimento!");
+				$('#bodyRetorno').html(data["msg"]);
+				$('#modalRetorno').modal('show');
+			}
 		})
 		.fail(function(data) {
-			console.log("error", data);
+			if( data["tipo"] == "erro" ){
+				$('#labelRetorno').html("Erro ao registrar agradecimento!");
+				$('#bodyRetorno').html(data["msg"]);
+				$('#modalRetorno').modal('show');
+			}
 		});
-	});
 });

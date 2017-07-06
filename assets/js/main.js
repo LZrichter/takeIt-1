@@ -20,15 +20,16 @@ function mensagem(tipo, msg, nome_objeto){
 	}else $("#" + nome_objeto).html(msg);
 }
 
-$(document).ready(setTimeout(function() {
-    $.ajax({
+var alertas = setInterval(function(){ chama_alertas(); }, 3000);
+
+function chama_alertas(){
+	$.ajax({
 		url: '/Painel/getQuantidade',
 		type: 'POST',
 		dataType: "json"
 	}).done(function(data) {
-			$('#badge').text(data['paginas_qtde']);
-			console.log(data['paginas_qtde']);
+		$('#badge').text(data['paginas_qtde']);
 	}).fail(function() {
-			console.log("error");
+			
 	});
-}, 2000));
+}

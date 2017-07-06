@@ -17,7 +17,8 @@
 					  		<label class="col-sm-2 control-label">Foto de Perfil</label>
 					  	  	<div class="col-sm-10">
 					  	  		<div class="col-sm-4 img-rounded">
-					  	  	  		<img id="perfil_img" src="<?=($usuario['imagem_id'])?base_url().$usuario['imagem_caminho'].'/'.$usuario['imagem_nome']:base_url().'/assets/img/painel_perfil.png'?>" alt="Foto do usuário">
+					  	  	  		<img id="perfil_img" class="perfil_img" src="<?=($usuario['imagem_id'])?base_url().$usuario['imagem_caminho'].'/'.$usuario['imagem_nome']:base_url().'/assets/img/painel_perfil.png'?>" alt="Foto do usuário">
+					  	  	  		<img id="nova_foto" class="perfil_img" />
 					  	  	  	</div>
 					  	  	  	<div class="col-sm-6">
 					  	  	  		<input type="file" name="foto" id="file_foto" accept=".gif,.jpg,.png,.jpeg">

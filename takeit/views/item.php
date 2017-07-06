@@ -82,9 +82,22 @@
 					</div>
 				</div>
 	  		</div>
+	  		<!-- Mensagem com os erros  -->
+			<div class="form-group" id="div_mensagem">
+				<div id="mensagem"></div>
+			</div>
+			<!-- /Mensagem com os erros -->
 	  		<? if($item[0]["usuario_id"] != $user_id): ?>
 		  		<div class="panel-footer text-center">
-		  			<button class="btn btn-primary btn-lg" type="button"><span class="fa fa-heart"></span> Manisfestar Interesse</button>
+		  			<? if($interessado): ?>
+						<button type="button" class="btn btn-primary btn-lg" value="remover" onclick="interesse(this,<?=$item[0]["item_id"]?>);">
+							<i class="fa fa-minus-circle"></i> Remover interesse
+						</button>
+					<? else : ?>
+						<button type="button" class="btn btn-primary btn-lg" value="adicionar" onclick="interesse(this,<?=$item[0]["item_id"]?>);">
+							<i class="fa fa-heart"></i> Manifestar interesse
+						</button>
+					<? endif; ?>
 
 		  			<button id="btn-reportar" class="btn btn-danger btn-lg" 
 		  			data-toggle="popover"

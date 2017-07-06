@@ -14,8 +14,7 @@ class Doacoes extends CI_Controller{
 		$this->load->model("Categoria_model", "CM");
 		$this->load->model('Item_model', 'IM');
 		$this->load->model('Imagem_model', 'IMG');
-		$this->load->model('usuario_model', 'UM');
-
+		$this->load->model('Usuario_model', 'UM');
 	}
 
 	public function index($indice = 1){
@@ -62,6 +61,8 @@ class Doacoes extends CI_Controller{
 		$dados["user_id"] = $this->session->userdata('user_id');
 
 		$dados["dadosDoador"] = $this->UM->buscaUsuario(array('id' => $dados['item'][0]['usuario_id'] ), TRUE);
+		$this->load->model('Interesse_model', 'inter');
+		$dados["interessado"] = $this->inter->testaInteresseItem($dados['item'][0]['item_id'], $dados["user_id"]);
 
 		$this->load->view('templates/head', $dados);
 		$this->load->view('templates/menu', $dados);
@@ -352,11 +353,22 @@ class Doacoes extends CI_Controller{
 		$user_id = $this->session->userdata('user_id');
 
 		$this->load->model("Interesse_model", "inter");
+		$this->load->model("Item_model", "item");
+		
 		if($acao=="adicionar"){
 			$resposta = $this->inter->manifestarInteresse($item_id, $user_id);
+			$interessados = $this->inter->todosInteressados($item_id);
+
+			if($resposta["tipo"]=="sucesso" && count($interessados)>0)
+				$resposta = $this->item->alteraStatusItemPorId($item_id,"Solicitado");
 		
 		}else if($acao=="remover"){
 			$resposta = $this->inter->removerInteresse($item_id, $user_id);
+			$interessados = $this->inter->todosInteressados($item_id);
+			$ninguem = "Nenhuma pessoa demonstrou interesse no seu item ainda.";
+
+			if($resposta["tipo"]=="sucesso"  && isset($interessados["msg"]) && $interessados["msg"]==$ninguem)
+				$resposta = $this->item->alteraStatusItemPorId($item_id,"Disponível");
 
 		}else{
 			$resposta = ["tipo" => "erro", "msg" => "Ocorreu um erro inesperado no sistema. Tente contatar o suporte@takeit.com.br que iremos ajuda-lo."];

@@ -20,15 +20,27 @@ function mensagem(tipo, msg, nome_objeto){
 	}else $("#" + nome_objeto).html(msg);
 }
 
-$(document).ready(setTimeout(function() {
-    $.ajax({
+var alertas = setInterval(function(){ loadDoc(); }, 500);
+
+function chama_alertas(){
+	$.ajax({
 		url: '/Painel/getQuantidade',
 		type: 'POST',
 		dataType: "json"
 	}).done(function(data) {
-			$('#badge').text(data['paginas_qtde']);
-			console.log(data['paginas_qtde']);
+		$('#badge').text(data['paginas_qtde']);
 	}).fail(function() {
-			console.log("error");
+			
 	});
-}, 2000));
+}
+
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("badge").innerHTML = parseInt(this.responseText.paginas_qtde);
+    }
+  };
+  xhttp.open("GET", "/Painel/getQuantidade", true);
+  xhttp.send();
+}

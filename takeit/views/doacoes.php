@@ -50,15 +50,15 @@
 							<h5><?=$itens[$key]['item_descricao'];?></h5>
 						</div>
 						<div class="button text-center">
-								<? if($itens[$key]['interessado']): ?>
-									<button type="button" class="btn btn-primary btn-sm" value="remover" onclick="interesse(this,<?=$itens[$key]['item_id']?>);">
-										<i class="fa fa-minus-circle"></i> Remover interesse
-									</button>
-								<? else : ?>
-									<button type="button" class="btn btn-danger btn-sm" value="adicionar" onclick="interesse(this,<?=$itens[$key]['item_id']?>);">
-										<i class="fa fa-heart"></i> Manifestar interesse
-									</button>
-								<? endif; ?>
+							<? if($itens[$key]['interessado']): ?>
+								<button type="button" class="btn btn-primary btn-sm" value="remover" onclick="interesse(this,<?=$itens[$key]['item_id']?>);">
+									<i class="fa fa-minus-circle"></i> Remover interesse
+								</button>
+							<? else : ?>
+								<button type="button" class="btn btn-danger btn-sm" value="adicionar" onclick="interesse(this,<?=$itens[$key]['item_id']?>);">
+									<i class="fa fa-heart"></i> Manifestar interesse
+								</button>
+							<? endif; ?>
 						</div>
 						<div class="clearfix">
 						</div>

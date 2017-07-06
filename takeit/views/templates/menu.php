@@ -1,6 +1,9 @@
 <header>
 <?
     $tipo_usuario = $this->session->userdata('user_tipo');
+    $ci = & get_instance(); 
+    $ci->load->model('Notificacao_model', 'NM');
+    $quantidade = $ci->NM->quantidadeDeNotificacoes($ci->session->userdata('user_id'))["paginas_qtde"];
 ?>
 <div id="main-menu" class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container-fluid">
@@ -17,12 +20,12 @@
         </div>
         <div class="collapse navbar-collapse navbar-menubuilder">
             <ul class="nav navbar-nav navbar-right">
-                <? if($tipo_usuario == 'Pessoa'): ?>
+                <? if($tipo_usuario != 'Admin'): ?>
                     <li id="notificacao">
                         <button class="btn btn-lg btn-link">
                             <a href="<?= base_url();?>Painel/notificacao">
                                 <span class="fa fa-bell notify-bell"></span>
-                                <span id="badge" class="badge badge-notify">0</span>
+                                <span id="badge" class="badge badge-notify"><?=$quantidade?></span>
                             </a>
                         </button>
                     </li>

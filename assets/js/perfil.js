@@ -11,6 +11,34 @@ $(function(){
 	});
 });
 
+/* Altera a imagem para o arquivo que foi selecionado */
+$("#file_foto").on("change", function(a){
+	$("#perfil_img").hide();
+	verificaMostraNovaImagem();
+});
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+        	$("#nova_foto").attr('src', e.target.result)
+    	};
+    	reader.readAsDataURL(input.files[0]);
+    }
+    else {
+        var img = input.value;
+        $(input).next().attr('src',img);
+    }
+} 
+
+function verificaMostraNovaImagem(){
+    $('input[type=file]').each(function(index){
+        if ($('input[type=file]').eq(index).val() != ""){
+            readURL(this);
+        }
+    });
+}
+
 /* Ajax responsável por buscar as cidades correspondentes com o estado selecionado */
 $("#select_estado").on("change", function(a){
 	var estado 	= $(this).val();

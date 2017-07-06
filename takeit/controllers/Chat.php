@@ -156,6 +156,10 @@ class Chat extends CI_Controller{
 		echo json_encode($this->chat->qtdeMsgsNaoLidasDoador($this->input->post()["item_id"]));
 	}
 
+	/**
+	 * Doa o item a partir de sua quantidade
+	 * @return string echo em um JSON da resposta
+	 */
 	public function doarItem(){
 		$dados = $this->input->post();
 
@@ -180,5 +184,15 @@ class Chat extends CI_Controller{
 			}
 			else echo json_encode($resposta);
 		}else echo json_encode(["tipo" => "erro", "msg" => "Não possui itens suficientes!"]);
+	}
+
+	/**
+	 * Cancela o bate-papo
+	 * @return string Echo de um json de resposta
+	 */
+	public function cancelarBatePapo(){
+		$this->load->model("Chat_model", "chat");
+
+		echo json_encode($this->chat->cancelarBatePapo($this->input->post()["interesse_id"]));
 	}
 }

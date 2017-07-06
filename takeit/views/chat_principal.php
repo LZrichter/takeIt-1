@@ -39,15 +39,15 @@
 							</div>
 						<? } ?>
 					<? }else if($tipo_pessoa == "Doador"){ ?>
-						<input type="button" id="doarButton" class="btn btn-success" value="Doar Item" onclick="doarItem();">
+						<input type="button" class="btn btn-success" data-toggle="modal" data-target="#model_doar" value="Doar Item">
 						<? if($restante == 1){ ?>
-							<span style=" padding: 0 4px 0 2px;">1 Item</span>
-							<input type="hidden" name="qtd-itens" class="form-control input-sm" id="qtd-intens-input" value="1" maxlength="1">
+							<span style=" padding: 0 4px 0 2px;"><span id="qtdeRestante">1</span> Item</span>
+							<input type="hidden" name="qtd-itens" class="form-control input-sm" id="qtde_itens" value="1" maxlength="1">
 						<? }else{ ?>
-							<input type="number" name="qtd-itens" class="form-control input-sm" id="qtd-intens-input" value="1" onchange="changeNumItens(this);">
+							<input type="number" name="qtd-itens" class="form-control input-sm" id="qtde_itens" value="1" onchange="changeNumItens(this);">
 							<span class="qtd-itens-totais" style="margin: 0 5px 0 0;"> de <span id="qtdeRestante"><?= $restante; ?></span> </span>
 						<? } ?>
-						<button name="chat-doar" class="btn btn-danger" data-toggle="tooltip" title="Cancelar Bate-Papo com esse usuário"><i class="fa fa-times-circle"></i></button>
+						<button name="chat-doar" class="btn btn-danger" rel="tooltip" data-toggle="modal" data-target="#model_cancelar" title="Cancelar Bate-Papo com esse usuário"><i class="fa fa-times-circle"></i></button>
 					<? } ?>
 				</div>
 			</div>
@@ -83,7 +83,7 @@
 		var time = setTimeout(function(){
 			$("#<?= $id_ultima_msg; ?>").focus();
 			$("#inputMsg").val("").focus();
-			$('[data-toggle="tooltip"]').tooltip();
+			$('[rel="tooltip"]').tooltip();
 		}, 100);
 	</script>
 	<div class="panel-footer" <?= ((!$usuario_doacao && $restante <= 0) ? 'data-toggle="tooltip" title="Não é possivel mais realizar um bate-papo, pois o produto já foi doado para outra(s) pessoa(s)."' : ''); ?> >
@@ -111,11 +111,40 @@
 <!-- MODAL ALERTA -->
 <div class="modal fade" id="modal_aviso" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-        <div class="alert" id="modal_alerta" role="alert">
+        <div class="alert alert-danger" id="modal_alerta" role="alert">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-            <span class="sr-only">Error:</span>
             <span id="modal_msg"></span>
-            <button type="button" class="btn btn-default close" data-dismiss="modal" aria-label="Close">X</button>
+            <div class="botoes">
+            	<button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">Sair</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL CANCELAR -->
+<div class="modal fade" id="model_cancelar" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span id="modal_msg">Desejá realmente cancelar o bate-papo com esse usuário?</span>
+            <div class="botoes">
+            	<button type="button" class="btn btn-default" id="botao_cancelar_sim" data-dismiss="modal">Sim</button>
+            	<button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DOAR -->
+<div class="modal fade" id="model_doar" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="alert alert-success" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span id="modal_msg">Deseja realmente doar para esse usuário?</span>
+            <div class="botoes">
+            	<button type="button" class="btn btn-default" id="botao_doar_sim" data-dismiss="modal">Sim</button>
+            	<button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">Cancelar</button>
+            </div>
         </div>
     </div>
 </div>
